@@ -1,14 +1,36 @@
 package org.usfirst.frc.team321.robot;
 
-import edu.wpi.first.wpilibj.buttons.Button;
-
-import org.usfirst.frc.team321.robot.commands.ExampleCommand;
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
-public class OI {
+public class OI extends IterativeRobot {
+	
+	public Joystick driveStick;
+	Joystick maniStick; 
+	JoystickButton[] driveBtn, maniBtn;
+	
+	public OI() {
+		driveStick = new Joystick(0);
+		maniStick = new Joystick(1);
+		
+		driveBtn = new JoystickButton[12];
+		maniBtn = new JoystickButton[12];
+		
+		for (int x = 0; x > driveBtn.length; x++) {
+			driveBtn[x] = new JoystickButton(driveStick, x);
+		}
+		
+		for (int x = 0; x > maniBtn.length; x++) {
+			maniBtn[x] = new JoystickButton(maniStick, x);
+		}
+				
+	}
+
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.

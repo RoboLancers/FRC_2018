@@ -1,15 +1,21 @@
 
 package org.usfirst.frc.team321.robot;
 
+import org.usfirst.frc.team321.robot.commands.AutoCode;
+import org.usfirst.frc.team321.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team321.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team321.robot.subsystems.LinearSlide;
+import org.usfirst.frc.team321.robot.subsystems.Pneumatics;
+import org.usfirst.frc.team321.robot.subsystems.Sensors;
+import org.usfirst.frc.team321.robot.subsystems.Sparky;
+
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team321.robot.commands.ExampleCommand;
-import org.usfirst.frc.team321.robot.subsystems.ExampleSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,7 +26,11 @@ import org.usfirst.frc.team321.robot.subsystems.ExampleSubsystem;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	public static Sparky drivetrain ;
+	public static Pneumatics pneumatics;
+	public static Compressor compressor; 
+	public static Sensors sensors;
+	public static LinearSlide linear;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -32,10 +42,17 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		drivetrain = new Sparky();
+		pneumatics = new Pneumatics(); 
+		compressor = new Compressor();
+		sensors = new Sensors();
+		linear = new LinearSlide();
 		oi = new OI();
-		chooser.addDefault("Default Auto", new ExampleCommand());
+
 		// chooser.addObject("My Auto", new MyAutoCommand());
+		chooser.addDefault("Autonhomas", new AutoCode());
 		SmartDashboard.putData("Auto mode", chooser);
+		
 	}
 
 	/**
