@@ -12,10 +12,11 @@ public class UseDriveTrain extends Command {
 
 	@Override
 	protected void initialize() {
-		
+		Robot.drivetrain.setAll(0);
 	}
 
 	@Override
+	
 	protected void execute() {
 		if(Math.abs(Robot.oi.driveStick.getRawAxis(1)) > 0.1) {
 			Robot.drivetrain.setLeft(Robot.oi.driveStick.getRawAxis(1));
@@ -28,7 +29,7 @@ public class UseDriveTrain extends Command {
 		} else {
 			Robot.drivetrain.setRight(0);
 		}
-		
+		//Robot.oi.driveStick.getRawButtonPressed(2);
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class UseDriveTrain extends Command {
 
 	@Override
 	protected void interrupted() {
-		
+		Robot.drivetrain.stopMotors();
 	}
 
 	

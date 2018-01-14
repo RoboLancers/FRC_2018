@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI extends IterativeRobot {
-	
+	//dat stick
 	public Joystick driveStick;
 	Joystick maniStick; 
 	JoystickButton[] driveBtn, maniBtn;

@@ -1,7 +1,5 @@
 package org.usfirst.frc.team321.robot.commands;
 
-import java.sql.Time;
-
 import org.usfirst.frc.team321.robot.Robot;
 
 import edu.wpi.first.wpilibj.Timer;

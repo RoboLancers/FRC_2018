@@ -3,6 +3,8 @@ package org.usfirst.frc.team321.robot;
 
 import org.usfirst.frc.team321.robot.commands.AutoCode;
 import org.usfirst.frc.team321.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team321.robot.subsystems.GearShifter;
+import org.usfirst.frc.team321.robot.subsystems.IntakeFlap;
 import org.usfirst.frc.team321.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team321.robot.subsystems.LinearSlide;
 import org.usfirst.frc.team321.robot.subsystems.Pneumatics;
@@ -10,6 +12,7 @@ import org.usfirst.frc.team321.robot.subsystems.Sensors;
 import org.usfirst.frc.team321.robot.subsystems.Sparky;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -26,11 +29,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static Sparky drivetrain ;
+	public static DriveTrain drivetrain ;
 	public static Pneumatics pneumatics;
 	public static Compressor compressor; 
 	public static Sensors sensors;
 	public static LinearSlide linear;
+	public static GearShifter gearshifter;
+	public static IntakeFlap intakeflap;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -42,11 +47,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		drivetrain = new Sparky();
+		drivetrain = new DriveTrain();
 		pneumatics = new Pneumatics(); 
 		compressor = new Compressor();
 		sensors = new Sensors();
 		linear = new LinearSlide();
+		gearshifter = new GearShifter();
+		intakeflap = new IntakeFlap(); 
 		oi = new OI();
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
