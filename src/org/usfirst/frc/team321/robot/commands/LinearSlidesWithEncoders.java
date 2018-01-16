@@ -37,10 +37,9 @@ public class LinearSlidesWithEncoders extends Command{
 	
 	@Override
 	protected boolean isFinished() {
-//		if (Robot.linear.getRawLineLeftEncoderCount() >= targetLSD) {
-//			Robot.drivetrain.setAll(0);
-//		}
-		//Remove this later if needed
+		if (Robot.linear.getRawLineLeftEncoderCount() >= Robot.linear.asdfghjkl(targetDistance)) {
+			Robot.drivetrain.setAll(0);
+		}
 		return false;
 	}
 

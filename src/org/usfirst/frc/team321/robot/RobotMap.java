@@ -36,6 +36,9 @@ public class RobotMap {
 	//ports are just placeholders
 	public static final int INTAKE_FORWARD = 2;
 	public static final int INTAKE_REVERSE = 5; 
+	//DIGITAL INPUT
+	public static final int TOUCH_SENSOR_TOP = 0;
+	public static final int TOUCH_SENSOR_BOTTOM = 1;
 	
 	
 	// For example to map the left and right motors, you could define the

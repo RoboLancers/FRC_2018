@@ -13,11 +13,9 @@ public class LinearSlide extends Subsystem {
 	
 	TalonSRX lineLeft, lineRight;
 	Encoder lineLeftA, lineRightA;
+	double ticksPerInch = 20;
 	
-	//public static final double GEARRATIO = 
-	
-	
-	public LinearSlide() { 
+	public LinearSlide() {
 		lineLeft = new TalonSRX(RobotMap.LINE_LEFT);
 		lineRight = new TalonSRX(RobotMap.LINE_RIGHT);
 		
@@ -41,6 +39,11 @@ public class LinearSlide extends Subsystem {
 		lineRight.set(ControlMode.PercentOutput, 0);
 	}
 	
+	public void move(double power) {
+		lineLeft.set(ControlMode.PercentOutput, power);
+		lineRight.set(ControlMode.PercentOutput, power);
+	}
+	
 	public double getLineLeftEncoderDistance(){
 		return lineLeftA.getDistance();
 	}
@@ -55,13 +58,10 @@ public class LinearSlide extends Subsystem {
 		return lineRightA.get();
 	}
 	
-//	public double inchesPerSec() {
-//		return 
-//	}
 	
-//	public double targetLSD() {
-		
-//	}
+	public double asdfghjkl(double targetDistance) {
+		return targetDistance * ticksPerInch;
+	}
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
