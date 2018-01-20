@@ -1,18 +1,14 @@
 
 package org.usfirst.frc.team321.robot;
 
-import org.usfirst.frc.team321.robot.commands.AutoCode;
+import org.usfirst.frc.team321.auto.commands.AutoCode;
 import org.usfirst.frc.team321.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team321.robot.subsystems.GearShifter;
-import org.usfirst.frc.team321.robot.subsystems.IntakeFlap;
-import org.usfirst.frc.team321.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team321.robot.subsystems.IntakePivot;
 import org.usfirst.frc.team321.robot.subsystems.LinearSlide;
 import org.usfirst.frc.team321.robot.subsystems.Pneumatics;
 import org.usfirst.frc.team321.robot.subsystems.Sensors;
-import org.usfirst.frc.team321.robot.subsystems.Sparky;
-
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -35,7 +31,7 @@ public class Robot extends IterativeRobot {
 	public static Sensors sensors;
 	public static LinearSlide linear;
 	public static GearShifter gearshifter;
-	public static IntakeFlap intakeflap;
+	public static IntakePivot intakeflap;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -53,7 +49,7 @@ public class Robot extends IterativeRobot {
 		sensors = new Sensors();
 		linear = new LinearSlide();
 		gearshifter = new GearShifter();
-		intakeflap = new IntakeFlap(); 
+		intakeflap = new IntakePivot(); 
 		oi = new OI();
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
