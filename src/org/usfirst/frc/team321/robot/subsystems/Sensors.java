@@ -34,11 +34,11 @@ public class Sensors extends Subsystem {
 	public double[] moveToTarget(double power, double currentAngle, double targetAngle) {
 		double[] motorSpeed = new double[2];
 		
-		motorSpeed[0] = RobotUtil.range(power + (currentAngle - targetAngle)/100, -1, 1);
-	    motorSpeed[1] = RobotUtil.range(power - (currentAngle - targetAngle)/100, -1, 1);
+		motorSpeed[0] = RobotUtil.range(power - (currentAngle - targetAngle)/100, -1, 1);
+	    motorSpeed[1] = RobotUtil.range(power + (currentAngle - targetAngle)/100, -1, 1);
 	    
-	    motorSpeed[0] = RobotUtil.floor(motorSpeed[0], 2);
-	    motorSpeed[1] = RobotUtil.floor(motorSpeed[1], 2);
+	    motorSpeed[0] = RobotUtil.floor(motorSpeed[0], 3);
+	    motorSpeed[1] = RobotUtil.floor(motorSpeed[1], 3);
 	    
 	    return motorSpeed;
 	}

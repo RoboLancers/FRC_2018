@@ -2,17 +2,17 @@ package org.usfirst.frc.team321.robot.subsystems;
 
 import org.usfirst.frc.team321.robot.Robot;
 import org.usfirst.frc.team321.robot.RobotMap;
-import org.usfirst.frc.team321.robot.commands.UseDriveTrain;
+import org.usfirst.frc.team321.robot.commands.UseArcadeDrive;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
+
 //naming motor controllers + encoders
 public class DriveTrain extends Subsystem {
-	TalonSRX topLeft, topRight, midLeft, midRight, bottomRight,bottomLeft;
+	public TalonSRX topLeft, topRight, midLeft, midRight, bottomRight,bottomLeft;
 	Encoder leftEncoder, rightEncoder;
 	
 // creating variables for encoder
@@ -20,6 +20,7 @@ public class DriveTrain extends Subsystem {
 	public static final double CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 	public static final double TPR = 256;
 	public static final double kDistancePerPulse = CIRCUMFERENCE / TPR;
+	
 	// setting up drivetrain, and encoder, and allows it to encode
 	public DriveTrain() {
 		bottomLeft= new TalonSRX(RobotMap.BOT_LEFT_MOTOR);
@@ -36,57 +37,63 @@ public class DriveTrain extends Subsystem {
 		rightEncoder.setDistancePerPulse(kDistancePerPulse);
 
 	}
+	
 	//start left motors
 	public void setLeft(double power) {
-		topLeft.set(ControlMode.PercentOutput, power);
-		midLeft.set(ControlMode.PercentOutput, power);
-		bottomLeft.set(ControlMode.PercentOutput, power);
-		
+		topLeft.set(ControlMode.PercentOutput, -power);
+		midLeft.set(ControlMode.PercentOutput, -power);
+		bottomLeft.set(ControlMode.PercentOutput, -power);
 	}
+	
 	//start right motors
 	public void setRight(double power) {
-		topRight.set(ControlMode.PercentOutput, -power);
-		midRight.set(ControlMode.PercentOutput, -power);
-		bottomRight.set(ControlMode.PercentOutput, -power);
+		topRight.set(ControlMode.PercentOutput, power);
+		midRight.set(ControlMode.PercentOutput, power);
+		bottomRight.set(ControlMode.PercentOutput, power);
 	}
+	
 	//set both
 	public void setAll(double power) {
 		setLeft(power);
 		setRight(power);
 	}
+	
 	//stop motors
 	public void stopMotors() {
 		setAll(0);
 	}
+	
 	//method to get amount of inches traveled per revolution of wheel (by encoder)
 	public double inchesPerRev() {
 		return (TPR / CIRCUMFERENCE);
 	}
+	
 	//gets Total revolutions required to travel to your target distance
 	public double getRevolutions(double targetDistance){
 		return (targetDistance / Robot.drivetrain.inchesPerRev()); 
 	}
+	
 	//get left and right encoder distance
 	public double getLeftEncoderDistance(){
 		return leftEncoder.getDistance();
 	}
+	
 	public double getRightEncoderDistance(){
 		return rightEncoder.getDistance();
 	}
+	
 	//get RAW left and right encoder tick count
 	public int getRawLeftEncoderCount(){
 		return leftEncoder.get();	
 	}
+	
 	public int getRawRightEncoderCount(){
 		return rightEncoder.get();
 	}
+	
 	//needed
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new UseDriveTrain());
-
-		// TODO Auto-generated method stub
-		
+		setDefaultCommand(new UseArcadeDrive());
 	}
-
 }

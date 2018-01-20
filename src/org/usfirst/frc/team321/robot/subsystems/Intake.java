@@ -26,7 +26,7 @@ public class Intake extends Subsystem {
 		setLeft(power);
 		setRight(power);
 	}//stop it
-	public void stopInta(double power) {
+	public void stopIntake() {
 		intakeLeft.set(ControlMode.PercentOutput, 0);
 		intakeRight.set(ControlMode.PercentOutput, 0);
 	}

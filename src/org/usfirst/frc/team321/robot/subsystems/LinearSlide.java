@@ -17,13 +17,9 @@ public class LinearSlide extends Subsystem {
 	//setting up motors and encoders
 	TalonSRX lineA, lineB;
 	Encoder linearEncoder;
-	public DigitalInput touchSensorTop;
-	public DigitalInput touchSensorBottom;
 	
 	//setting up tooch censors
 	public LinearSlide() {
-		touchSensorTop = new DigitalInput(RobotMap.TOUCH_SENSOR_TOP);
-		touchSensorBottom = new DigitalInput(RobotMap.TOUCH_SENSOR_BOTTOM);
 		
 		lineA = new TalonSRX(RobotMap.LINE_A);
 		lineB = new TalonSRX(RobotMap.LINE_B);
@@ -78,13 +74,13 @@ public class LinearSlide extends Subsystem {
 	
 	public void moveSafe(double power) {
 		if (power < 0) {
-			if (Robot.sensors.touchSensorBottom.get() == true) {
+			if (Robot.sensors.touchSensorBottom.get() != true) {
 				stop();
 			} else {
 				move(power);
 			} 
 		} else if (power > 0) {
-			if(Robot.sensors.touchSensorTop.get() == true) {
+			if(Robot.sensors.touchSensorTop.get() != true) {
 				stop();
 			} else {
 				move(power);
