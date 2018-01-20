@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 //naming motor controllers + encoders
 public class DriveTrain extends Subsystem {
 	TalonSRX topLeft, topRight, midLeft, midRight, bottomRight,bottomLeft;
-	Encoder topLeftA, topRightA, bottomLeftA, bottomRightA;
+	Encoder leftEncoder, rightEncoder;
 	
 // creating variables for encoder
 	public static final double RADIUS = 2;
@@ -29,25 +29,21 @@ public class DriveTrain extends Subsystem {
 		midRight = new TalonSRX(RobotMap.MID_RIGHT_MOTOR);
 		midLeft = new TalonSRX(RobotMap.MID_LEFT_MOTOR);
 		
-		topLeftA = new Encoder(0, 1, true, EncodingType.k4X);
-		topRightA = new Encoder(2, 3, true, EncodingType.k4X); 
-		bottomLeftA = new Encoder(4, 5, true, EncodingType.k4X);
-		bottomRightA = new Encoder(6, 7, true, EncodingType.k4X);
+		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, true, EncodingType.k4X);
+		rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, true, EncodingType.k4X); 
 	
-		topLeftA.setDistancePerPulse(kDistancePerPulse);
-		topRightA.setDistancePerPulse(kDistancePerPulse);
-		bottomLeftA.setDistancePerPulse(kDistancePerPulse);
-		bottomRightA.setDistancePerPulse(kDistancePerPulse);
-	
+		leftEncoder.setDistancePerPulse(kDistancePerPulse);
+		rightEncoder.setDistancePerPulse(kDistancePerPulse);
+
 	}
-//start left motors
+	//start left motors
 	public void setLeft(double power) {
 		topLeft.set(ControlMode.PercentOutput, power);
 		midLeft.set(ControlMode.PercentOutput, power);
 		bottomLeft.set(ControlMode.PercentOutput, power);
 		
 	}
-	//pretty obvious
+	//start right motors
 	public void setRight(double power) {
 		topRight.set(ControlMode.PercentOutput, -power);
 		midRight.set(ControlMode.PercentOutput, -power);
@@ -58,7 +54,7 @@ public class DriveTrain extends Subsystem {
 		setLeft(power);
 		setRight(power);
 	}
-	//			VVVVVVVVV
+	//stop motors
 	public void stopMotors() {
 		setAll(0);
 	}
@@ -70,31 +66,19 @@ public class DriveTrain extends Subsystem {
 	public double getRevolutions(double targetDistance){
 		return (targetDistance / Robot.drivetrain.inchesPerRev()); 
 	}
-	//					VVVVVVVVVVVVVVVVVVV
-	public double getTopLeftEncoderDistance(){
-		return topLeftA.getDistance();
+	//get left and right encoder distance
+	public double getLeftEncoderDistance(){
+		return leftEncoder.getDistance();
 	}
-	public double getTopRightEncoderDistance(){
-		return topRightA.getDistance();
+	public double getRightEncoderDistance(){
+		return rightEncoder.getDistance();
 	}
-	public double getBottomLeftEncoderDistance(){
-		return bottomLeftA.getDistance();
+	//get RAW left and right encoder tick count
+	public int getRawLeftEncoderCount(){
+		return leftEncoder.get();	
 	}
-	public double getBottomRightEncoderDistance(){
-		return bottomRightA.getDistance();
-	}
-	//				VVVVVVVVVVVVVVVVVVVV
-	public int getRawTopLeftEncoderCount(){
-		return topLeftA.get();	
-	}
-	public int getRawTopRightEncoderCount(){
-		return topRightA.get();
-	}
-	public int getRawBottomLeftEncoderCount(){
-		return bottomLeftA.get();
-	}
-	public int getRawBottomRightEncoderCount(){
-		return bottomRightA.get();
+	public int getRawRightEncoderCount(){
+		return rightEncoder.get();
 	}
 	//needed
 	@Override

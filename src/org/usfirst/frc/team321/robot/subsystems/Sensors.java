@@ -21,10 +21,6 @@ public class Sensors extends Subsystem {
 		touchSensorBottom = new DigitalInput(RobotMap.TOUCH_SENSOR_BOTTOM);
 		navX.reset();
 		navX.resetDisplacement();
-		
-		//Get how much rotation
-		//Get how fast you're moving in XYZ
-		//Get how much it has moved from original position
 	}
 	
 	public double getRobotHeading() {
