@@ -1,5 +1,14 @@
 package org.usfirst.frc.team321.robot;
 
+import org.usfirst.frc.team321.robot.commands.DSolenoidHold;
+import org.usfirst.frc.team321.robot.commands.DSolenoidToggle;
+import org.usfirst.frc.team321.robot.commands.UseIntake;
+import org.usfirst.frc.team321.robot.commands.UseLinearSlides;
+import org.usfirst.frc.team321.robot.subsystems.GearShifter;
+import org.usfirst.frc.team321.robot.subsystems.Intake;
+import org.usfirst.frc.team321.robot.subsystems.IntakePivot;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -11,8 +20,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI extends IterativeRobot {
 	//dat stick
 	public Joystick driveStick;
-	Joystick maniStick; 
-	JoystickButton[] driveBtn, maniBtn;
+	public Joystick maniStick; 
+	public JoystickButton[] driveBtn, maniBtn;
 	
 	public OI() {
 		driveStick = new Joystick(0);
@@ -21,14 +30,21 @@ public class OI extends IterativeRobot {
 		driveBtn = new JoystickButton[12];
 		maniBtn = new JoystickButton[12];
 		
-		for (int x = 0; x > driveBtn.length; x++) {
-			driveBtn[x] = new JoystickButton(driveStick, x);
+		for (int x = 0; x < driveBtn.length; x++) {
+			driveBtn[x] = new JoystickButton(driveStick, x + 1);
 		}
 		
-		for (int x = 0; x > maniBtn.length; x++) {
-			maniBtn[x] = new JoystickButton(maniStick, x);
+		for (int x = 0; x < maniBtn.length; x++) {
+			maniBtn[x] = new JoystickButton(maniStick, x + 1);
 		}
 				
+		driveBtn[5].whileHeld(new DSolenoidHold(Robot.gearshifter, GearShifter.gearShifter, DoubleSolenoid.Value.kForward));
+		maniBtn[9].whenPressed(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakePivot, DoubleSolenoid.Value.kForward));
+		maniBtn[8].whenPressed(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakePivot, DoubleSolenoid.Value.kReverse));
+		maniBtn[0].whileHeld(new UseIntake(1));
+		maniBtn[1].whileHeld(new UseIntake(-1));
+		maniBtn[10].whileHeld(new UseLinearSlides());
+		maniBtn[11].whileHeld(new UseLinearSlides());
 	}
 
 	//// CREATING BUTTONS

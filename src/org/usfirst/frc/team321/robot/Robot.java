@@ -1,9 +1,12 @@
 
 package org.usfirst.frc.team321.robot;
 
-import org.usfirst.frc.team321.auto.commands.AutoCode;
+import org.usfirst.frc.team321.robot.commands.autocode.Autno;
+import org.usfirst.frc.team321.robot.commands.autocode.AutoCode;
+import org.usfirst.frc.team321.robot.commands.autocode.AutoCodeGyro;
 import org.usfirst.frc.team321.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team321.robot.subsystems.GearShifter;
+import org.usfirst.frc.team321.robot.subsystems.Intake;
 import org.usfirst.frc.team321.robot.subsystems.IntakePivot;
 import org.usfirst.frc.team321.robot.subsystems.LinearSlide;
 import org.usfirst.frc.team321.robot.subsystems.Pneumatics;
@@ -31,7 +34,8 @@ public class Robot extends IterativeRobot {
 	public static Sensors sensors;
 	public static LinearSlide linear;
 	public static GearShifter gearshifter;
-	public static IntakePivot intakeflap;
+	public static IntakePivot intakepivot;
+	public static Intake intake;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -43,18 +47,22 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		sensors = new Sensors();
 		drivetrain = new DriveTrain();
 		pneumatics = new Pneumatics(); 
 		compressor = new Compressor();
-		sensors = new Sensors();
+		
 		linear = new LinearSlide();
 		gearshifter = new GearShifter();
-		intakeflap = new IntakePivot(); 
+		intakepivot = new IntakePivot(); 
+		intake = new Intake(); 
 		oi = new OI();
 
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		chooser.addDefault("Autonhomas", new AutoCode());
+		chooser.addDefault("No Auto", new Autno());
+		chooser.addObject("Autonhomas", new AutoCode());
+		chooser.addObject("GyroCode", new AutoCodeGyro());
 		SmartDashboard.putData("Auto mode", chooser);
+		
 		
 	}
 
@@ -105,6 +113,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		SmartDashboard.putNumber("Gyro", Robot.sensors.getRobotHeading());
 		Scheduler.getInstance().run();
 	}
 
@@ -123,6 +132,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		SmartDashboard.putNumber("Gyro", Robot.sensors.getRobotHeading());
 		Scheduler.getInstance().run();
 	}
 

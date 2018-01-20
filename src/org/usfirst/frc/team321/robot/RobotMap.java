@@ -1,8 +1,5 @@
 package org.usfirst.frc.team321.robot;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -10,39 +7,41 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
  * floating around.
  */
 public class RobotMap {
-	//matches ports to objects
-	public static final int TOP_LEFT_MOTOR = 1;
-	public static final int TOP_RIGHT_MOTOR = 4;
-	
-	public static final int MID_LEFT_MOTOR = 2;
-	public static final int MID_RIGHT_MOTOR = 5;
-	
+	//TalonSRXs
+	public static final int TOP_LEFT_MOTOR = 5;
+	public static final int TOP_RIGHT_MOTOR = 8;
+	public static final int MID_LEFT_MOTOR = 1;
+	public static final int MID_RIGHT_MOTOR = 4;
 	public static final int BOT_LEFT_MOTOR = 3;
-	public static final int BOT_RIGHT_MOTOR = 6;
+	public static final int BOT_RIGHT_MOTOR = 2;
 	
+	public static final int LINE_A = 0;
+	public static final int LINE_B = 9;
+	
+	public static final int INTAKE_LEFT = 9;
+	public static final int INTAKE_RIGHT = 10;
+	
+	//Compressor
 	public static final int COMPRESSOR = 0;	
-	public static final int LINE_A = 7;
-	public static final int LINE_B = 8;
 	
-	public static final int LEFT_ENCODER_A = 0;
-	public static final int LEFT_ENCODER_B = 1;
-	public static final int RIGHT_ENCODER_A = 2;
-	public static final int RIGHT_ENCODER_B = 3;
-	
-	public static final int LINE_ENCODER_A = 4;
-	public static final int LINE_ENCODER_B = 5;
-	//ports are just placeholders
-	public static final int GEARSHIFTER_FORWARD = 0;
-	public static final int GEARSHIFTER_REVERSE = 1;
-	//ports are just placeholders
-	public static final int INTAKE_FORWARD = 2;
-	public static final int INTAKE_REVERSE = 5; 
-	//DIGITAL INPUT
+	//Pneumatics 
+	public static final int GEARSHIFTER_FORWARD = 2;
+	public static final int GEARSHIFTER_REVERSE = 3;
+
+	public static final int INTAKE_FORWARD = 0;
+	public static final int INTAKE_REVERSE = 1; 
+
+	//Touch Sensors
 	public static final int TOUCH_SENSOR_TOP = 0;
 	public static final int TOUCH_SENSOR_BOTTOM = 1;
 	
-	public static final int INTAKE_LEFT = 0;
-	public static final int INTAKE_RIGHT = 1;
+	//Encoders
+	public static final int LINE_ENCODER_A = 2;
+	public static final int LINE_ENCODER_B = 3;
+	public static final int LEFT_ENCODER_A = 4;
+	public static final int LEFT_ENCODER_B = 5;
+	public static final int RIGHT_ENCODER_A = 6;
+	public static final int RIGHT_ENCODER_B = 7;
 	
 	
 	// For example to map the left and right motors, you could define the
