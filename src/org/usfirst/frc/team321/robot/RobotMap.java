@@ -21,16 +21,15 @@ public class RobotMap {
 	public static final int BOT_RIGHT_MOTOR = 6;
 	
 	public static final int COMPRESSOR = 0;	
-	public static final int LINE_A = 7;
-	public static final int LINE_B = 8;
+	public static final int LINE_LEFT = 7;
+	public static final int LINE_RIGHT = 8;
 	
-	public static final int LEFT_ENCODER_A = 0;
-	public static final int LEFT_ENCODER_B = 1;
-	public static final int RIGHT_ENCODER_A = 2;
-	public static final int RIGHT_ENCODER_B = 3;
-	
-	public static final int LINE_ENCODER_A = 4;
-	public static final int LINE_ENCODER_B = 5;
+	public static final int TOP_LEFT_ENCODER = 0;
+	public static final int TOP_RIGHT_ENCODER = 1;
+	public static final int BOT_LEFT_ENCODER = 2;
+	public static final int BOT_RIGHT_ENCODER = 3;
+	public static final int LINE_LEFT_ENCODER = 4;
+	public static final int LINE_RIGHT_ENCODER = 5;
 	//ports are just placeholders
 	public static final int GEARSHIFTER_FORWARD = 0;
 	public static final int GEARSHIFTER_REVERSE = 1;
@@ -40,9 +39,6 @@ public class RobotMap {
 	//DIGITAL INPUT
 	public static final int TOUCH_SENSOR_TOP = 0;
 	public static final int TOUCH_SENSOR_BOTTOM = 1;
-	
-	public static final int INTAKE_LEFT = 0;
-	public static final int INTAKE_RIGHT = 1;
 	
 	
 	// For example to map the left and right motors, you could define the

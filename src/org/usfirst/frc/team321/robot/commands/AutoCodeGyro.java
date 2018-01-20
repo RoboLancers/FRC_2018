@@ -1,6 +1,4 @@
-package org.usfirst.frc.team321.auto.commands;
-
-import org.usfirst.frc.team321.robot.commands.MoveWithNaveedX;
+package org.usfirst.frc.team321.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

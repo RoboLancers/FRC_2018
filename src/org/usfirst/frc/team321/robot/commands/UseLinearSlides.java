@@ -31,7 +31,11 @@ public class UseLinearSlides extends Command {
 	
 	@Override
 	protected boolean isFinished() {
+		if(Robot.sensors.touchSensorTop.get() == true) {
+			Robot.linear.up(0);
+		} else if(Robot.sensors.touchSensorBottom.get() == true) {
+			Robot.linear.down(0);
+		}
 		return false;
 	}
-}
-
+}	

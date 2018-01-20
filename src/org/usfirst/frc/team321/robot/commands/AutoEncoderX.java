@@ -36,7 +36,7 @@ public class AutoEncoderX extends Command {
 	//makes robot stop when ticks match up
 	@Override
 	protected boolean isFinished() {
-		if (Robot.drivetrain.getRawRightEncoderCount() >= Robot.drivetrain.getRevolutions(targetDistance)) {
+		if (Robot.drivetrain.getRawTopRightEncoderCount() >= Robot.drivetrain.getRevolutions(targetDistance)) {
 			Robot.drivetrain.setAll(0);
 		}
 		return true;
