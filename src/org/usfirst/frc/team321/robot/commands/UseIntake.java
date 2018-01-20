@@ -3,35 +3,39 @@ package org.usfirst.frc.team321.robot.commands;
 import org.usfirst.frc.team321.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class UseLinearSlides extends Command {
-	
+public class UseIntake extends Command {
+
 	double power;
 	
-	public UseLinearSlides() {
-		requires(Robot.linear);
+	public UseIntake(double power) {
+		requires(Robot.intake);
+		this.power = power;
 	}
 	
 	protected void initialize() {
-		Robot.linear.stop();
+		
 	}
 	
 	protected void execute() {
-		Robot.linear.moveSafe(Robot.oi.maniStick.getRawAxis(3));
+		Robot.intake.setLeft(power);
+		Robot.intake.setRight(power);
 	}
-
+	
 	protected void interrupted() {
-		Robot.linear.stop();
+		Robot.intake.stopIntake();
 	}
 	
 	protected void end() {
-		Robot.linear.stop();
+		Robot.intake.stopIntake();
 	}
+	
+	
 	
 	@Override
 	protected boolean isFinished() {
+		// TODO Auto-generated method stub
 		return false;
 	}
-}
 
+}

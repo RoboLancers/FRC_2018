@@ -1,10 +1,10 @@
-package org.usfirst.frc.team321.robot.commands;
+package org.usfirst.frc.team321.robot.commands.auto;
 
 import org.usfirst.frc.team321.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class AutoEncoderX extends Command {
+public class EncoderX extends Command {
 
 	//Listing Variables
 	double power;
@@ -13,7 +13,7 @@ public class AutoEncoderX extends Command {
 	double targetDistance;
 
 	//Constructor to input values, formula for addSequential
-	public AutoEncoderX(double power, double targetAngle, double targetDistance) {
+	public EncoderX(double power, double targetAngle, double targetDistance) {
 		requires(Robot.drivetrain);
 		this.power = power;
 		this.targetDistance = targetDistance;
