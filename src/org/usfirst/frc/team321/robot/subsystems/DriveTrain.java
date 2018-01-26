@@ -5,6 +5,7 @@ import org.usfirst.frc.team321.robot.RobotMap;
 import org.usfirst.frc.team321.robot.commands.UseArcadeDrive;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
@@ -35,6 +36,13 @@ public class DriveTrain extends Subsystem {
 	
 		leftEncoder.setDistancePerPulse(kDistancePerPulse);
 		rightEncoder.setDistancePerPulse(kDistancePerPulse);
+		
+		bottomLeft.setNeutralMode(NeutralMode.Brake);
+		bottomRight.setNeutralMode(NeutralMode.Brake);
+		midRight.setNeutralMode(NeutralMode.Brake);
+		midLeft.setNeutralMode(NeutralMode.Brake);
+		topLeft.setNeutralMode(NeutralMode.Brake);
+		topRight.setNeutralMode(NeutralMode.Brake);
 
 	}
 	

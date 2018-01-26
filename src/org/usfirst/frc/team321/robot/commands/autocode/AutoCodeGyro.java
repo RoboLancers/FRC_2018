@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutoCodeGyro extends CommandGroup{
 	public AutoCodeGyro(){
-		addSequential(new MoveWithNaveedX(0, 50, 10));
-		addSequential(new MoveWithNaveedX(0, 190, 10));
-		addSequential(new MoveWithNaveedX(0, 1, 10));
+		addSequential(new MoveWithNaveedX(0, 50), 15);
+		addSequential(new MoveWithNaveedX(0, 290), 15);
+		addSequential(new MoveWithNaveedX(0, 96), 15);
 	}
 }

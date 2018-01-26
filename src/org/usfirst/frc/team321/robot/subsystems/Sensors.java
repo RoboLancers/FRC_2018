@@ -31,6 +31,14 @@ public class Sensors extends Subsystem {
 		}
 	}
 	
+	public double convertToHeading(double heading) {
+		if (heading < 0) {
+			return RobotUtil.floor(360 - Math.abs(heading % 360), 2);
+		} else {
+			return RobotUtil.floor(heading % 360, 2);
+		}
+	}
+	
 	public double[] moveToTarget(double power, double currentAngle, double targetAngle) {
 		double[] motorSpeed = new double[2];
 		
