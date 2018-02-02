@@ -1,4 +1,4 @@
-package org.usfirst.frc.team321.robot.commands;
+package org.usfirst.frc.team321.robot.commands.auto;
 
 import org.usfirst.frc.team321.robot.Robot;
 
@@ -9,7 +9,6 @@ public class UseIntake extends Command {
 	double power;
 	
 	public UseIntake(double power) {
-		requires(Robot.intake);
 		this.power = power;
 	}
 	
@@ -18,20 +17,16 @@ public class UseIntake extends Command {
 	}
 	
 	protected void execute() {
-		Robot.intake.setLeft(power);
-		Robot.intake.setRight(power);
-	}
-	
-	protected void interrupted() {
-		Robot.intake.stopIntake();
+		Robot.intake.setAll(power);
 	}
 	
 	protected void end() {
-		Robot.intake.stopIntake();
+		Robot.intake.setAll(0);
 	}
 	
-	
-	
+	protected void interrupted() {
+		Robot.intake.setAll(0);
+	}
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub

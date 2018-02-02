@@ -17,7 +17,7 @@ public class MoveWithNaveedX extends Command {
 	public MoveWithNaveedX (double power, double targetAngle) {
 		this.power = power;
 		this.targetAngle = targetAngle + Robot.sensors.navX.getAngle();
-		pid = new LancerPID(0.0245, 0.001, 0.15);
+		pid = new LancerPID(0.0-800, 0.0, 0.0);
 		pid.setSetpoint(targetAngle);
 	}
 	
@@ -38,7 +38,7 @@ public class MoveWithNaveedX extends Command {
 		SmartDashboard.putNumber("rightpowers", powers[1]);
 		
 		Robot.drivetrain.setLeft(powers[0]);
-		Robot.drivetrain.setRight(powers[1]);*/
+		Robot.drivetrain.setRight(powers[1]);*/  
 		
 		Robot.drivetrain.setLeft(pid.getOutput(Robot.sensors.navX.getAngle()));
 		Robot.drivetrain.setRight(-pid.getOutput(Robot.sensors.navX.getAngle()));
@@ -47,6 +47,7 @@ public class MoveWithNaveedX extends Command {
 	@Override
 	protected boolean isFinished() {
 		return false;
+		//return ((Robot.sensors.navX.getAngle() - targetAngle) <= 2);
 	}
 
 }

@@ -4,36 +4,35 @@ import org.usfirst.frc.team321.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class UseLinearSlideDown extends Command {
+public class UseRamp extends Command {
 	
-	double power;
+double power;
 	
-	public UseLinearSlideDown(double power) {
-		requires(Robot.linear);
+	public UseRamp(double power) {
+		requires(Robot.ramp);
 		this.power = power;
 	}
 	
 	protected void initialize() {
-		Robot.linear.stop();
+		Robot.ramp.stopAll();
 	}
 	
 	protected void execute() {
-		Robot.linear.down(power);
+		Robot.ramp.setUp(power);
+		Robot.ramp.setDown(power);
 	}
 	
 	protected void interrupted() {
-		Robot.linear.stop();
+		Robot.ramp.stopAll();
 	}
 	
 	protected void end() {
-		Robot.linear.stop();
+		Robot.ramp.stopAll();
 	}
-	
+
 	@Override
 	protected boolean isFinished() {
-		if(Robot.sensors.touchSensorBottom.get() == true) {
-			Robot.linear.stop();
-		}
+		// TODO Auto-generated method stub
 		return false;
 	}
 

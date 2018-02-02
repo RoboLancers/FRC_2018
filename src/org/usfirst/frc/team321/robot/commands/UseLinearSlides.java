@@ -18,7 +18,7 @@ public class UseLinearSlides extends Command {
 	}
 	
 	protected void execute() {
-		Robot.linear.moveSafe(Robot.oi.maniStick.getRawAxis(3));
+		//Robot.linear.moveSafe(Robot.oi.maniStick.getRawAxis(3));
 	}
 
 	protected void interrupted() {
