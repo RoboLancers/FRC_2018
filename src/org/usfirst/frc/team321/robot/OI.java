@@ -4,6 +4,7 @@ import org.usfirst.frc.team321.robot.commands.DSolenoidHold;
 import org.usfirst.frc.team321.robot.commands.DSolenoidToggle;
 import org.usfirst.frc.team321.robot.commands.UseIntake;
 import org.usfirst.frc.team321.robot.commands.UseLinearSlides;
+import org.usfirst.frc.team321.robot.commands.UseRamp;
 import org.usfirst.frc.team321.robot.subsystems.GearShifter;
 import org.usfirst.frc.team321.robot.subsystems.Intake;
 import org.usfirst.frc.team321.robot.subsystems.IntakePivot;
@@ -38,13 +39,15 @@ public class OI extends IterativeRobot {
 			maniBtn[x] = new JoystickButton(maniStick, x + 1);
 		}
 				
-		driveBtn[5].whileHeld(new DSolenoidHold(Robot.gearshifter, GearShifter.gearShifter, DoubleSolenoid.Value.kForward));
+		driveBtn[5].whenPressed (new DSolenoidToggle(Robot.gearshifter, GearShifter.gearShifter));
 		maniBtn[9].whenPressed(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakePivot, DoubleSolenoid.Value.kForward));
 		maniBtn[8].whenPressed(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakePivot, DoubleSolenoid.Value.kReverse));
 		maniBtn[0].whileHeld(new UseIntake(1));
 		maniBtn[1].whileHeld(new UseIntake(-1));
 		maniBtn[10].whileHeld(new UseLinearSlides());
 		maniBtn[11].whileHeld(new UseLinearSlides());
+		driveBtn[0].whileHeld(new UseRamp(-1));
+		driveBtn[1].whileHeld(new UseRamp(1));
 	}
 
 	//// CREATING BUTTONS

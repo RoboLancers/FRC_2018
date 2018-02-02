@@ -1,9 +1,12 @@
 
 package org.usfirst.frc.team321.robot;
 
+import org.usfirst.frc.team321.robot.commands.auto.MoveWithEncoder;
 import org.usfirst.frc.team321.robot.commands.autocode.Autno;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoCode;
+import org.usfirst.frc.team321.robot.commands.autocode.AutoCodeEncoder;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoCodeGyro;
+import org.usfirst.frc.team321.robot.subsystems.Ramp;
 import org.usfirst.frc.team321.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team321.robot.subsystems.GearShifter;
 import org.usfirst.frc.team321.robot.subsystems.Intake;
@@ -36,6 +39,7 @@ public class Robot extends IterativeRobot {
 	public static GearShifter gearshifter;
 	public static IntakePivot intakepivot;
 	public static Intake intake;
+	public static Ramp ramp;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -51,6 +55,7 @@ public class Robot extends IterativeRobot {
 		drivetrain = new DriveTrain();
 		pneumatics = new Pneumatics(); 
 		compressor = new Compressor();
+		ramp = new Ramp();
 		
 		linear = new LinearSlide();
 		gearshifter = new GearShifter();
@@ -61,8 +66,8 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("No Auto", new Autno());
 		chooser.addObject("Autonhomas", new AutoCode());
 		chooser.addObject("GyroCode", new AutoCodeGyro());
+		chooser.addObject("AutoWithEncoder", new AutoCodeEncoder());
 		SmartDashboard.putData("Auto mode", chooser);
-		
 		
 	}
 
@@ -114,6 +119,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		SmartDashboard.putNumber("Gyro", Robot.sensors.getRobotHeading());
+		SmartDashboard.putNumber("LinearSlide Encoder value/position auto", Robot.linear.getLineEncoderDistance());
 		Scheduler.getInstance().run();
 	}
 
@@ -133,7 +139,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		SmartDashboard.putNumber("Gyro", Robot.sensors.getRobotHeading());
+		SmartDashboard.putNumber("Left Encoder Value", Robot.drivetrain.getRawLeftEncoderCount());
+		SmartDashboard.putNumber("Distance", Robot.drivetrain.getLeftEncoderDistance());
+		SmartDashboard.putNumber("LinearSlide Encoder value/position", Robot.linear.getLineEncoderDistance());
 		Scheduler.getInstance().run();
+		
 	}
 
 	/**

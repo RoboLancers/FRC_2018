@@ -21,6 +21,11 @@ public class RobotMap {
 	public static final int INTAKE_LEFT = 9;
 	public static final int INTAKE_RIGHT = 10;
 	
+	public static final int LEFT_RAMP = 11;
+	public static final int RIGHT_RAMP = 12;
+	
+	
+	
 	//Compressor
 	public static final int COMPRESSOR = 0;	
 	
@@ -32,14 +37,14 @@ public class RobotMap {
 	public static final int INTAKE_REVERSE = 1; 
 
 	//Touch Sensors
-	public static final int TOUCH_SENSOR_TOP = 0;
-	public static final int TOUCH_SENSOR_BOTTOM = 1;
+	public static final int TOUCH_SENSOR_TOP = 4;
+	public static final int TOUCH_SENSOR_BOTTOM = 5;
 	
 	//Encoders
 	public static final int LINE_ENCODER_A = 2;
 	public static final int LINE_ENCODER_B = 3;
-	public static final int LEFT_ENCODER_A = 4;
-	public static final int LEFT_ENCODER_B = 5;
+	public static final int LEFT_ENCODER_A = 0;
+	public static final int LEFT_ENCODER_B = 1;
 	public static final int RIGHT_ENCODER_A = 6;
 	public static final int RIGHT_ENCODER_B = 7;
 	
