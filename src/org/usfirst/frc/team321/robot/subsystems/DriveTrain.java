@@ -1,63 +1,61 @@
 package org.usfirst.frc.team321.robot.subsystems;
 
-import org.usfirst.frc.team321.robot.Robot;
 import org.usfirst.frc.team321.robot.RobotMap;
 import org.usfirst.frc.team321.robot.commands.UseArcadeDrive;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 //naming motor controllers + encoders
 public class DriveTrain extends Subsystem {
-	public TalonSRX topLeft, topRight, midLeft, midRight, bottomRight,bottomLeft;
+	public TalonSRX leftMaster, rightMaster, midLeftSlave, midRightSlave, botRightSlave, botLeftSlave;
 	Encoder leftEncoder, rightEncoder;
 	
 // creating variables for encoder
-	public static final double RADIUS = 2;
+	public static final double RADIUS = 3.75;
 	public static final double CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 	public static final double TPR = 256;
 	public static final double kDistancePerPulse = CIRCUMFERENCE / TPR;
 	
 	// setting up drivetrain, and encoder, and allows it to encode
 	public DriveTrain() {
-		bottomLeft= new TalonSRX(RobotMap.BOT_LEFT_MOTOR);
-		topLeft = new TalonSRX(RobotMap.TOP_LEFT_MOTOR);
-		bottomRight = new TalonSRX(RobotMap.BOT_RIGHT_MOTOR);
-		topRight = new TalonSRX(RobotMap.TOP_RIGHT_MOTOR);
-		midRight = new TalonSRX(RobotMap.MID_RIGHT_MOTOR);
-		midLeft = new TalonSRX(RobotMap.MID_LEFT_MOTOR);
+		botLeftSlave= new TalonSRX(RobotMap.BOT_LEFT_MOTOR);
+		leftMaster = new TalonSRX(RobotMap.TOP_LEFT_MOTOR);
+		botRightSlave = new TalonSRX(RobotMap.BOT_RIGHT_MOTOR);
+		rightMaster = new TalonSRX(RobotMap.TOP_RIGHT_MOTOR);
+		midRightSlave = new TalonSRX(RobotMap.MID_RIGHT_MOTOR);
+		midLeftSlave = new TalonSRX(RobotMap.MID_LEFT_MOTOR);
 		
-		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, true, EncodingType.k4X);
-		rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, true, EncodingType.k4X); 
+		midLeftSlave.set(ControlMode.Follower, leftMaster.getDeviceID());
+		botLeftSlave.set(ControlMode.Follower, leftMaster.getDeviceID());
+		midRightSlave.set(ControlMode.Follower, rightMaster.getDeviceID());
+		botRightSlave.set(ControlMode.Follower, rightMaster.getDeviceID());
+		
+		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B);
+		rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B); 
 	
 		leftEncoder.setDistancePerPulse(kDistancePerPulse);
 		rightEncoder.setDistancePerPulse(kDistancePerPulse);
 		
-		bottomLeft.setNeutralMode(NeutralMode.Brake);
-		bottomRight.setNeutralMode(NeutralMode.Brake);
-		midRight.setNeutralMode(NeutralMode.Brake);
-		midLeft.setNeutralMode(NeutralMode.Brake);
-		topLeft.setNeutralMode(NeutralMode.Brake);
-		topRight.setNeutralMode(NeutralMode.Brake);
-
+		botLeftSlave.setNeutralMode(NeutralMode.Brake);
+		botRightSlave.setNeutralMode(NeutralMode.Brake);
+		midRightSlave.setNeutralMode(NeutralMode.Brake);
+		midLeftSlave.setNeutralMode(NeutralMode.Brake);
+		leftMaster.setNeutralMode(NeutralMode.Brake);
+		rightMaster.setNeutralMode(NeutralMode.Brake);
 	}
 	
 	//start left motors
 	public void setLeft(double power) {
-		topLeft.set(ControlMode.PercentOutput, -power);
-		midLeft.set(ControlMode.PercentOutput, -power);
-		bottomLeft.set(ControlMode.PercentOutput, -power);
+		leftMaster.set(ControlMode.PercentOutput, -power);
 	}
 	
 	//start right motors
 	public void setRight(double power) {
-		topRight.set(ControlMode.PercentOutput, power);
-		midRight.set(ControlMode.PercentOutput, power);
-		bottomRight.set(ControlMode.PercentOutput, power);
+		rightMaster.set(ControlMode.PercentOutput, power);
 	}
 	
 	//set both
@@ -72,13 +70,13 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	//method to get amount of inches traveled per revolution of wheel (by encoder)
-	public double inchesPerRev() {
+	public double getTicksPerInch() {
 		return (TPR / CIRCUMFERENCE);
 	}
 	
-	//gets Total revolutions required to travel to your target distance
-	public double getRevolutions(double targetDistance){
-		return (targetDistance / Robot.drivetrain.inchesPerRev()); 
+	//gets Total ticks required to travel to your target distance
+	public double targetTicks(double targetDistance){
+		return (targetDistance * getTicksPerInch()); 
 	}
 	
 	//get left and right encoder distance
@@ -97,6 +95,11 @@ public class DriveTrain extends Subsystem {
 	
 	public int getRawRightEncoderCount(){
 		return rightEncoder.get();
+	}
+	
+	public void resetEncoder(){
+		leftEncoder.reset();
+		rightEncoder.reset();
 	}
 	
 	//needed
