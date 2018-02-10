@@ -27,10 +27,10 @@ public class UseIntake extends Command {
 	protected void interrupted() {
 		Robot.intake.setAll(0);
 	}
+	
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

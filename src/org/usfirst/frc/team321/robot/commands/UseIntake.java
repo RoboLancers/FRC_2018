@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class UseIntake extends Command {
 
+	//setting up intake
 	double power;
 	
 	public UseIntake(double power) {
@@ -30,12 +31,9 @@ public class UseIntake extends Command {
 		Robot.intake.stopIntake();
 	}
 	
-	
-	
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

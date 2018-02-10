@@ -7,18 +7,16 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Sensors extends Subsystem {
 
 	public AHRS navX;
-	public DigitalInput touchSensorTop;
-	public DigitalInput touchSensorBottom;
+	public Ultrasonic ultrasonic;
 	
 	public Sensors() {
 		navX = new AHRS(SerialPort.Port.kMXP);
-		touchSensorTop = new DigitalInput(RobotMap.TOUCH_SENSOR_TOP);
-		touchSensorBottom = new DigitalInput(RobotMap.TOUCH_SENSOR_BOTTOM);
 		navX.reset();
 		navX.resetDisplacement();
 	}
@@ -31,14 +29,23 @@ public class Sensors extends Subsystem {
 		}
 	}
 	
-	public double convertToHeading(double heading) {
-		if (heading < 0) {
-			return RobotUtil.floor(360 - Math.abs(heading % 360), 2);
+	public double convertToHeading(double angle) {
+		if (angle < 0) {
+			return RobotUtil.floor(360 - Math.abs(angle % 360), 2);
 		} else {
-			return RobotUtil.floor(heading % 360, 2);
+			return RobotUtil.floor(angle % 360, 2);
 		}
 	}
 	
+	/**
+	 * Calculates the required motor power to move to an angle or 
+	 * move at an angle.
+	 * 
+	 * @param power        The power of the motors
+	 * @param currentAngle The current angle of the robot
+	 * @param targetAngle  The angle to turn your robot to
+	 * @return An array of size 2 for left and right side drive motors
+	 */
 	public double[] moveToTarget(double power, double currentAngle, double targetAngle) {
 		double[] motorSpeed = new double[2];
 		

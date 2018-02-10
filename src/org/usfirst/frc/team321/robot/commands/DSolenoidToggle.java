@@ -5,9 +5,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- *
- */
 public class DSolenoidToggle extends Command {
 
 	private DoubleSolenoid ds;

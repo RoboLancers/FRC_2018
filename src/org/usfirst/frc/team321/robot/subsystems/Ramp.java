@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Ramp extends Subsystem {
 
+	//setting up ramp
 	public TalonSRX leftRamp, rightRamp;
 	 
 	public Ramp() {
@@ -16,17 +17,12 @@ public class Ramp extends Subsystem {
 		rightRamp = new TalonSRX(RobotMap.RIGHT_RAMP);
 	}
 	
-	public void setUp(double power) {
+	public void moveRamp(double power) {
 		leftRamp.set(ControlMode.PercentOutput, power);
 		rightRamp.set(ControlMode.PercentOutput, -power);
 	}
 	
-	public void setDown(double power){
-		leftRamp.set(ControlMode.PercentOutput, -power);
-		rightRamp.set(ControlMode.PercentOutput, power);
-	}
-	
-	public void stopAll(){
+	public void stop() {
 		leftRamp.set(ControlMode.PercentOutput, 0);
 		rightRamp.set(ControlMode.PercentOutput, 0);
 	}
@@ -34,7 +30,5 @@ public class Ramp extends Subsystem {
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
-		
 	}
-
 }

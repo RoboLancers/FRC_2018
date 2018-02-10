@@ -8,23 +8,22 @@ package org.usfirst.frc.team321.robot;
  */
 public class RobotMap {
 	//TalonSRXs
-	public static final int TOP_LEFT_MOTOR = 5;
-	public static final int TOP_RIGHT_MOTOR = 8;
-	public static final int MID_LEFT_MOTOR = 1;
-	public static final int MID_RIGHT_MOTOR = 4;
-	public static final int BOT_LEFT_MOTOR = 3;
-	public static final int BOT_RIGHT_MOTOR = 2;
+	public static final int LEFT_MASTER_MOTOR = 1;
+	public static final int LEFT_SLAVE_A = 5;
+	public static final int LEFT_SLAVE_B = 10;
 	
-	public static final int LINE_A = 0;
-	public static final int LINE_B = 9;
+	public static final int RIGHT_MASTER_MOTOR = 9;
+	public static final int RIGHT_SLAVE_A = 4;
+	public static final int RIGHT_SLAVE_B = 8;
 	
-	public static final int INTAKE_LEFT = 9;
-	public static final int INTAKE_RIGHT = 10;
+	public static final int LINE_A = 2;
+	public static final int LINE_B = 6;
+	
+	public static final int INTAKE_LEFT = 3;
+	public static final int INTAKE_RIGHT = 5;
 	
 	public static final int LEFT_RAMP = 11;
 	public static final int RIGHT_RAMP = 12;
-	
-	
 	
 	//Compressor
 	public static final int COMPRESSOR = 0;	
@@ -35,10 +34,6 @@ public class RobotMap {
 
 	public static final int INTAKE_FORWARD = 0;
 	public static final int INTAKE_REVERSE = 1; 
-
-	//Touch Sensors
-	public static final int TOUCH_SENSOR_TOP = 4;
-	public static final int TOUCH_SENSOR_BOTTOM = 5;
 	
 	//Encoders
 	public static final int LINE_ENCODER_A = 2;
@@ -47,15 +42,4 @@ public class RobotMap {
 	public static final int LEFT_ENCODER_B = 1;
 	public static final int RIGHT_ENCODER_A = 6;
 	public static final int RIGHT_ENCODER_B = 7;
-	
-	
-	// For example to map the left and right motors, you could define the
-	// following variables to use with your drivetrain subsystem.
-	// public static int leftMotor = 1;
-	// public static int rightMotor = 2;
-
-	// If you are using multiple modules, make sure to define both the port
-	// number and the module. For example you with a rangefinder:
-	// public static int rangefinderPort = 1;
-	// public static int rangefinderModule = 1;
 }

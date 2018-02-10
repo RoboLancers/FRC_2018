@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MoveWithNaveedX extends Command {
 
+	//sets margin of error for moving with a gyro
 	double power;
 	double targetAngle;
 	LancerPID pid;
@@ -17,13 +18,13 @@ public class MoveWithNaveedX extends Command {
 	public MoveWithNaveedX (double power, double targetAngle) {
 		this.power = power;
 		this.targetAngle = targetAngle + Robot.sensors.navX.getAngle();
-		pid = new LancerPID(0.0-800, 0.0, 0.0);
-		pid.setSetpoint(targetAngle);
+		pid = new LancerPID(0.800, 0.0, 0.0);
+		pid.setReference(targetAngle);
 	}
 	
 	@Override
 	protected void initialize() {
-		
+
 	}
 	
 	@Override 
@@ -40,8 +41,8 @@ public class MoveWithNaveedX extends Command {
 		Robot.drivetrain.setLeft(powers[0]);
 		Robot.drivetrain.setRight(powers[1]);*/  
 		
-		Robot.drivetrain.setLeft(pid.getOutput(Robot.sensors.navX.getAngle()));
-		Robot.drivetrain.setRight(-pid.getOutput(Robot.sensors.navX.getAngle()));
+		Robot.drivetrain.setLeft(pid.calcPID(Robot.sensors.navX.getAngle()));
+		Robot.drivetrain.setRight(-pid.calcPID(Robot.sensors.navX.getAngle()));
 	}
 	
 	@Override
@@ -49,5 +50,4 @@ public class MoveWithNaveedX extends Command {
 		return false;
 		//return ((Robot.sensors.navX.getAngle() - targetAngle) <= 2);
 	}
-
 }

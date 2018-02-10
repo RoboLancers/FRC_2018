@@ -1,12 +1,10 @@
 package org.usfirst.frc.team321.robot;
 
-import org.usfirst.frc.team321.robot.commands.DSolenoidHold;
 import org.usfirst.frc.team321.robot.commands.DSolenoidToggle;
 import org.usfirst.frc.team321.robot.commands.UseIntake;
 import org.usfirst.frc.team321.robot.commands.UseLinearSlides;
 import org.usfirst.frc.team321.robot.commands.UseRamp;
 import org.usfirst.frc.team321.robot.subsystems.GearShifter;
-import org.usfirst.frc.team321.robot.subsystems.Intake;
 import org.usfirst.frc.team321.robot.subsystems.IntakePivot;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -19,6 +17,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI extends IterativeRobot {
+	
 	//dat stick
 	public Joystick driveStick;
 	public Joystick maniStick; 

@@ -2,11 +2,12 @@
 package org.usfirst.frc.team321.robot;
 
 import org.usfirst.frc.team321.robot.commands.auto.MoveWithEncoder;
-import org.usfirst.frc.team321.robot.commands.autocode.Autno;
+import org.usfirst.frc.team321.robot.commands.autocode.AutoStill;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoCode;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoCodeEncoder;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoCodeGyro;
 import org.usfirst.frc.team321.robot.subsystems.Ramp;
+import org.usfirst.frc.team321.robot.subsystems.Camera;
 import org.usfirst.frc.team321.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team321.robot.subsystems.GearShifter;
 import org.usfirst.frc.team321.robot.subsystems.Intake;
@@ -31,24 +32,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static DriveTrain drivetrain ;
-	public static Pneumatics pneumatics;
-	public static Compressor compressor; 
-	public static Sensors sensors;
+	public static DriveTrain drivetrain;
 	public static LinearSlide linear;
-	public static GearShifter gearshifter;
 	public static IntakePivot intakepivot;
 	public static Intake intake;
 	public static Ramp ramp;
+
+	public static Compressor compressor; 
+	public static Pneumatics pneumatics;
+	public static GearShifter gearshifter;
+	
+	public static Sensors sensors;
+	
 	public static OI oi;
-
+	
 	Command autonomousCommand;
-	SendableChooser<Command> chooser = new SendableChooser<>();
+	SendableChooser<String> chooser = new SendableChooser<>();
 
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
 	@Override
 	public void robotInit() {
 		sensors = new Sensors();
@@ -63,19 +63,24 @@ public class Robot extends IterativeRobot {
 		intake = new Intake(); 
 		oi = new OI();
 
-		chooser.addDefault("No Auto", new Autno());
-		chooser.addObject("Autonhomas", new AutoCode());
-		chooser.addObject("GyroCode", new AutoCodeGyro());
-		chooser.addObject("AutoWithEncoder", new AutoCodeEncoder());
+		chooser.addDefault("No Auto", "AutoStill");
+		chooser.addObject("Autonhomas", "AutoCode");
+		chooser.addObject("GyroCode", "AutoCodeGyro");
+		chooser.addObject("AutoWithEncoder", "AutoCodeEncoder");
 		SmartDashboard.putData("Auto mode", chooser);
-		
+	}
+	
+	public void setDashboardValues() {
+		try {
+			SmartDashboard.putNumber("Gyro", Robot.sensors.getRobotHeading());
+			SmartDashboard.putNumber("LinearSlide Encoder value/position auto", Robot.linear.getLineEncoderDistance());
+			SmartDashboard.putNumber("Left Encoder Distance", Robot.drivetrain.getLeftEncoderDistance());
+			SmartDashboard.putNumber("Raw Left Encoder Value", Robot.drivetrain.getRawLeftEncoderCount());
+			SmartDashboard.putNumber("Distance", Robot.drivetrain.getLeftEncoderDistance());
+			SmartDashboard.putNumber("LinearSlide Encoder value/position", Robot.linear.getLineEncoderDistance());
+		} catch (Exception e) {}
 	}
 
-	/**
-	 * This function is called once each time the robot enters Disabled mode.
-	 * You can use it to reset any subsystem information you want to clear when
-	 * the robot is disabled.
-	 */
 	@Override
 	public void disabledInit() {
 
@@ -86,69 +91,46 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 	}
 
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
-	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// schedule the autonomous command (example)
+		switch (chooser.getSelected()) {
+			case "AutoCode":
+				autonomousCommand = new AutoCode();
+				break;
+			case "AutoGyroCode":
+				autonomousCommand = new AutoCodeGyro();
+				break;
+			case "AutoCodeEncoder":
+				autonomousCommand = new AutoCodeEncoder();
+				break;
+			default:
+				autonomousCommand = new AutoStill();
+				break;
+		}
+		
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
 
-	/**
-	 * This function is called periodically during autonomous
-	 */
 	@Override
 	public void autonomousPeriodic() {
-		SmartDashboard.putNumber("Gyro", Robot.sensors.getRobotHeading());
-		SmartDashboard.putNumber("LinearSlide Encoder value/position auto", Robot.linear.getLineEncoderDistance());
+		setDashboardValues();
 		Scheduler.getInstance().run();
 	}
 
 	@Override
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
 
-	/**
-	 * This function is called periodically during operator control
-	 */
 	@Override
 	public void teleopPeriodic() {
-		SmartDashboard.putNumber("Gyro", Robot.sensors.getRobotHeading());
-		SmartDashboard.putNumber("Left Encoder Value", Robot.drivetrain.getRawLeftEncoderCount());
-		SmartDashboard.putNumber("Distance", Robot.drivetrain.getLeftEncoderDistance());
-		SmartDashboard.putNumber("LinearSlide Encoder value/position", Robot.linear.getLineEncoderDistance());
+		setDashboardValues();
 		Scheduler.getInstance().run();
 		
 	}
 
-	/**
-	 * This function is called periodically during test mode
-	 */
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();

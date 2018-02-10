@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class GearShifter extends Subsystem {
 	
+	//allows for change of gears
 	public static DoubleSolenoid gearShifter;
 	
 	public GearShifter(){

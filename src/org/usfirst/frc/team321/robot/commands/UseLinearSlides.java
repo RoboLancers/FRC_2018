@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class UseLinearSlides extends Command {
 	
+	//setting up linear slides
 	double power;
 	
 	public UseLinearSlides() {

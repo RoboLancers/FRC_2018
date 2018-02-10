@@ -7,15 +7,17 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class LinearSlidesWithEncoders extends Command{
 
+	//sets margin of error, can make it lower or higher but must find perfect (P)
 	LancerPID pid;
 	double targetDistance;
 	double startLineEncoderDistance;
+	
 	public LinearSlidesWithEncoders(double targetDistance) {
 		requires(Robot.linear);
 		this.targetDistance = targetDistance;
 		this.startLineEncoderDistance = Robot.linear.getLineEncoderDistance();
 		pid = new LancerPID(0, 0, 0);
-		pid.setSetpoint(targetDistance);
+		pid.setReference(targetDistance);
 	}
 	
 	protected void initialize() {
@@ -23,18 +25,15 @@ public class LinearSlidesWithEncoders extends Command{
 	}
 	
 	protected void execute() {
-		Robot.linear.move(pid.getOutput(Robot.linear.getLineEncoderDistance()));
+		Robot.linear.move(pid.calcPID(Robot.linear.getLineEncoderDistance()));
 	}
 	
 	protected void interrupted() {
 		Robot.linear.stop();
 	}
 	
-	
 	@Override
 	protected boolean isFinished() {
-
-	
 		return Math.abs(Robot.linear.getLineEncoderDistance() - startLineEncoderDistance) >= targetDistance;
 	}
 }

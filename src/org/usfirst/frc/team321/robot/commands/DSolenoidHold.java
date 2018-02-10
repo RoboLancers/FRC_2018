@@ -5,11 +5,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- *
- */
 public class DSolenoidHold extends Command {
-
+	
 	private DoubleSolenoid ds;
 	private boolean hasFinished = false;
 	Value value = null;

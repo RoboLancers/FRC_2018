@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class RegulateCompressor extends Command {
 
+	//Idea for compressor, to allow bot to go into high/low gear
 	private boolean hasFinished;
 
 	public RegulateCompressor() {

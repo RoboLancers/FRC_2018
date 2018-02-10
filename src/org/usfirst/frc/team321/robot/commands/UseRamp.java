@@ -6,7 +6,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class UseRamp extends Command {
 	
-double power;
+	//setting up ramp
+	double power;
 	
 	public UseRamp(double power) {
 		requires(Robot.ramp);
@@ -14,20 +15,19 @@ double power;
 	}
 	
 	protected void initialize() {
-		Robot.ramp.stopAll();
+		Robot.ramp.stop();
 	}
 	
 	protected void execute() {
-		Robot.ramp.setUp(power);
-		Robot.ramp.setDown(power);
+		Robot.ramp.moveRamp(power);
 	}
 	
 	protected void interrupted() {
-		Robot.ramp.stopAll();
+		Robot.ramp.stop();
 	}
 	
 	protected void end() {
-		Robot.ramp.stopAll();
+		Robot.ramp.stop();
 	}
 
 	@Override
@@ -35,5 +35,4 @@ double power;
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

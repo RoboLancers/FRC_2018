@@ -3,10 +3,11 @@ package org.usfirst.frc.team321.robot.commands;
 import org.usfirst.frc.team321.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class UseArcadeDrive extends Command {
-		
-	double tolerance = 0.15;
+	
+	double tolerance = 0.10;
 	
 	public UseArcadeDrive() {
 		requires(Robot.drivetrain);
@@ -14,7 +15,7 @@ public class UseArcadeDrive extends Command {
 
 	@Override
 	protected void initialize() {
-		Robot.drivetrain.setAll(0);
+		Robot.drivetrain.stopMotors();
 	}
 
 	@Override
@@ -23,26 +24,11 @@ public class UseArcadeDrive extends Command {
 		double throttle = Math.abs(Robot.oi.driveStick.getRawAxis(1)) >= tolerance ? -Robot.oi.driveStick.getRawAxis(1) : 0;
 		double rotate = Math.abs(Robot.oi.driveStick.getRawAxis(4)) >= tolerance ? Robot.oi.driveStick.getRawAxis(4) : 0;
 		
-		//Formulas for leftMotorSpeed and rightMotorSpeed
-		double leftMotorSpeed = throttle + rotate;
-	    double rightMotorSpeed = throttle - rotate;	
-	     
+		double leftMotorSpeed = Math.abs(throttle + rotate) >= tolerance ? throttle + rotate : 0;
+	    double rightMotorSpeed = Math.abs(throttle - rotate) >= tolerance ? throttle - rotate : 0;	
+	    
 	    Robot.drivetrain.setLeft(leftMotorSpeed);
 	    Robot.drivetrain.setRight(rightMotorSpeed);
-	    /*
-	    if((Robot.oi.driveStick.getRawAxis(1) > tolerance) || (Robot.oi.driveStick.getRawAxis(1) < -tolerance)) {
-	    	Robot.drivetrain.setLeft(leftMotorSpeed);
-		    Robot.drivetrain.setRight(rightMotorSpeed);
-	    } else if ((Robot.oi.driveStick.getRawAxis(4) > tolerance) || (Robot.oi.driveStick.getRawAxis(4) < -tolerance)) {
-	    	Robot.drivetrain.setLeft(leftMotorSpeed);
-		    Robot.drivetrain.setRight(rightMotorSpeed);
-	    } else if ((Math.abs(Robot.oi.driveStick.getRawAxis(1)) > tolerance) && (Math.abs(Robot.oi.driveStick.getRawAxis(4))) > tolerance){
-	    	Robot.drivetrain.setLeft(leftMotorSpeed);
-		    Robot.drivetrain.setRight(rightMotorSpeed);
-	    } else {111
-	    	Robo111t.drivetrain.setLeft(0);
-		    Robot.drivetrain.setRight(0);
-	    }*/
 	}
 
 	@Override

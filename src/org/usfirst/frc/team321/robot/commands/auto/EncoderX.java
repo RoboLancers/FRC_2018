@@ -33,6 +33,7 @@ public class EncoderX extends Command {
 		Robot.drivetrain.setLeft(Robot.sensors.moveToTarget(power, Robot.sensors.getRobotHeading(), targetAngle)[0]);
 		Robot.drivetrain.setRight(Robot.sensors.moveToTarget(power, Robot.sensors.getRobotHeading(), targetAngle)[1]);
 	}
+	
 	//makes robot stop when ticks match up
 	@Override
 	protected boolean isFinished() {
@@ -41,10 +42,12 @@ public class EncoderX extends Command {
 		}
 		return true;
 	}	
+	
 	//stop it
 	protected void end() {
 		Robot.drivetrain.setAll(0);
 	}
+	
 	//get some help/ if something is wrong, stop it
 	protected void interrupted() {
 		Robot.drivetrain.setAll(0);

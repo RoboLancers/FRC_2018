@@ -6,11 +6,12 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class MoveRobotWithTime extends Command{
+	
+	//setting up motors and time
 	Timer timer = new Timer();
 	double leftMotors;
 	double rightMotors;
 	double time;
-	
 	
 	public MoveRobotWithTime(double leftMotors, double rightMotors, double time){
 		requires(Robot.drivetrain);
@@ -19,6 +20,7 @@ public class MoveRobotWithTime extends Command{
 		this.time = time;
 		
 	}
+	//resets time so it would start where it left off
 	protected void initialize(){
 		Robot.drivetrain.setAll(0);
 		timer.reset();
@@ -28,10 +30,10 @@ public class MoveRobotWithTime extends Command{
 	protected void execute(){
 		Robot.drivetrain.setLeft(leftMotors);
 		Robot.drivetrain.setRight(rightMotors);
-	
-		}
+	}
 	
 	@Override
+	//when timer passes how much time i want, robot will stop
 	protected boolean isFinished() {
 		return (timer.get() > this.time);
 	}
