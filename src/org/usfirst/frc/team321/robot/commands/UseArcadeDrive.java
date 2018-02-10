@@ -21,8 +21,8 @@ public class UseArcadeDrive extends Command {
 	@Override
 	protected void execute() {
 		
-		double throttle = Math.abs(Robot.oi.driveStick.getRawAxis(1)) >= tolerance ? -Robot.oi.driveStick.getRawAxis(1) : 0;
-		double rotate = Math.abs(Robot.oi.driveStick.getRawAxis(4)) >= tolerance ? Robot.oi.driveStick.getRawAxis(4) : 0;
+		double throttle = Robot.oi.xboxController.getLeftYAxisValue();
+		double rotate = Robot.oi.xboxController.getRightXAxisValue();
 		
 		double leftMotorSpeed = Math.abs(throttle + rotate) >= tolerance ? throttle + rotate : 0;
 	    double rightMotorSpeed = Math.abs(throttle - rotate) >= tolerance ? throttle - rotate : 0;	

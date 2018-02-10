@@ -29,54 +29,18 @@ public class FlightController extends Controller {
 
     public FlightController(int port) {
         super(port);
-    }
-
-    public Button trigger() {
-        return this.buttons[TRIGGER_ID];
-    }
-
-    public Button shooter() {
-        return this.buttons[SHOOTER_ID];
-    }
-
-    public Button bottomLeft() {
-        return this.buttons[BOTTOM_LEFT_ID];
-    }
-
-    public Button bottomRight() {
-        return this.buttons[BOTTOM_RIGHT_ID];
-    }
-
-    public Button topLeft() {
-        return this.buttons[TOP_LEFT_ID];
-    }
-
-    public Button topRight() {
-        return this.buttons[TOP_RIGHT_ID];
-    }
-
-    public Button farTop() {
-        return this.buttons[FAR_TOP_ID];
-    }
-
-    public Button innerTop() {
-        return this.buttons[INNER_TOP_ID];
-    }
-
-    public Button farMiddle() {
-        return this.buttons[FAR_MIDDLE_ID];
-    }
-
-    public Button innerMiddle() {
-        return this.buttons[INNER_MIDDLE_ID];
-    }
-
-    public Button farBottom() {
-        return this.buttons[FAR_BOTTOM_ID];
-    }
-
-    public Button innerBottom() {
-        return this.buttons[INNER_BOTTOM_ID];
+        trigger = this.buttons[TRIGGER_ID];
+        shooter = this.buttons[SHOOTER_ID];
+        bottomLeft = this.buttons[BOTTOM_LEFT_ID];
+        bottomRight = this.buttons[BOTTOM_RIGHT_ID];
+        topLeft = this.buttons[TOP_LEFT_ID];
+        topRight = this.buttons[TOP_RIGHT_ID];
+        farTop = this.buttons[FAR_TOP_ID];
+        innerTop = this.buttons[INNER_TOP_ID];
+        farMiddle = this.buttons[FAR_MIDDLE_ID];
+        innerMiddle = this.buttons[INNER_MIDDLE_ID];
+        farBottom = this.buttons[FAR_BOTTOM_ID];
+        innerBottom = this.buttons[INNER_BOTTOM_ID];
     }
 
     public double getRawXAxisValue() {
