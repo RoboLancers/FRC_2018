@@ -20,7 +20,6 @@ public class UseArcadeDrive extends Command {
 
 	@Override
 	protected void execute() {
-		
 		double throttle = Robot.oi.xboxController.getLeftYAxisValue();
 		double rotate = Robot.oi.xboxController.getRightXAxisValue();
 		
@@ -29,6 +28,11 @@ public class UseArcadeDrive extends Command {
 	    
 	    Robot.drivetrain.setLeft(leftMotorSpeed);
 	    Robot.drivetrain.setRight(rightMotorSpeed);
+		
+		/*
+		Robot.drivetrain.setLeft(Robot.oi.xboxController.getLeftYAxisValue());
+	    Robot.drivetrain.setRight(Robot.oi.xboxController.getRightYAxisValue());
+	    */
 	}
 
 	@Override

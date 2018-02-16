@@ -5,7 +5,6 @@ import org.usfirst.frc.team321.robot.utilities.RobotUtil;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -17,9 +16,18 @@ public class Sensors extends Subsystem {
 	
 	public Sensors() {
 		navX = new AHRS(SerialPort.Port.kMXP);
+		ultrasonic = new Ultrasonic(RobotMap.UlTRASONIC_A, RobotMap.UlTRASONIC_B);
 		navX.reset();
 		navX.resetDisplacement();
+		
+		ultrasonic.setAutomaticMode(true);
+		ultrasonic.setEnabled(true);
+		ultrasonic.setDistanceUnits(Ultrasonic.Unit.kMillimeters);
 	}
+	
+	public double getDistanceInMeters() {
+        return ultrasonic.getRangeMM() / 1000;
+    }
 	
 	public double getRobotHeading() {
 		if (navX.getAngle() < 0) {

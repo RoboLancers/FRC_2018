@@ -29,24 +29,28 @@ public class MoveWithEncoder extends Command{
 	}
 	
 	protected void execute() {
+		Robot.drivetrain.setLeft(0.6);
+		Robot.drivetrain.setRight(0.6);
+		/*
 		Robot.drivetrain.setLeft(pid.calcPID(Robot.drivetrain.getLeftEncoderDistance()));
-		Robot.drivetrain.setRight(pid.calcPID(Robot.drivetrain.getLeftEncoderDistance()));
+		Robot.drivetrain.setRight(pid.calcPID(Robot.drivetrain.getRightEncoderDistance()));
+		*/
 	}
 	
 	@Override
 	protected boolean isFinished() {
-		if(distance < 0){
+		if (distance < 0) {
 			return distance - Robot.drivetrain.getLeftEncoderDistance() >= 0;
 		} else {
 			return distance - Robot.drivetrain.getLeftEncoderDistance() <= 0;
 		}
-		// TODO Auto-generated method stub
+		
 		/*
 		return Math.abs(Robot.drivetrain.getRightEncoderDistance() - startRightEncoderDistance) >= distance  ||
 				Math.abs(Robot.drivetrain.getLeftEncoderDistance() - startLeftEncoderDistance) >= distance;
-				*/
-		/*return Math.abs(Robot.drivetrain.getRightEncoderDistance()) >= Math.abs(distance)  ||
-				Math.abs(Robot.drivetrain.getLeftEncoderDistance()) >= Math.abs(distance); */
+		return Math.abs(Robot.drivetrain.getRightEncoderDistance()) >= Math.abs(distance)  ||
+				Math.abs(Robot.drivetrain.getLeftEncoderDistance()) >= Math.abs(distance); 
+		*/
 	}
 	
 	@Override

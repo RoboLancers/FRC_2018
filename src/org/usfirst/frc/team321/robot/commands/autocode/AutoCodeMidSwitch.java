@@ -3,8 +3,10 @@ package org.usfirst.frc.team321.robot.commands.autocode;
 import org.usfirst.frc.team321.robot.Robot;
 import org.usfirst.frc.team321.robot.commands.DSolenoidToggle;
 import org.usfirst.frc.team321.robot.commands.UseIntake;
+import org.usfirst.frc.team321.robot.commands.auto.MoveTowardTarget;
 import org.usfirst.frc.team321.robot.commands.auto.MoveWithEncoder;
 import org.usfirst.frc.team321.robot.commands.auto.MoveWithNaveedX;
+import org.usfirst.frc.team321.robot.commands.auto.TurnUntilTargetDetected;
 import org.usfirst.frc.team321.robot.subsystems.IntakePivot;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -25,18 +27,18 @@ public class AutoCodeMidSwitch extends CommandGroup {
 		if (gameData.charAt(0) == 'L') {
 			addSequential(new MoveWithNaveedX(0.8, -45));
 			addSequential(new MoveWithEncoder(MOVE_TO_SWITCH)); 
-			//addSequential(new MOVE UNTIL CAM DETECTS());
-			//addSequential(new MOVE WITH VISION());
+			addSequential(new TurnUntilTargetDetected(MOVE_UNTIL_CAM_DETECTS));
+			addSequential(new MoveTowardTarget(MOVE_WITH_VISION));
 			addSequential(new MoveWithEncoder(APPROACH_SWITCH));
-			addSequential(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakePivot, DoubleSolenoid.Value.kReverse));
+			//addSequential(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakePivot, DoubleSolenoid.Value.kReverse));
 			addSequential(new UseIntake(-1));
 		} else if ((gameData.charAt(1) == 'R')) {
 			addSequential(new MoveWithNaveedX(0.8, 45));
 			addSequential(new MoveWithEncoder(MOVE_TO_SWITCH)); 
-			//addSequential(new MOVE UNTIL CAM DETECTS());
-			//addSequential(new MOVE WITH VISION());
+			addSequential(new TurnUntilTargetDetected(MOVE_UNTIL_CAM_DETECTS));
+			addSequential(new MoveTowardTarget(MOVE_WITH_VISION));
 			addSequential(new MoveWithEncoder(APPROACH_SWITCH));
-			addSequential(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakePivot, DoubleSolenoid.Value.kReverse));
+			//addSequential(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakePivot, DoubleSolenoid.Value.kReverse));
 			addSequential(new UseIntake(-1));
 		}
 	}

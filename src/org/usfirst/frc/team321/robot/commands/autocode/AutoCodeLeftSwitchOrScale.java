@@ -27,7 +27,7 @@ public class AutoCodeLeftSwitchOrScale extends CommandGroup{
 			addSequential(new MoveWithEncoder(AUTO_LINE_TO_MIDDLE_OF_SWITCH));
 			addSequential(new MoveWithNaveedX(0.8, 90));
 			addSequential(new MoveWithEncoder(APPROACH_SWITCH));
-			addSequential(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakePivot, DoubleSolenoid.Value.kReverse));
+			//addSequential(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakePivot, DoubleSolenoid.Value.kReverse));
 			addSequential(new UseIntake(-1), 3);
 		} else if ((gameData.charAt(1) == 'L') && (gameData.charAt(0) == 'L')) {
 			addSequential(new MoveWithEncoder(AUTO_LINE_TO_MIDDLE_OF_SWITCH));
@@ -35,10 +35,10 @@ public class AutoCodeLeftSwitchOrScale extends CommandGroup{
 			addSequential(new MoveWithEncoder(AUTO_LINE_TO_MIDDLE_OF_SCALE));
 			addSequential(new MoveWithNaveedX(0.8, 90));
 			addSequential(new MoveWithEncoder(APPROACH_SWITCH));
-			addSequential(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakePivot, DoubleSolenoid.Value.kReverse));
+			//addSequential(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakePivot, DoubleSolenoid.Value.kReverse));
 			addSequential(new UseIntake(-1), 3);
 			addSequential(new MoveWithEncoder(-APPROACH_SWITCH));
-			addSequential(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakePivot, DoubleSolenoid.Value.kForward));
+			//addSequential(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakePivot, DoubleSolenoid.Value.kForward));
 			addSequential(new LinearSlidesWithEncoders(-TOP_OF_LINEAR_SLIDE));
 		}
 	}

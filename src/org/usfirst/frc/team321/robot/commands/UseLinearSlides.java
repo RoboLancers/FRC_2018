@@ -10,8 +10,9 @@ public class UseLinearSlides extends Command {
 	//setting up linear slides
 	double power;
 	
-	public UseLinearSlides() {
+	public UseLinearSlides(double power) {
 		requires(Robot.linear);
+		this.power = power;
 	}
 	
 	protected void initialize() {
@@ -19,6 +20,7 @@ public class UseLinearSlides extends Command {
 	}
 	
 	protected void execute() {
+		Robot.linear.move(power);
 		//Robot.linear.moveSafe(Robot.oi.maniStick.getRawAxis(3));
 	}
 

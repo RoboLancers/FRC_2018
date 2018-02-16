@@ -50,11 +50,11 @@ public class RobotUtil {
 	 * 
 	 * Note: Set power to 0 to move in place
 	 */
-	public static double[] moveToTarget(double power, double currentAngle, double targetAngle) {
+	public static double[] moveToTarget(double power, double currentAngle, double targetAngle, double proportion) {
 		double[] motorSpeed = new double[2];
 		
-		motorSpeed[0] = RobotUtil.range(power + (currentAngle - targetAngle) * 0.9, -1, 1);
-	    motorSpeed[1] = RobotUtil.range(power - (currentAngle - targetAngle) * 0.9, -1, 1);
+		motorSpeed[0] = RobotUtil.range(power + (currentAngle - targetAngle) * proportion, -1, 1);
+	    motorSpeed[1] = RobotUtil.range(power - (currentAngle - targetAngle) * proportion, -1, 1);
 	    
 	    motorSpeed[0] = RobotUtil.floor(motorSpeed[0], 2);
 	    motorSpeed[1] = RobotUtil.floor(motorSpeed[1], 2);

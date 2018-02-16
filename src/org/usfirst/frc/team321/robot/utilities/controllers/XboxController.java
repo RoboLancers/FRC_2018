@@ -22,10 +22,11 @@ public class XboxController extends Controller {
     private static int RIGHT_JOY_BTN_ID = 10;
     private double tolerance = 0.15;
     
-    public Button A, B, X, Y, leftBumper, rightBumper, select, start;
+    public Button A, B, X, Y, leftBumper, rightBumper, select, start, leftJoyBtn, rightJoyBtn;
 
     public XboxController(int port) {
         super(port);
+        
         A = this.buttons[A_ID];
         B = this.buttons[B_ID];
         X = this.buttons[X_ID];
@@ -34,14 +35,8 @@ public class XboxController extends Controller {
         rightBumper = this.buttons[RB_ID];
         select = this.buttons[SELECT_ID];
         start = this.buttons[START_ID];
-    }
-
-    public Button leftJoyBtn() {
-        return this.buttons[LEFT_JOY_BTN_ID];
-    }
-
-    public Button rightJoyBtn() {
-        return this.buttons[RIGHT_JOY_BTN_ID];
+        leftJoyBtn = this.buttons[LEFT_JOY_BTN_ID];
+        rightJoyBtn = this.buttons[RIGHT_JOY_BTN_ID];
     }
 
     public double getLTValue() {

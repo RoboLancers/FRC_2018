@@ -4,35 +4,33 @@ import org.usfirst.frc.team321.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class UseIntake extends Command {
-
+public class UsePivot /*extends Command*/ {
+/*
 	double power;
 	
-	public UseIntake(double power) {
-		requires(Robot.intake);
+	public UsePivot(double power) {
+		requires(Robot.intakepivot);
 		this.power = power;
 	}
 	
 	protected void initialize() {
-		Robot.intake.setAll(0);
+		Robot.intakepivot.setPivotPower(0);
 	}
 	
 	protected void execute() {
-		Robot.intake.setLeft(power);
-		Robot.intake.setRight(power);
+		Robot.intakepivot.setPivotPower(power);
 	}
 	
 	protected void interrupted() {
-		Robot.intake.stopIntake();
+		Robot.intakepivot.setPivotPower(0);
 	}
 	
 	protected void end() {
-		Robot.intake.stopIntake();
+		Robot.intakepivot.setPivotPower(0);
 	}
 	
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return false;
-	}
+	}*/
 }

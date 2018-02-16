@@ -9,48 +9,48 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.CounterBase;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-	//naming motor controllers + encoders
 public class DriveTrain extends Subsystem {
 	
 	public TalonSRX leftMaster, rightMaster, midLeftSlave, 
 		midRightSlave, botRightSlave, botLeftSlave;
+
+	//top left, right motors are backwards
+	//midleftslave is backwards
+	//botrightslave is backwards
 	
-    //creating variables for encoder
 	public static final double RADIUS = 3.775;
 	public static final double CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 	public static final double TPR = 256 * 4;
 	public static final double kDistancePerPulse = CIRCUMFERENCE / TPR;
 	
-	public double maxMotorPower;
+	public double maxMotorPower = 1;
 	
 	// setting up drivetrain, and encoder, and allows it to encode
 	public DriveTrain() {
 		leftMaster = new TalonSRX(RobotMap.LEFT_MASTER_MOTOR);
-		botLeftSlave= new TalonSRX(RobotMap.LEFT_SLAVE_B);
-		botRightSlave = new TalonSRX(RobotMap.RIGHT_SLAVE_B);
+		midLeftSlave = new TalonSRX(RobotMap.LEFT_SLAVE_A);
+		botLeftSlave = new TalonSRX(RobotMap.LEFT_SLAVE_B);
 		
 		rightMaster = new TalonSRX(RobotMap.RIGHT_MASTER_MOTOR);
 		midRightSlave = new TalonSRX(RobotMap.RIGHT_SLAVE_A);
-		midLeftSlave = new TalonSRX(RobotMap.LEFT_SLAVE_A);
+		botRightSlave = new TalonSRX(RobotMap.RIGHT_SLAVE_B);
 		
 		leftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 		rightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 		
+		/*
 		midLeftSlave.set(ControlMode.Follower, leftMaster.getDeviceID());
 		botLeftSlave.set(ControlMode.Follower, leftMaster.getDeviceID());
 		midRightSlave.set(ControlMode.Follower, rightMaster.getDeviceID());
 		botRightSlave.set(ControlMode.Follower, rightMaster.getDeviceID());
-		
-		maxMotorPower = 1;
-		
-		setBrake();
+		*/
+
+		this.setBrake();
 	}
 	
-		public void setCoast(){
+	public void setCoast(){
 		botLeftSlave.setNeutralMode(NeutralMode.Coast);
 		botRightSlave.setNeutralMode(NeutralMode.Coast);
 		midRightSlave.setNeutralMode(NeutralMode.Coast);
@@ -79,12 +79,16 @@ public class DriveTrain extends Subsystem {
 	
 	public void setLeft(double power) {
 		power *= maxMotorPower;
-		leftMaster.set(ControlMode.PercentOutput, -power);
+		leftMaster.set(ControlMode.PercentOutput, power);
+		midLeftSlave.set(ControlMode.PercentOutput, power);
+		botLeftSlave.set(ControlMode.PercentOutput, -power);
 	}
 	
 	public void setRight(double power) {
 		power *= maxMotorPower;
-		rightMaster.set(ControlMode.PercentOutput, power);
+		rightMaster.set(ControlMode.PercentOutput, -power);
+		midRightSlave.set(ControlMode.PercentOutput, power);
+		botRightSlave.set(ControlMode.PercentOutput, -power);
 	}
 	
 	public void setAll(double power) {

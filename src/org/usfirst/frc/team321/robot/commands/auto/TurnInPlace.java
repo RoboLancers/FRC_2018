@@ -25,8 +25,8 @@ public class TurnInPlace extends Command {
 	}
 	
 	public void execute() {
-		Robot.drivetrain.setLeft(RobotUtil.moveToTarget(0, Robot.sensors.getRobotHeading(), degrees + currentAngle)[0]);
-		Robot.drivetrain.setRight(RobotUtil.moveToTarget(0, Robot.sensors.getRobotHeading(), degrees + currentAngle)[1]);
+		Robot.drivetrain.setLeft(RobotUtil.moveToTarget(0, Robot.sensors.getRobotHeading(), degrees + currentAngle, 0.9)[0]);
+		Robot.drivetrain.setRight(RobotUtil.moveToTarget(0, Robot.sensors.getRobotHeading(), degrees + currentAngle, 0.9)[1]);
 	}
 	
 	public void end() {

@@ -5,6 +5,7 @@ import org.usfirst.frc.team321.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Intake extends Subsystem {
@@ -23,6 +24,7 @@ public class Intake extends Subsystem {
 	public void setRight(double power) {
 		intakeRight.set(ControlMode.PercentOutput, -power);
 	}
+	
 	public void setAll(double power) {
 		setLeft(power);
 		setRight(power);

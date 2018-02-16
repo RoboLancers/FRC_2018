@@ -1,11 +1,13 @@
-
 package org.usfirst.frc.team321.robot;
 
-import org.usfirst.frc.team321.robot.commands.auto.MoveWithEncoder;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoStill;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoCode;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoCodeEncoder;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoCodeGyro;
+import org.usfirst.frc.team321.robot.commands.autocode.AutoLeftForward;
+import org.usfirst.frc.team321.robot.commands.autocode.AutoMoveToTarget;
+import org.usfirst.frc.team321.robot.commands.autocode.AutoMoveTowardTarget;
+import org.usfirst.frc.team321.robot.commands.autocode.AutoTurnUntilTarget;
 import org.usfirst.frc.team321.robot.subsystems.Ramp;
 import org.usfirst.frc.team321.robot.subsystems.Camera;
 import org.usfirst.frc.team321.robot.subsystems.DriveTrain;
@@ -15,34 +17,27 @@ import org.usfirst.frc.team321.robot.subsystems.IntakePivot;
 import org.usfirst.frc.team321.robot.subsystems.LinearSlide;
 import org.usfirst.frc.team321.robot.subsystems.Pneumatics;
 import org.usfirst.frc.team321.robot.subsystems.Sensors;
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
- */
 public class Robot extends IterativeRobot {
 
 	public static DriveTrain drivetrain;
 	public static LinearSlide linear;
-	public static IntakePivot intakepivot;
+	//public static IntakePivot intakepivot;
 	public static Intake intake;
 	public static Ramp ramp;
 
-	public static Compressor compressor; 
-	public static Pneumatics pneumatics;
+	public static Pneumatics pneumatics; 
 	public static GearShifter gearshifter;
 	
 	public static Sensors sensors;
+	public static Camera camera;
 	
 	public static OI oi;
 	
@@ -52,21 +47,27 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		sensors = new Sensors();
-		drivetrain = new DriveTrain();
-		pneumatics = new Pneumatics(); 
-		compressor = new Compressor();
-		ramp = new Ramp();
+		camera = new Camera();
 		
+		drivetrain = new DriveTrain();
 		linear = new LinearSlide();
-		gearshifter = new GearShifter();
-		intakepivot = new IntakePivot(); 
 		intake = new Intake(); 
+		ramp = new Ramp();
+
+		pneumatics = new Pneumatics();
+		gearshifter = new GearShifter();
+		//intakepivot = new IntakePivot(); 
+		
 		oi = new OI();
 
 		chooser.addDefault("No Auto", "AutoStill");
 		chooser.addObject("Autonhomas", "AutoCode");
 		chooser.addObject("GyroCode", "AutoCodeGyro");
 		chooser.addObject("AutoWithEncoder", "AutoCodeEncoder");
+		chooser.addObject("AutoMoveTowardTarget", "AutoMoveTowardTarget");
+		chooser.addObject("AutoMoveToTarget", "AutoMoveToTarget");
+		chooser.addObject("AutoTurnUntilTarget", "AutoTurnUntilTarget");
+		chooser.addObject("AutoLeftForward", "AutoLeftForward");
 		SmartDashboard.putData("Auto mode", chooser);
 	}
 	
@@ -75,9 +76,11 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Gyro", Robot.sensors.getRobotHeading());
 			SmartDashboard.putNumber("LinearSlide Encoder value/position auto", Robot.linear.getLineEncoderDistance());
 			SmartDashboard.putNumber("Left Encoder Distance", Robot.drivetrain.getLeftEncoderDistance());
-			SmartDashboard.putNumber("Raw Left Encoder Value", Robot.drivetrain.getRawLeftEncoderCount());
+			SmartDashboard.putNumber("Right Encoder Distance", Robot.drivetrain.getRightEncoderDistance());
 			SmartDashboard.putNumber("Distance", Robot.drivetrain.getLeftEncoderDistance());
-			SmartDashboard.putNumber("LinearSlide Encoder value/position", Robot.linear.getLineEncoderDistance());
+			SmartDashboard.putNumber("Linear Slide Encoder value/position", Robot.linear.getLineEncoderDistance());
+			SmartDashboard.putBoolean("isTargetDetected", Robot.camera.isTgtVisible());
+			SmartDashboard.putNumber("Vision Target Angle", Robot.camera.getTgtAngle_Deg());
 		} catch (Exception e) {}
 	}
 
@@ -103,9 +106,22 @@ public class Robot extends IterativeRobot {
 			case "AutoCodeEncoder":
 				autonomousCommand = new AutoCodeEncoder();
 				break;
+			case "AutoMoveToTarget":
+				autonomousCommand = new AutoMoveToTarget();
+				break;
+			case "AutoMoveTowardTarget":
+				autonomousCommand = new AutoMoveTowardTarget();
+				break;
+			case "AutoTurnUntilTarget":
+				autonomousCommand = new AutoTurnUntilTarget();
+				break;
+			case "AutoLeftForward":
+				autonomousCommand = new AutoLeftForward();
+				break;
 			default:
 				autonomousCommand = new AutoStill();
 				break;
+		
 		}
 		
 		if (autonomousCommand != null)
@@ -128,7 +144,6 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		setDashboardValues();
 		Scheduler.getInstance().run();
-		
 	}
 
 	@Override

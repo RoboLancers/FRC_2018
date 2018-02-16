@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class UseRamp extends Command {
 	
-	//setting up ramp
 	double power;
 	
 	public UseRamp(double power) {
