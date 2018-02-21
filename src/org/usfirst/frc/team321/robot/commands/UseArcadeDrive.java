@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class UseArcadeDrive extends Command {
 	
-	double tolerance = 0.10;
+	double tolerance = 0.18;
 	
 	public UseArcadeDrive() {
 		requires(Robot.drivetrain);

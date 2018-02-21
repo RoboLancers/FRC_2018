@@ -16,14 +16,14 @@ public class MoveWithNaveedX extends Command {
 		
 	public MoveWithNaveedX (double power, double targetAngle) {
 		this.power = power;
-		this.targetAngle = targetAngle + Robot.sensors.navX.getAngle();
-		pid = new LancerPID(0.800, 0.0, 0.0);
+		this.targetAngle = targetAngle;
+		pid = new LancerPID(0.0185, 0.0, 0.0);
 		pid.setReference(targetAngle);
 	}
 	
 	@Override
 	protected void initialize() {
-
+		Robot.sensors.navX.reset();
 	}
 	
 	@Override 

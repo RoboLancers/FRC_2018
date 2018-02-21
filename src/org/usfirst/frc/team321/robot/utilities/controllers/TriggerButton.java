@@ -4,17 +4,20 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class POV extends Trigger {
+public class TriggerButton extends Trigger {
 
 	Joystick joystick;
-	int pov;
+	int triggerPort;
+	double tolerance;
 
-	public POV(Joystick joystick, int pov){
+	public TriggerButton (Joystick joystick, int triggerPort, double tolerance){
 		this.joystick = joystick;
-		this.pov = pov;
+		this.triggerPort = triggerPort;
+		this.tolerance = tolerance;
 	}
+	
 	public boolean get() {
-		return joystick.getPOV() == pov;
+		return joystick.getRawAxis(triggerPort) >= tolerance;
 	}
 	
 	public void whileHeld(final Command command) {

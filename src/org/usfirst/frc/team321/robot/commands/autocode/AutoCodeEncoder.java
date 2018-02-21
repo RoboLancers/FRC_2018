@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoCodeEncoder extends CommandGroup{
 	
 	public AutoCodeEncoder() {
-		addSequential (new MoveWithEncoder (36));
+		addSequential (new MoveWithEncoder (1));
 		//addSequential (new MoveRobotWithTime(0, 0, 0.3));
 		//addSequential (new MoveWithEncoder (-36));
 		//addSequential (new MoveRobotWithTime(0, 0, 0.3));

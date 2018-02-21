@@ -17,7 +17,7 @@ public class MoveWithEncoder extends Command{
 		this.distance = distance;
 		//this.startLeftEncoderDistance = Robot.drivetrain.getLeftEncoderDistance();
 		//this.startRightEncoderDistance = Robot.drivetrain.getRightEncoderDistance();
-		pid = new LancerPID(0.2, 0, 0, 0);
+		pid = new LancerPID(0.5, 0, 0.001, 0);
 		pid.setReference(distance);
 		Robot.drivetrain.resetEncoder();
 	}
@@ -29,28 +29,14 @@ public class MoveWithEncoder extends Command{
 	}
 	
 	protected void execute() {
-		Robot.drivetrain.setLeft(0.6);
-		Robot.drivetrain.setRight(0.6);
-		/*
-		Robot.drivetrain.setLeft(pid.calcPID(Robot.drivetrain.getLeftEncoderDistance()));
+		Robot.drivetrain.setLeft(pid.calcPID(-Robot.drivetrain.getLeftEncoderDistance()));
 		Robot.drivetrain.setRight(pid.calcPID(Robot.drivetrain.getRightEncoderDistance()));
-		*/
 	}
 	
 	@Override
 	protected boolean isFinished() {
-		if (distance < 0) {
-			return distance - Robot.drivetrain.getLeftEncoderDistance() >= 0;
-		} else {
-			return distance - Robot.drivetrain.getLeftEncoderDistance() <= 0;
-		}
-		
-		/*
-		return Math.abs(Robot.drivetrain.getRightEncoderDistance() - startRightEncoderDistance) >= distance  ||
-				Math.abs(Robot.drivetrain.getLeftEncoderDistance() - startLeftEncoderDistance) >= distance;
-		return Math.abs(Robot.drivetrain.getRightEncoderDistance()) >= Math.abs(distance)  ||
-				Math.abs(Robot.drivetrain.getLeftEncoderDistance()) >= Math.abs(distance); 
-		*/
+		return Math.abs(Robot.drivetrain.getLeftEncoderDistance()) >= Math.abs(distance) || 
+				Math.abs(Robot.drivetrain.getRightEncoderDistance()) >= Math.abs(distance);
 	}
 	
 	@Override

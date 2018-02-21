@@ -11,8 +11,8 @@ public class GearShifter extends Subsystem {
 	public static DoubleSolenoid gearShifter;
 	
 	public GearShifter(){
-		gearShifter = new DoubleSolenoid(RobotMap.GEARSHIFTER_FORWARD,RobotMap.GEARSHIFTER_REVERSE);
-		gearShifter.set(DoubleSolenoid.Value.kForward);
+		gearShifter = new DoubleSolenoid(RobotMap.GEARSHIFTER_FORWARD, RobotMap.GEARSHIFTER_REVERSE);
+		gearShifter.set(DoubleSolenoid.Value.kReverse);
 	}
 	
 	public void setHighGear() {

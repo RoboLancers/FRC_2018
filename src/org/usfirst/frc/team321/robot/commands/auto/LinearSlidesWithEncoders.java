@@ -15,7 +15,7 @@ public class LinearSlidesWithEncoders extends Command{
 	public LinearSlidesWithEncoders(double targetDistance) {
 		requires(Robot.linear);
 		this.targetDistance = targetDistance;
-		this.startLineEncoderDistance = Robot.linear.getLineEncoderDistance();
+		//this.startLineEncoderDistance = Robot.linear.getLineEncoderDistance();
 		pid = new LancerPID(0, 0, 0);
 		pid.setReference(targetDistance);
 	}
@@ -25,7 +25,7 @@ public class LinearSlidesWithEncoders extends Command{
 	}
 	
 	protected void execute() {
-		Robot.linear.move(pid.calcPID(Robot.linear.getLineEncoderDistance()));
+		//Robot.linear.move(pid.calcPID(Robot.linear.getLineEncoderDistance()));
 	}
 	
 	protected void interrupted() {
@@ -34,6 +34,7 @@ public class LinearSlidesWithEncoders extends Command{
 	
 	@Override
 	protected boolean isFinished() {
-		return Math.abs(Robot.linear.getLineEncoderDistance() - startLineEncoderDistance) >= targetDistance;
+		return false;
+		//return Math.abs(Robot.linear.getLineEncoderDistance() - startLineEncoderDistance) >= targetDistance;
 	}
 }

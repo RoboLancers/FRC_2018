@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import java.util.Arrays;
+import java.util.StringJoiner;
 
 public class Camera extends Subsystem {
 
@@ -19,7 +20,7 @@ public class Camera extends Subsystem {
     // MJPG Streaming Constants 
     private static final int MJPG_STREAM_PORT = 1180;
 
-    // Packet format constants a
+    // Packet format constants 
     private static final String PACKET_START_CHAR = "{";
     private static final String PACKET_END_CHAR = "}";
     private static final String PACKET_DILEM_CHAR = ",";
@@ -48,7 +49,15 @@ public class Camera extends Subsystem {
     // Most recently seen target information
     private boolean tgtVisible = false;
     private double tgtAngleDeg = 0;
-
+    
+    // Store known backup hsv values
+    private final double[] LOWER_HSV_VALUE = {55, 117, 115};
+    private final double[] UPPER_HSV_VALUE = {103, 255, 255};
+    
+    // Store HSV Values to send to camera
+    private double[] lowerHSV = {55, 117, 115};
+    private double[] upperHSV = {103, 255, 255};
+    
     //=======================================================
     //== BEGIN PUBLIC INTERFACE
     //=======================================================
@@ -74,9 +83,7 @@ public class Camera extends Subsystem {
     public Camera(boolean useUSBStream) {
     	
     	Thread packetListenerThread = new Thread(() -> {
-            while (!Thread.interrupted()) {
-                backgroundUpdate();
-            }
+            backgroundUpdate();
         });
 
         //Runs updater every 0.025 seconds which is perfect because that's how fast CAN bus will update
@@ -134,8 +141,6 @@ public class Camera extends Subsystem {
         updater.startPeriodic(0.025);
     }
 
-    //Main getters/setters
-
     public void stop() {
         if (broadcastUSBCam) {
             //Start streaming the JeVois via webcam
@@ -147,7 +152,57 @@ public class Camera extends Subsystem {
 
         updater.stop();
     }
-
+    
+    //Main getters/setters
+    
+    /**
+     * Sets the lower hsv values and sends it to the jevois
+     */
+    public void setLowerHSV(double h, double s, double v){
+    	lowerHSV[0] = h;
+    	lowerHSV[1] = s;
+    	lowerHSV[2] = v;
+    	
+    	sendCmd("setLowerHSV " + h + "," + s + "," + v);
+    	System.out.println("Sending Value");
+    }
+    
+    /**
+     * Sets the upper hsv values and sends it to the jevois
+     */
+    public void setUpperHSV(double h, double s, double v){
+    	upperHSV[0] = h;
+    	upperHSV[1] = s;
+    	upperHSV[2] = v;
+    	
+    	sendCmd("setUpperHSV " + h + "," + s + "," + v);
+    }
+    
+    /**
+     * Reset HSV Value
+     */
+    public void resetHSV(){
+    	lowerHSV = LOWER_HSV_VALUE;
+    	upperHSV = UPPER_HSV_VALUE;
+    	
+    	sendCmd("setLowerHSV " + lowerHSV[0] + "," + lowerHSV[1] + "," + lowerHSV[2]);
+    	sendCmd("setUpperHSV " + upperHSV[0] + "," + upperHSV[1] + "," + upperHSV[2]);
+    }
+    
+    /**
+     * Get lower hsv values
+     */
+    public double[] getLowerHSV(){
+    	return lowerHSV;
+    }
+    
+    /**
+     * Get upper hsv values
+     */
+    public double[] getUpperHSV(){
+    	return upperHSV;
+    }
+    
     /**
      * Send commands to the JeVois to configure it for image-processing friendly parameters
      */
@@ -204,7 +259,7 @@ public class Camera extends Subsystem {
      * Returns true when the JeVois sees a target and is tracking it, false otherwise.
      */
     public boolean isTgtVisible() {
-        return tgtVisible;
+        return visionOnline ? tgtVisible : false;
     }
 
     /**
@@ -215,7 +270,7 @@ public class Camera extends Subsystem {
     }
 
     /**
-     * This is the main perodic update function for the Listener. It is intended
+     * This is the main periodic update function for the Listener. It is intended
      * to be run in a background task, as it will block until it gets packets.
      */
     private void backgroundUpdate() {
@@ -226,6 +281,7 @@ public class Camera extends Subsystem {
             visionOnline = parsePacket(packet) == 0;
         } else {
             visionOnline = false;
+            tgtVisible = false;
             DriverStation.reportWarning("Cannot get packet from JeVois Vision Processor", false);
         }
     }
@@ -294,9 +350,13 @@ public class Camera extends Subsystem {
      * @return number of bytes written
      */
     private int sendCmd(String cmd) {
-        int bytes;
-        bytes = visionPort.writeString(cmd + "\n");
-        System.out.println("wrote " + bytes + "/" + (cmd.length() + 1) + " bytes, cmd: " + cmd);
+        int bytes = 0;
+        try{
+        	bytes = visionPort.writeString(cmd + "\n");
+        }catch(Exception exception){
+        	exception.printStackTrace();
+        }
+        //System.out.println("wrote " + bytes + "/" + (cmd.length() + 1) + " bytes, cmd: " + cmd);
         return bytes;
     }
 
@@ -534,3 +594,7 @@ public class Camera extends Subsystem {
 		
 	}
 }
+
+
+//we prayed to poseidon for vision processing
+//...because he's god of the see

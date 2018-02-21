@@ -41,3 +41,5 @@ public class DSolenoidHold extends Command {
 		hasFinished = true;
 	}
 }
+
+//this robot is crazy, it's nuts

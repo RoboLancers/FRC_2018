@@ -1,13 +1,9 @@
 package org.usfirst.frc.team321.robot.commands.autocode;
 
-import org.usfirst.frc.team321.robot.Robot;
-import org.usfirst.frc.team321.robot.commands.DSolenoidToggle;
 import org.usfirst.frc.team321.robot.commands.UseIntake;
 import org.usfirst.frc.team321.robot.commands.auto.MoveWithEncoder;
 import org.usfirst.frc.team321.robot.commands.auto.MoveWithNaveedX;
-import org.usfirst.frc.team321.robot.subsystems.IntakePivot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutoCodeRightSwitch extends CommandGroup {

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team321.robot.utilities.controllers;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.buttons.Button;
 
 public class XboxController extends Controller {
@@ -23,7 +24,8 @@ public class XboxController extends Controller {
     private double tolerance = 0.15;
     
     public Button A, B, X, Y, leftBumper, rightBumper, select, start, leftJoyBtn, rightJoyBtn;
-
+    public TriggerButton leftTrigger, rightTrigger;
+    
     public XboxController(int port) {
         super(port);
         
@@ -37,6 +39,9 @@ public class XboxController extends Controller {
         start = this.buttons[START_ID];
         leftJoyBtn = this.buttons[LEFT_JOY_BTN_ID];
         rightJoyBtn = this.buttons[RIGHT_JOY_BTN_ID];
+
+        leftTrigger = new TriggerButton(this.joystick, LT_ID, 0.10);
+        rightTrigger = new TriggerButton(this.joystick, RT_ID, 0.10);
     }
 
     public double getLTValue() {
@@ -71,7 +76,7 @@ public class XboxController extends Controller {
         }
     }
 
-    private double getRawLeftYAxisValue() {
+    public double getRawLeftYAxisValue() {
         return this.joystick.getRawAxis(LEFT_Y_ID);
     }
 
@@ -83,7 +88,7 @@ public class XboxController extends Controller {
         }
     }
 
-    private double getRawRightYAxisValue() {
+    public double getRawRightYAxisValue() {
         return this.joystick.getRawAxis(RIGHT_Y_ID);
     }
 
@@ -110,4 +115,21 @@ public class XboxController extends Controller {
     public double getRawRightXAxisValue() {
         return this.joystick.getRawAxis(RIGHT_X_ID);
     }
+    
+    public void setRumble(boolean rumble) {
+    	if (rumble) {
+        	this.joystick.setRumble(RumbleType.kRightRumble, 1);
+        	this.joystick.setRumble(RumbleType.kLeftRumble, 1);
+    	} else {
+        	this.joystick.setRumble(RumbleType.kRightRumble, 0);
+        	this.joystick.setRumble(RumbleType.kLeftRumble, 0);
+    	}
+    }
 }
+
+//no judge will ever read this, but maybe u
+//yea u, the guy looking at this code
+//come closer... closer... closer
+//wait too close, you're fogging up the screen
+//listen, go to https//:www.clickbait.com/gullible/, and i
+//promise, a life full of fun

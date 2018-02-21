@@ -3,6 +3,7 @@ package org.usfirst.frc.team321.robot.subsystems;
 import org.usfirst.frc.team321.robot.Robot;
 import org.usfirst.frc.team321.robot.RobotMap;
 import org.usfirst.frc.team321.robot.commands.UseArcadeDrive;
+import org.usfirst.frc.team321.robot.utilities.RobotUtil;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -20,9 +21,9 @@ public class DriveTrain extends Subsystem {
 	//midleftslave is backwards
 	//botrightslave is backwards
 	
-	public static final double RADIUS = 3.775;
+	public static final double RADIUS = 3.1;
 	public static final double CIRCUMFERENCE = 2 * Math.PI * RADIUS;
-	public static final double TPR = 256 * 4;
+	public static final double TPR = 4096;
 	public static final double kDistancePerPulse = CIRCUMFERENCE / TPR;
 	
 	public double maxMotorPower = 1;
@@ -48,6 +49,36 @@ public class DriveTrain extends Subsystem {
 		*/
 
 		this.setBrake();
+		this.resetEncoder();
+	}
+	
+	public void setLeft(double power) {
+		power = RobotUtil.range(power, -1, 1);
+		power *= maxMotorPower;
+		leftMaster.set(ControlMode.PercentOutput, power);
+		midLeftSlave.set(ControlMode.PercentOutput, power);
+		botLeftSlave.set(ControlMode.PercentOutput, -power);
+	}
+	
+	public void setRight(double power) {
+		power = RobotUtil.range(power, -1, 1);
+		power *= maxMotorPower;
+		rightMaster.set(ControlMode.PercentOutput, -power);
+		midRightSlave.set(ControlMode.PercentOutput, power);
+		botRightSlave.set(ControlMode.PercentOutput, -power);
+	}
+	
+	public void setAll(double power) {
+		setLeft(power);
+		setRight(power);
+	}
+	
+	public void stopMotors() {
+		setAll(0);
+	}
+	
+	public void setMaxMotorSpeed(double power) {
+		maxMotorPower = RobotUtil.range(Math.abs(power), 0, 1);
 	}
 	
 	public void setCoast(){
@@ -77,49 +108,22 @@ public class DriveTrain extends Subsystem {
 		rightMaster.setNeutralMode(mode);
 	}
 	
-	public void setLeft(double power) {
-		power *= maxMotorPower;
-		leftMaster.set(ControlMode.PercentOutput, power);
-		midLeftSlave.set(ControlMode.PercentOutput, power);
-		botLeftSlave.set(ControlMode.PercentOutput, -power);
-	}
-	
-	public void setRight(double power) {
-		power *= maxMotorPower;
-		rightMaster.set(ControlMode.PercentOutput, -power);
-		midRightSlave.set(ControlMode.PercentOutput, power);
-		botRightSlave.set(ControlMode.PercentOutput, -power);
-	}
-	
-	public void setAll(double power) {
-		setLeft(power);
-		setRight(power);
-	}
-	
-	public void stopMotors() {
-		setAll(0);
-	}
-	
-	public void setMaxMotorSpeed(double power) {
-		maxMotorPower = Math.abs(power);
-	}
-	
-	//Gets amount of inches traveled per revolution of wheel (by encoder)
+	//Gets amount of cm traveled per revolution of wheel (by encoder)
 	public double getTicksPerInch() {
-		return (TPR / CIRCUMFERENCE);
+		return (TPR / CIRCUMFERENCE) / 10.0;
 	}
 	
 	//returns total ticks required to travel to your target distance
 	public double targetTicks(double targetDistance){
-		return (targetDistance * getTicksPerInch()); 
+		return (targetDistance * getTicksPerInch() / 10.0); 
 	}
 	
 	public double getLeftEncoderDistance(){
-		return (CIRCUMFERENCE / TPR) * Robot.drivetrain.getRawLeftEncoderCount();
+		return kDistancePerPulse * Robot.drivetrain.getRawLeftEncoderCount() / 10.0;
 	}
 	
 	public double getRightEncoderDistance(){
-		return (CIRCUMFERENCE / TPR) * Robot.drivetrain.getRawRightEncoderCount();
+		return kDistancePerPulse * Robot.drivetrain.getRawRightEncoderCount() / 10.0;
 	}
 	
 	public int getRawLeftEncoderCount(){
@@ -140,3 +144,6 @@ public class DriveTrain extends Subsystem {
 		setDefaultCommand(new UseArcadeDrive());
 	}
 }
+
+
+//domo arigato mr. roboto
