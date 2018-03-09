@@ -21,11 +21,11 @@ public class Intake extends Subsystem {
 	}
 	
 	public void setLeft(double power) {
-		intakeLeft.set(ControlMode.PercentOutput,power);
+		intakeLeft.set(ControlMode.PercentOutput, power);
 	}
 	
 	public void setRight(double power) {
-		intakeRight.set(ControlMode.PercentOutput, -power);
+		intakeRight.set(ControlMode.PercentOutput, power);
 	}
 	
 	public void setAll(double power) {

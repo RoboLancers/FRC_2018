@@ -1,6 +1,7 @@
 package org.usfirst.frc.team321.robot.subsystems;
 
 import org.usfirst.frc.team321.robot.RobotMap;
+import org.usfirst.frc.team321.robot.commands.UseLinearSlides;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -69,6 +70,6 @@ public class LinearSlide extends Subsystem {
 	
 	@Override
 	protected void initDefaultCommand() {
-		
+		setDefaultCommand(new UseLinearSlides());
 	}
 }

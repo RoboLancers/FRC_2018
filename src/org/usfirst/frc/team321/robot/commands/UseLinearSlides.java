@@ -8,6 +8,10 @@ public class UseLinearSlides extends Command {
 	
 	double power;
 	
+	public UseLinearSlides() {
+		requires(Robot.linear);
+	}
+	
 	public UseLinearSlides(double power) {
 		requires(Robot.linear);
 		this.power = power;
@@ -18,7 +22,7 @@ public class UseLinearSlides extends Command {
 	}
 	
 	protected void execute() {
-		Robot.linear.move(power);
+		Robot.linear.move(Robot.oi.flightController.getYAxisValue());
 	}
 
 	protected void interrupted() {

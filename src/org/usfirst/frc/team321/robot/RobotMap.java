@@ -23,7 +23,7 @@ public class RobotMap {
 	public static final int LINE_A = 6;
 	public static final int LINE_B = 12;
 	
-	public static final int INTAKE_LEFT = 3;
+	public static final int INTAKE_LEFT = 2;
 	public static final int INTAKE_RIGHT = 11;
 	
 	public static final int LEFT_RAMP = 21;

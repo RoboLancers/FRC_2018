@@ -6,6 +6,7 @@ import org.usfirst.frc.team321.robot.commands.autocode.AutoCodeGyro;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoLeftForward;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoMoveToTarget;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoMoveTowardTarget;
+import org.usfirst.frc.team321.robot.commands.autocode.AutoSimple;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoStill;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoTurnUntilTarget;
 import org.usfirst.frc.team321.robot.subsystems.Camera;
@@ -33,8 +34,8 @@ public class Robot extends IterativeRobot {
 	public static Intake intake;
 	public static IntakePivot intakepivot; 
 	public static RampRelease ramprelease;
-	public static Pneumatics pneumatics; 
 	public static GearShifter gearshifter;
+	public static Pneumatics pneumatics; 
 	
 	public static Sensors sensors;
 	public static Camera camera;
@@ -64,10 +65,8 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("AutoCode", "AutoCode");
 		chooser.addObject("AutoCodeGyro", "AutoCodeGyro");
 		chooser.addObject("AutoWithEncoder", "AutoCodeEncoder");
-		chooser.addObject("AutoMoveTowardTarget", "AutoMoveTowardTarget");
-		chooser.addObject("AutoMoveToTarget", "AutoMoveToTarget");
-		chooser.addObject("AutoTurnUntilTarget", "AutoTurnUntilTarget");
 		chooser.addObject("AutoLeftForward", "AutoLeftForward");
+		chooser.addObject("AutoForwardAndOuttake", "AutoForwardAndOuttake");
 		SmartDashboard.putData("Auto mode", chooser);
 	}
 	
@@ -116,22 +115,15 @@ public class Robot extends IterativeRobot {
 			case "AutoCodeEncoder":
 				autonomousCommand = new AutoCodeEncoder();
 				break;
-			case "AutoMoveToTarget":
-				autonomousCommand = new AutoMoveToTarget();
-				break;
-			case "AutoMoveTowardTarget":
-				autonomousCommand = new AutoMoveTowardTarget();
-				break;
-			case "AutoTurnUntilTarget":
-				autonomousCommand = new AutoTurnUntilTarget();
-				break;
 			case "AutoLeftForward":
 				autonomousCommand = new AutoLeftForward();
+				break;
+			case "AutoForwardAndOuttake":
+				autonomousCommand = new AutoSimple();
 				break;
 			default:
 				autonomousCommand = new AutoStill();
 				break;
-		
 		}
 		
 		if (autonomousCommand != null)

@@ -25,7 +25,7 @@ public class UseIntake extends Command {
 	}
 	
 	protected void execute() {
-		Robot.intake.setLeft(power);
+		Robot.intake.setLeft(-power);
 		Robot.intake.setRight(power);
 		
 		if (rumble) {

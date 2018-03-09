@@ -3,21 +3,22 @@ package org.usfirst.frc.team321.robot.commands.auto;
 import org.usfirst.frc.team321.robot.Robot;
 import org.usfirst.frc.team321.robot.utilities.LancerPID;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LinearSlidesWithEncoders extends Command{
+public class TimeLS extends Command{
 
 	//sets margin of error, can make it lower or higher but must find perfect (P)
 	LancerPID pid;
-	double targetDistance;
-	double startLineEncoderDistance;
+	double time;
+	double power;
+	Timer timer = new Timer();
 	
-	public LinearSlidesWithEncoders(double targetDistance) {
+	public TimeLS(double time, double power) {
 		requires(Robot.linear);
-		this.targetDistance = targetDistance;
+		this.time = time;
+		this.power = power;
 		//this.startLineEncoderDistance = Robot.linear.getLineEncoderDistance();
-		pid = new LancerPID(0, 0, 0);
-		pid.setReference(targetDistance);
 	}
 	
 	protected void initialize() {
@@ -25,6 +26,7 @@ public class LinearSlidesWithEncoders extends Command{
 	}
 	
 	protected void execute() {
+		Robot.linear.move(power);
 		//Robot.linear.move(pid.calcPID(Robot.linear.getLineEncoderDistance()));
 	}
 	
@@ -34,7 +36,7 @@ public class LinearSlidesWithEncoders extends Command{
 	
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return (timer.get() > this.time);
 		//return Math.abs(Robot.linear.getLineEncoderDistance() - startLineEncoderDistance) >= targetDistance;
 	}
 }
