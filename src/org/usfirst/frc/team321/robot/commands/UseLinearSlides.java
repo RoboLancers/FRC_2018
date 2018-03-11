@@ -8,13 +8,18 @@ public class UseLinearSlides extends Command {
 	
 	double power;
 	
+	boolean useJoystick;
+	
 	public UseLinearSlides() {
 		requires(Robot.linear);
+		useJoystick = true;
 	}
 	
 	public UseLinearSlides(double power) {
 		requires(Robot.linear);
 		this.power = power;
+		
+		useJoystick = false;
 	}
 	
 	protected void initialize() {
@@ -22,7 +27,23 @@ public class UseLinearSlides extends Command {
 	}
 	
 	protected void execute() {
-		Robot.linear.move(Robot.oi.flightController.getYAxisValue());
+		if(useJoystick){
+			if ((-Robot.oi.flightController.getYAxisValue() > 0 && Robot.sensors.isLinearSlideFullyExtended()) ||
+					(-Robot.oi.flightController.getYAxisValue() < 0 && Robot.sensors.isLinearSlideAtGround())) {
+				Robot.linear.move(0);
+				return;
+			}
+			
+			Robot.linear.move(-Robot.oi.flightController.getYAxisValue());
+		}else{
+			if ((power > 0 && Robot.sensors.isLinearSlideFullyExtended()) || 
+					(power < 0 && Robot.sensors.isLinearSlideAtGround())) {
+				Robot.linear.move(0);
+				return;
+			}
+			
+			Robot.linear.move(power);
+		}
 	}
 
 	protected void interrupted() {

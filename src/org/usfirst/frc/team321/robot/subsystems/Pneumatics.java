@@ -1,6 +1,6 @@
 package org.usfirst.frc.team321.robot.subsystems;
 
-import org.usfirst.frc.team321.robot.RobotMap;
+import org.usfirst.frc.team321.robot.Constants;
 import org.usfirst.frc.team321.robot.commands.RegulateCompressor;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -11,7 +11,7 @@ public class Pneumatics extends Subsystem {
 	public Compressor compressor;
 	
 	public Pneumatics(){
-		compressor = new Compressor(RobotMap.COMPRESSOR);
+		compressor = new Compressor(Constants.COMPRESSOR);
 	}
 
 	@Override

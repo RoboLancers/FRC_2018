@@ -1,6 +1,6 @@
 package org.usfirst.frc.team321.robot;
 
-public class RobotMap {
+public class Constants {
 	//TalonSRXs
 	/*
 	public static final int LEFT_MASTER_MOTOR = 5;
@@ -48,8 +48,11 @@ public class RobotMap {
 	*/
 	
 	//Sensors
-	public static final int UlTRASONIC_A = 0;
-	public static final int UlTRASONIC_B = 1;
+	public static final int UlTRASONIC_A = 8;
+	public static final int UlTRASONIC_B = 9;
+	
+	public static final int TOP_TOUCH_SENSOR = 0;
+	public static final int BOTTOM_TOUCH_SENSOR = 7;
 	
 	//Encoders
 //	public static final int LINE_ENCODER_A = 2;

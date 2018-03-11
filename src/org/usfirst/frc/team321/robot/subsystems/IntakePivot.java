@@ -1,6 +1,6 @@
 package org.usfirst.frc.team321.robot.subsystems;
 
-import org.usfirst.frc.team321.robot.RobotMap;
+import org.usfirst.frc.team321.robot.Constants;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -11,7 +11,7 @@ public class IntakePivot extends Subsystem{
 	public static DoubleSolenoid intakepivot;
 	
 	public IntakePivot(){
-		intakepivot = new DoubleSolenoid(RobotMap.PIVOT_FORWARD, RobotMap.PIVOT_REVERSE);
+		intakepivot = new DoubleSolenoid(Constants.PIVOT_FORWARD, Constants.PIVOT_REVERSE);
 		intakepivot.set(DoubleSolenoid.Value.kReverse);
 	}
 	

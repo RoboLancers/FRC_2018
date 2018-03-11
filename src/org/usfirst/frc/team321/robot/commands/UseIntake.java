@@ -44,7 +44,16 @@ public class UseIntake extends Command {
 	
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public enum IntakePower{
+		INTAKE(0.9), OUTTAKE(-0.7);
+		
+		public double power;
+		
+		IntakePower(double power){
+			this.power = power;
+		}
 	}
 }

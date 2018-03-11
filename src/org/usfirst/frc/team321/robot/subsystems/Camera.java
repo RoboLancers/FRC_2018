@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import java.util.Arrays;
-import java.util.StringJoiner;
 
 public class Camera extends Subsystem {
 
@@ -594,7 +593,3 @@ public class Camera extends Subsystem {
 		
 	}
 }
-
-
-//we prayed to poseidon for vision processing
-//...because he's god of the see

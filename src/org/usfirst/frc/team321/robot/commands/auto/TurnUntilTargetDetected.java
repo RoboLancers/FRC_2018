@@ -3,7 +3,6 @@ package org.usfirst.frc.team321.robot.commands.auto;
 import org.usfirst.frc.team321.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurnUntilTargetDetected extends Command {
 	

@@ -1,14 +1,8 @@
 package org.usfirst.frc.team321.robot;
 
-import org.usfirst.frc.team321.robot.commands.autocode.AutoCode;
-import org.usfirst.frc.team321.robot.commands.autocode.AutoCodeEncoder;
-import org.usfirst.frc.team321.robot.commands.autocode.AutoCodeGyro;
-import org.usfirst.frc.team321.robot.commands.autocode.AutoLeftForward;
-import org.usfirst.frc.team321.robot.commands.autocode.AutoMoveToTarget;
-import org.usfirst.frc.team321.robot.commands.autocode.AutoMoveTowardTarget;
-import org.usfirst.frc.team321.robot.commands.autocode.AutoSimple;
+import org.usfirst.frc.team321.robot.commands.autocode.CrossAutoLine;
+import org.usfirst.frc.team321.robot.commands.autocode.AutoSwitch;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoStill;
-import org.usfirst.frc.team321.robot.commands.autocode.AutoTurnUntilTarget;
 import org.usfirst.frc.team321.robot.subsystems.Camera;
 import org.usfirst.frc.team321.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team321.robot.subsystems.GearShifter;
@@ -16,14 +10,11 @@ import org.usfirst.frc.team321.robot.subsystems.Intake;
 import org.usfirst.frc.team321.robot.subsystems.IntakePivot;
 import org.usfirst.frc.team321.robot.subsystems.LinearSlide;
 import org.usfirst.frc.team321.robot.subsystems.Pneumatics;
-import org.usfirst.frc.team321.robot.subsystems.RampRelease;
 import org.usfirst.frc.team321.robot.subsystems.Sensors;
 
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -32,8 +23,7 @@ public class Robot extends IterativeRobot {
 	public static DriveTrain drivetrain;
 	public static LinearSlide linear;
 	public static Intake intake;
-	public static IntakePivot intakepivot; 
-	public static RampRelease ramprelease;
+	public static IntakePivot intakepivot;
 	public static GearShifter gearshifter;
 	public static Pneumatics pneumatics; 
 	
@@ -48,35 +38,38 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		sensors = new Sensors();
-		camera = new Camera(true);
+		//camera = new Camera(true);
 		
 		drivetrain = new DriveTrain();
 		linear = new LinearSlide();
 		intake = new Intake(); 
-		intakepivot = new IntakePivot(); 
-		ramprelease = new RampRelease();
+		intakepivot = new IntakePivot();
 		
 		pneumatics = new Pneumatics();
 		gearshifter = new GearShifter();
 		
 		oi = new OI();
 
-		chooser.addDefault("No Auto", "AutoStill");
-		chooser.addObject("AutoCode", "AutoCode");
-		chooser.addObject("AutoCodeGyro", "AutoCodeGyro");
-		chooser.addObject("AutoWithEncoder", "AutoCodeEncoder");
-		chooser.addObject("AutoLeftForward", "AutoLeftForward");
-		chooser.addObject("AutoForwardAndOuttake", "AutoForwardAndOuttake");
+		chooser.addDefault("Cross Auto Line (Time)", "CrossAutoLine");
+		chooser.addObject("Cross Auto Line (Gyro)", "CrossAutoLineGyro");
+		chooser.addObject("Auto Switch", "AutoSwitch");
+		
 		SmartDashboard.putData("Auto mode", chooser);
 	}
 	
 	public void setDashboardValues() {
 		try {
 			SmartDashboard.putNumber("Gyro", Robot.sensors.getRobotHeading());
-			//SmartDashboard.putNumber("LinearSlide Encoder value/position auto", Robot.linear.getLineEncoderDistance());
 			SmartDashboard.putNumber("Left Encoder Distance", Robot.drivetrain.getLeftEncoderDistance());
 			SmartDashboard.putNumber("Right Encoder Distance", Robot.drivetrain.getRightEncoderDistance());
-			SmartDashboard.putNumber("Linear Slide Encoder value/position", Robot.linear.masterLine.getSelectedSensorPosition(0));
+			SmartDashboard.putNumber("Ultrasonic Sensor", Robot.sensors.getDistanceInMeters());
+			
+			SmartDashboard.putBoolean("Slide Fully Extended", Robot.sensors.isLinearSlideFullyExtended());
+			SmartDashboard.putBoolean("Slide Grounded", Robot.sensors.isLinearSlideAtGround());
+			SmartDashboard.putNumber("Linear Encoder", linear.masterLine.getSelectedSensorPosition(0));
+			
+			/*SmartDashboard.putNumber("Linear Slide Encoder value", Robot.linear.masterLine.getSelectedSensorPosition(0));
+			SmartDashboard.putNumber("LinearSlide Encoder distance", Robot.linear.getLineEncoderDistance());
 			
 			SmartDashboard.putBoolean("isTargetDetected", Robot.camera.isTgtVisible());
 			SmartDashboard.putNumber("Vision Target Angle", Robot.camera.getTgtAngle_Deg());
@@ -84,12 +77,7 @@ public class Robot extends IterativeRobot {
 			NetworkTableInstance.getDefault()
 		        .getEntry("/CameraPublisher/JeVois/streams")
 		        .setStringArray(new String[]{"mjpeg:http://roborio-321-frc.local:1180/?action=stream"});
-	        
-	        if(SmartDashboard.getBoolean("Send Values", false)){
-	        	Robot.camera.setLowerHSV(Robot.camera.getLowerHSV()[0], Robot.camera.getLowerHSV()[1], Robot.camera.getLowerHSV()[2]);
-	        	Robot.camera.setUpperHSV(Robot.camera.getUpperHSV()[0], Robot.camera.getUpperHSV()[1], Robot.camera.getUpperHSV()[0]);
-	        	SmartDashboard.putBoolean("Send Values", false);
-	        }
+	        */
 		} catch (Exception e) {}
 	}
 
@@ -106,20 +94,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		switch (chooser.getSelected()) {
-			case "AutoCode":
-				autonomousCommand = new AutoCode();
+			case "CrossAutoLine":
+				autonomousCommand = new CrossAutoLine(false);
 				break;
-			case "AutoGyroCode":
-				autonomousCommand = new AutoCodeGyro();
+			case "CrossAutoLineGyro":
+				autonomousCommand = new CrossAutoLine(true);
 				break;
-			case "AutoCodeEncoder":
-				autonomousCommand = new AutoCodeEncoder();
-				break;
-			case "AutoLeftForward":
-				autonomousCommand = new AutoLeftForward();
-				break;
-			case "AutoForwardAndOuttake":
-				autonomousCommand = new AutoSimple();
+			case "AutoSwitch":
+				autonomousCommand = new AutoSwitch();
 				break;
 			default:
 				autonomousCommand = new AutoStill();
@@ -129,11 +111,12 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 		
-		camera.setCamVisionProcMode();
+		//camera.setCamVisionProcMode();
 	}
 
 	@Override
 	public void autonomousPeriodic() {
+		gearshifter.setLowGear();
 		setDashboardValues();
 		Scheduler.getInstance().run();
 	}
@@ -143,8 +126,10 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		
-		camera.setCamHumanDriverMode();
+		//camera.setCamHumanDriverMode();
 		drivetrain.resetEncoder();
+		gearshifter.setLowGear();
+		intakepivot.setDown();
 	}
 
 	@Override
@@ -154,7 +139,5 @@ public class Robot extends IterativeRobot {
 	}
 
 	@Override
-	public void testPeriodic() {
-		LiveWindow.run();
-	}
+	public void testPeriodic() {}
 }

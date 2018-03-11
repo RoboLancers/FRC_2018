@@ -1,6 +1,6 @@
 package org.usfirst.frc.team321.robot.subsystems;
 
-import org.usfirst.frc.team321.robot.RobotMap;
+import org.usfirst.frc.team321.robot.Constants;
 import org.usfirst.frc.team321.robot.commands.UseLinearSlides;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -20,8 +20,8 @@ public class LinearSlide extends Subsystem {
 	public static final double kDistancePerPulse = CIRCUMFERENCE / TPR;
 
 	public LinearSlide() {
-		masterLine = new TalonSRX(RobotMap.LINE_A);
-		slaveLine = new TalonSRX(RobotMap.LINE_B);
+		masterLine = new TalonSRX(Constants.LINE_A);
+		slaveLine = new TalonSRX(Constants.LINE_B);
 		
 		masterLine.setNeutralMode(NeutralMode.Brake);
 		slaveLine.setNeutralMode(NeutralMode.Brake);

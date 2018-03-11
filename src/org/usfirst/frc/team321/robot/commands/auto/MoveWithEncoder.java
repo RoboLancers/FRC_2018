@@ -15,8 +15,6 @@ public class MoveWithEncoder extends Command{
 	
 	public MoveWithEncoder(double distance) {
 		this.distance = distance;
-		//this.startLeftEncoderDistance = Robot.drivetrain.getLeftEncoderDistance();
-		//this.startRightEncoderDistance = Robot.drivetrain.getRightEncoderDistance();
 		pid = new LancerPID(0.5, 0, 0.001, 0);
 		pid.setReference(distance);
 		Robot.drivetrain.resetEncoder();
@@ -35,8 +33,8 @@ public class MoveWithEncoder extends Command{
 	
 	@Override
 	protected boolean isFinished() {
-		return Math.abs(Robot.drivetrain.getLeftEncoderDistance()) >= Math.abs(distance) || 
-				Math.abs(Robot.drivetrain.getRightEncoderDistance()) >= Math.abs(distance);
+		return (Math.abs(Robot.drivetrain.getLeftEncoderDistance()) >= Math.abs(distance) || 
+				Math.abs(Robot.drivetrain.getRightEncoderDistance()) >= Math.abs(distance)) || Robot.sensors.getDistanceInMeters() < 0.2;
 	}
 	
 	@Override

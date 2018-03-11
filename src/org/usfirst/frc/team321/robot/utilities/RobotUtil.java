@@ -1,11 +1,6 @@
 package org.usfirst.frc.team321.robot.utilities;
 
-import edu.wpi.first.wpilibj.Timer;
-
 public class RobotUtil {
-
-	private static Timer timer = new Timer();
-	private static boolean isTimeTracking = false;
 	
 	public static double range(double input, double min, double max){
 		if(input > max) {
@@ -15,6 +10,10 @@ public class RobotUtil {
 		} else {
 			return input;
 		}
+	}
+	
+	public static double range(double value, double max){
+		return value > max ? max : (value < -max ? -max : value);
 	}
 
 	public static double floor(double num, int places) {
@@ -50,41 +49,16 @@ public class RobotUtil {
 	 * 
 	 * Note: Set power to 0 to move in place
 	 */
-	public static double[] moveToTarget(double power, double currentAngle, double targetAngle, double proportion) {
+	public static double[] moveToTarget(double power, double currentAngle, double targetAngle, double kP) {
 		double[] motorSpeed = new double[2];
 		
-		motorSpeed[0] = RobotUtil.range(power + (currentAngle - targetAngle) * proportion, -1, 1);
-	    motorSpeed[1] = RobotUtil.range(power - (currentAngle - targetAngle) * proportion, -1, 1);
+		motorSpeed[0] = RobotUtil.range(power + (currentAngle - targetAngle) * kP, -1, 1);
+	    motorSpeed[1] = RobotUtil.range(power - (currentAngle - targetAngle) * kP, -1, 1);
 	    
 	    motorSpeed[0] = RobotUtil.floor(motorSpeed[0], 2);
 	    motorSpeed[1] = RobotUtil.floor(motorSpeed[1], 2);
 	    
 	    return motorSpeed;
-	}
-	
-	public static void startTimer() {
-		timer.reset();
-		timer.start();
-		isTimeTracking = true;
-	}
-	
-	public static void stopTimer() {
-		timer.stop();
-		timer.reset();
-		isTimeTracking = false;
-	}
-	
-	public static boolean isTimeTracking() {
-		return isTimeTracking;
-	}
-	
-	public static boolean isTimePassed(double seconds) {
-		if (timer.get() >= seconds) {
-			stopTimer();
-			return true;
-		}
-
-		return false;
 	}
 	
 	public static double[] arcadeDrive(double moveValue, double rotateValue) {

@@ -1,10 +1,11 @@
 package org.usfirst.frc.team321.robot.subsystems;
 
-import org.usfirst.frc.team321.robot.RobotMap;
+import org.usfirst.frc.team321.robot.Constants;
 import org.usfirst.frc.team321.robot.utilities.RobotUtil;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -13,16 +14,29 @@ public class Sensors extends Subsystem {
 
 	public AHRS navX;
 	public Ultrasonic ultrasonic;
+	public DigitalInput topTouchSensor; 
+	public DigitalInput bottomTouchSensor; 
 	
 	public Sensors() {
 		navX = new AHRS(SerialPort.Port.kMXP);
-		ultrasonic = new Ultrasonic(RobotMap.UlTRASONIC_A, RobotMap.UlTRASONIC_B);
+		ultrasonic = new Ultrasonic(Constants.UlTRASONIC_A, Constants.UlTRASONIC_B);
+		topTouchSensor = new DigitalInput(Constants.TOP_TOUCH_SENSOR);
+		bottomTouchSensor = new DigitalInput(Constants.BOTTOM_TOUCH_SENSOR);
+		
 		navX.reset();
 		navX.resetDisplacement();
 		
 		ultrasonic.setAutomaticMode(true);
 		ultrasonic.setEnabled(true);
 		ultrasonic.setDistanceUnits(Ultrasonic.Unit.kMillimeters);
+	}
+	
+	public boolean isLinearSlideFullyExtended() {
+		return !topTouchSensor.get();
+	}
+	
+	public boolean isLinearSlideAtGround() {
+		return !bottomTouchSensor.get();
 	}
 	
 	public double getDistanceInMeters() {
