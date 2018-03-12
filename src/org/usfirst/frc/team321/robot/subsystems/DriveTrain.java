@@ -106,7 +106,6 @@ public class DriveTrain extends Subsystem {
 		leftSlave2.setNeutralMode(mode);
 	}
 	
-	//Gets amount of cm traveled per revolution of wheel (by encoder)
 	public double getTicksPerInch() {
 		return (TPR / CIRCUMFERENCE) / 10.0;
 	}

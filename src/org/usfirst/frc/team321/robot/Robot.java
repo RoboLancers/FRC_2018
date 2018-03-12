@@ -2,6 +2,8 @@ package org.usfirst.frc.team321.robot;
 
 import org.usfirst.frc.team321.robot.commands.autocode.CrossAutoLine;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoSwitch;
+import org.usfirst.frc.team321.robot.commands.autocode.AutoScaleLeft;
+import org.usfirst.frc.team321.robot.commands.autocode.AutoScaleRight;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoStill;
 import org.usfirst.frc.team321.robot.subsystems.Camera;
 import org.usfirst.frc.team321.robot.subsystems.DriveTrain;
@@ -53,6 +55,9 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("Cross Auto Line (Time)", "CrossAutoLine");
 		chooser.addObject("Cross Auto Line (Gyro)", "CrossAutoLineGyro");
 		chooser.addObject("Auto Switch", "AutoSwitch");
+		chooser.addObject("Auto Scale Left", "AutoScaleLeft");
+		chooser.addObject("Auto Scale Right", "AutoScaleRight");
+
 		
 		SmartDashboard.putData("Auto mode", chooser);
 	}
@@ -102,6 +107,12 @@ public class Robot extends IterativeRobot {
 				break;
 			case "AutoSwitch":
 				autonomousCommand = new AutoSwitch();
+				break;
+			case "AutoScaleLeft" :
+				autonomousCommand = new AutoScaleLeft();
+				break;
+			case "AutoScaleRight" :
+				autonomousCommand = new AutoScaleRight();
 				break;
 			default:
 				autonomousCommand = new AutoStill();
