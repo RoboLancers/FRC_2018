@@ -2,6 +2,8 @@ package org.usfirst.frc.team321.robot;
 
 import org.usfirst.frc.team321.robot.commands.autocode.CrossAutoLine;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoSwitch;
+import org.usfirst.frc.team321.robot.commands.autocode.AutoTurn;
+import org.usfirst.frc.team321.robot.commands.autocode.AutoMeters;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoScaleLeft;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoScaleRight;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoStill;
@@ -53,6 +55,8 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 
 		chooser.addDefault("Cross Auto Line (Time)", "CrossAutoLine");
+		chooser.addObject("TestEncoder", "TestEncoder");
+		chooser.addObject("TestGyro", "TestGyro");
 		chooser.addObject("Cross Auto Line (Gyro)", "CrossAutoLineGyro");
 		chooser.addObject("Auto Switch", "AutoSwitch");
 		chooser.addObject("Auto Scale Left", "AutoScaleLeft");
@@ -64,7 +68,7 @@ public class Robot extends IterativeRobot {
 	
 	public void setDashboardValues() {
 		try {
-			SmartDashboard.putNumber("Gyro", Robot.sensors.getRobotHeading());
+			SmartDashboard.putNumber("Gyro", Robot.sensors.navX.getAngle());
 			SmartDashboard.putNumber("Left Encoder Distance", Robot.drivetrain.getLeftEncoderDistance());
 			SmartDashboard.putNumber("Right Encoder Distance", Robot.drivetrain.getRightEncoderDistance());
 			SmartDashboard.putNumber("Ultrasonic Sensor", Robot.sensors.getDistanceInMeters());
@@ -113,6 +117,12 @@ public class Robot extends IterativeRobot {
 				break;
 			case "AutoScaleRight" :
 				autonomousCommand = new AutoScaleRight();
+				break;
+			case "TestEncoder":
+				autonomousCommand = new AutoMeters();
+				break;
+			case "TestGyro":
+				autonomousCommand = new AutoTurn();
 				break;
 			default:
 				autonomousCommand = new AutoStill();

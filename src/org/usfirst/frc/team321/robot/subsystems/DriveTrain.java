@@ -3,6 +3,7 @@ package org.usfirst.frc.team321.robot.subsystems;
 import org.usfirst.frc.team321.robot.Robot;
 import org.usfirst.frc.team321.robot.Constants;
 import org.usfirst.frc.team321.robot.commands.UseArcadeDrive;
+import org.usfirst.frc.team321.robot.commands.VelocityControl;
 import org.usfirst.frc.team321.robot.utilities.RobotUtil;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -36,31 +37,37 @@ public class DriveTrain extends Subsystem {
 		rightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 		rightMaster.setSensorPhase(true);
 		
-		/*
+		
 		leftSlave1.set(ControlMode.Follower, leftMaster.getDeviceID());
 		leftSlave2.set(ControlMode.Follower, leftMaster.getDeviceID());
 		
 		rightSlave1.set(ControlMode.Follower, rightMaster.getDeviceID());
 		rightSlave2.set(ControlMode.Follower, rightMaster.getDeviceID());
-		*/
-
+		
+		leftSlave2.setInverted(true);
+		rightMaster.setInverted(true);
+		rightSlave2.setInverted(true);
+		
+		rightMaster.config_kF(0, 0.1097, 0);
+		rightMaster.config_kP(0, 0.8, 0);
+		
+		leftMaster.config_kF(0, 0.1097, 0);
+		leftMaster.config_kP(0, 0.8, 0);
+		
 		this.setBrake();
 		this.resetEncoder();
 	}
 	
 	public void setLeft(double power) {
 		power = RobotUtil.range(power, -1, 1) * maxMotorPower;
+		
 		leftMaster.set(ControlMode.PercentOutput, power);
-		leftSlave1.set(ControlMode.PercentOutput, power);
-		leftSlave2.set(ControlMode.PercentOutput, -power);
 	}
 	
 	public void setRight(double power) {
 		power = RobotUtil.range(power, -1, 1) * maxMotorPower;
 		
-		rightMaster.set(ControlMode.PercentOutput, -power);
-		rightSlave1.set(ControlMode.PercentOutput, power);
-		rightSlave2.set(ControlMode.PercentOutput, -power);
+		rightMaster.set(ControlMode.PercentOutput, power);
 	}
 	
 	public void setAll(double power) {

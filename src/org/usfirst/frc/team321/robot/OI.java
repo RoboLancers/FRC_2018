@@ -19,7 +19,7 @@ public class OI {
 		xboxController = new XboxController(0);
 		flightController = new FlightController(1);
 		
-		xboxController.rightTrigger.whileHeld(new DSolenoidHold(Robot.gearshifter, GearShifter.gearShifter, DoubleSolenoid.Value.kReverse));
+		xboxController.rightTrigger.whileHeld(new DSolenoidHold(Robot.gearshifter, GearShifter.gearShifter, DoubleSolenoid.Value.kForward));
 		
 		xboxController.leftBumper.whileHeld(new UseIntake(IntakePower.INTAKE.power, true));
 		xboxController.rightBumper.whileHeld(new UseIntake(IntakePower.OUTTAKE.power, false));

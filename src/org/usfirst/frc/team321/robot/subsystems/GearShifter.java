@@ -12,20 +12,16 @@ public class GearShifter extends Subsystem {
 	
 	public GearShifter(){
 		gearShifter = new DoubleSolenoid(Constants.GEARSHIFTER_FORWARD, Constants.GEARSHIFTER_REVERSE);
-		gearShifter.set(DoubleSolenoid.Value.kReverse);
-	}
-	
-	public void setHighGear() {
 		gearShifter.set(DoubleSolenoid.Value.kForward);
 	}
 	
-	public void setLowGear() {
+	public void setHighGear() {
 		gearShifter.set(DoubleSolenoid.Value.kReverse);
 	}
 	
-	public boolean isHighGear() {
-		return gearShifter.get() == DoubleSolenoid.Value.kForward;
-	}  
+	public void setLowGear() {
+		gearShifter.set(DoubleSolenoid.Value.kForward);
+	}
 
 	@Override
 	protected void initDefaultCommand() {

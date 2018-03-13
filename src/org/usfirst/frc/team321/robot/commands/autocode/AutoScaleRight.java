@@ -4,7 +4,7 @@ import org.usfirst.frc.team321.robot.commands.UseArcadeDrive;
 import org.usfirst.frc.team321.robot.commands.UseIntake;
 import org.usfirst.frc.team321.robot.commands.UseLinearSlides;
 import org.usfirst.frc.team321.robot.commands.auto.MoveWithEncoder;
-import org.usfirst.frc.team321.robot.commands.auto.TurnInPlace;
+import org.usfirst.frc.team321.robot.commands.auto.MoveInAngle;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -21,10 +21,10 @@ public class AutoScaleRight extends CommandGroup {
 			addSequential(new UseIntake(1), 2);
 		} else {
 			addSequential(new MoveWithEncoder(214));
-			addSequential(new TurnInPlace(-90, 3));
+			addSequential(new MoveInAngle(0, -90), 3);
 			addSequential(new MoveWithEncoder(186));
 			addParallel(new UseLinearSlides(0.8));
-			addSequential(new TurnInPlace(90, 3));
+			addSequential(new MoveInAngle(0, 90), 3);
 			addSequential(new UseIntake(1), 2);
 		}
 		

@@ -2,7 +2,7 @@ package org.usfirst.frc.team321.robot.commands.autocode;
 
 import org.usfirst.frc.team321.robot.commands.UseLinearSlides;
 import org.usfirst.frc.team321.robot.commands.auto.MoveTowardTarget;
-import org.usfirst.frc.team321.robot.commands.auto.TurnInPlace;
+import org.usfirst.frc.team321.robot.commands.auto.MoveInAngle;
 import org.usfirst.frc.team321.robot.commands.auto.TurnUntilTargetDetected;
 import org.usfirst.frc.team321.robot.commands.auto.UseIntake;
 
