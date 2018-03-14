@@ -24,8 +24,8 @@ public class UseArcadeDrive extends Command {
 		
 		double leftMotorSpeed, rightMotorSpeed;
 		
-		leftMotorSpeed = Math.abs(throttle + rotate) >= tolerance ? (throttle + rotate) - Robot.drivetrain.getDriveError() : 0;
-	    rightMotorSpeed = Math.abs(throttle - rotate) >= tolerance ? (throttle - rotate) + Robot.drivetrain.getDriveError() : 0;	
+		leftMotorSpeed = Math.abs(throttle + rotate) >= tolerance ? (throttle + rotate): 0;
+	    rightMotorSpeed = Math.abs(throttle - rotate) >= tolerance ? (throttle - rotate) : 0;	
 		
 	    SmartDashboard.putNumber("Drive Error Velocity", Robot.drivetrain.getDriveError());
 	    SmartDashboard.putNumber("Arcade Left Motor Speed", leftMotorSpeed);

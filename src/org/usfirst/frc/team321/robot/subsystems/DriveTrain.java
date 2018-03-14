@@ -57,6 +57,7 @@ public class DriveTrain extends Subsystem {
 		leftMaster.config_kP(0, 0.8, 0);
 		leftMaster.config_kD(0, 80, 0);
 		
+		rightMaster.setSensorPhase(false);
 		this.setBrake();
 		this.resetEncoder();
 	}
@@ -121,6 +122,16 @@ public class DriveTrain extends Subsystem {
 		leftSlave2.setNeutralMode(mode);
 	}
 	
+	public void enableRamping (boolean ramp) {
+		if (ramp) {
+			leftMaster.configOpenloopRamp(0.25, 0);
+			rightMaster.configOpenloopRamp(0.25, 0);
+		} else {
+			leftMaster.configOpenloopRamp(0, 0);
+			rightMaster.configOpenloopRamp(0, 0);
+		}
+	}
+	
 	//returns total ticks required to travel to your target distance in meters
 	public static double getTargetTicks(double targetDistance){
 		return (targetDistance * 10 / kDistancePerPulse); 
@@ -160,7 +171,7 @@ public class DriveTrain extends Subsystem {
 	
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new VelocityControl());
+		setDefaultCommand(new UseArcadeDrive());
 	}
 	
 	public static class DrivetrainProfiling {

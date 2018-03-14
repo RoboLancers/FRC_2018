@@ -1,12 +1,15 @@
 package org.usfirst.frc.team321.robot;
 
-import org.usfirst.frc.team321.robot.commands.autocode.CrossAutoLine;
-import org.usfirst.frc.team321.robot.commands.autocode.AutoSwitch;
-import org.usfirst.frc.team321.robot.commands.autocode.AutoTurn;
+import java.nio.file.Paths;
+
 import org.usfirst.frc.team321.robot.commands.autocode.AutoMeters;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoScaleLeft;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoScaleRight;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoStill;
+import org.usfirst.frc.team321.robot.commands.autocode.AutoSwitch;
+import org.usfirst.frc.team321.robot.commands.autocode.AutoTurn;
+import org.usfirst.frc.team321.robot.commands.autocode.CrossAutoLine;
+import org.usfirst.frc.team321.robot.commands.pathfinder.FollowPath;
 import org.usfirst.frc.team321.robot.subsystems.Camera;
 import org.usfirst.frc.team321.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team321.robot.subsystems.GearShifter;
@@ -16,6 +19,7 @@ import org.usfirst.frc.team321.robot.subsystems.LinearSlide;
 import org.usfirst.frc.team321.robot.subsystems.Pneumatics;
 import org.usfirst.frc.team321.robot.subsystems.Sensors;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -42,7 +46,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		sensors = new Sensors();
-		//camera = new Camera(true);
+		camera = new Camera(true);
 		
 		drivetrain = new DriveTrain();
 		linear = new LinearSlide();
@@ -61,6 +65,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Auto Switch", "AutoSwitch");
 		chooser.addObject("Auto Scale Left", "AutoScaleLeft");
 		chooser.addObject("Auto Scale Right", "AutoScaleRight");
+		chooser.addObject("TestPathfinder", "TestPathfinder");
 
 		
 		SmartDashboard.putData("Auto mode", chooser);
@@ -81,8 +86,8 @@ public class Robot extends IterativeRobot {
 			
 			//SmartDashboard.putNumber("Linear Encoder", linear.masterLine.getSelectedSensorPosition(0));
 			
-			/*SmartDashboard.putNumber("Linear Slide Encoder value", Robot.linear.masterLine.getSelectedSensorPosition(0));
-			SmartDashboard.putNumber("LinearSlide Encoder distance", Robot.linear.getLineEncoderDistance());
+			SmartDashboard.putNumber("Linear Slide Encoder value", Robot.linear.masterLine.getSelectedSensorPosition(0));
+			//SmartDashboard.putNumber("LinearSlide Encoder distance", Robot.linear.getLineEncoderDistance());
 			
 			SmartDashboard.putBoolean("isTargetDetected", Robot.camera.isTgtVisible());
 			SmartDashboard.putNumber("Vision Target Angle", Robot.camera.getTgtAngle_Deg());
@@ -90,7 +95,7 @@ public class Robot extends IterativeRobot {
 			NetworkTableInstance.getDefault()
 		        .getEntry("/CameraPublisher/JeVois/streams")
 		        .setStringArray(new String[]{"mjpeg:http://roborio-321-frc.local:1180/?action=stream"});
-	        */
+	        
 		} catch (Exception e) {}
 	}
 
@@ -128,6 +133,9 @@ public class Robot extends IterativeRobot {
 			case "TestGyro":
 				autonomousCommand = new AutoTurn();
 				break;
+			case "TestPathfinder":
+				autonomousCommand = new FollowPath(org.usfirst.frc.team321.robot.commands.pathfinder.Paths.test);
+				break;
 			default:
 				autonomousCommand = new AutoStill();
 				break;
@@ -135,6 +143,8 @@ public class Robot extends IterativeRobot {
 		
 		if (autonomousCommand != null)
 			autonomousCommand.start();
+		
+		drivetrain.enableRamping(false);
 		
 		//camera.setCamVisionProcMode();
 	}
@@ -153,6 +163,7 @@ public class Robot extends IterativeRobot {
 		
 		//camera.setCamHumanDriverMode();
 		drivetrain.resetEncoder();
+		drivetrain.enableRamping(true);
 		gearshifter.setLowGear();
 		intakepivot.setDown();
 	}

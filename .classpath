@@ -12,5 +12,10 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/pathfinder"/>
 	<classpathentry kind="lib" path="C:/Users/jiong/navx-mxp/java/lib/navx_frc.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jiong/wpilib/user/java/lib/CTRE_Phoenix.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jiong/wpilib/user/java/lib/Pathfinder-Java-1.8.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/jiong/wpilib/user/java/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
