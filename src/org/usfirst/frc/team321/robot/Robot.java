@@ -75,7 +75,11 @@ public class Robot extends IterativeRobot {
 			
 			SmartDashboard.putBoolean("Slide Fully Extended", Robot.sensors.isLinearSlideFullyExtended());
 			SmartDashboard.putBoolean("Slide Grounded", Robot.sensors.isLinearSlideAtGround());
-			SmartDashboard.putNumber("Linear Encoder", linear.masterLine.getSelectedSensorPosition(0));
+			
+			SmartDashboard.putNumber("Left Velocity", Robot.drivetrain.leftMaster.getSelectedSensorVelocity(0));
+			SmartDashboard.putNumber("Right Velocity", Robot.drivetrain.rightMaster.getSelectedSensorVelocity(0));
+			
+			//SmartDashboard.putNumber("Linear Encoder", linear.masterLine.getSelectedSensorPosition(0));
 			
 			/*SmartDashboard.putNumber("Linear Slide Encoder value", Robot.linear.masterLine.getSelectedSensorPosition(0));
 			SmartDashboard.putNumber("LinearSlide Encoder distance", Robot.linear.getLineEncoderDistance());

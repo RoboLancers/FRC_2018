@@ -1,7 +1,10 @@
 package org.usfirst.frc.team321.robot.commands.auto;
 
 import org.usfirst.frc.team321.robot.Robot;
+import org.usfirst.frc.team321.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team321.robot.utilities.LancerPID;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -27,8 +30,13 @@ public class MoveWithEncoder extends Command{
 	}
 	
 	protected void execute() {
+		/*
 		Robot.drivetrain.setLeft(pid.calcPID(Robot.drivetrain.getLeftEncoderDistance()));
 		Robot.drivetrain.setRight(pid.calcPID(Robot.drivetrain.getRightEncoderDistance()));
+		*/
+		
+		Robot.drivetrain.leftMaster.set(ControlMode.Position, DriveTrain.getTargetTicks(distance));
+		Robot.drivetrain.rightMaster.set(ControlMode.Position, DriveTrain.getTargetTicks(distance));
 	}
 	
 	@Override

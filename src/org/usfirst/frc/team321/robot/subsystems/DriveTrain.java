@@ -37,7 +37,6 @@ public class DriveTrain extends Subsystem {
 		rightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 		rightMaster.setSensorPhase(true);
 		
-		
 		leftSlave1.set(ControlMode.Follower, leftMaster.getDeviceID());
 		leftSlave2.set(ControlMode.Follower, leftMaster.getDeviceID());
 		
@@ -48,11 +47,15 @@ public class DriveTrain extends Subsystem {
 		rightMaster.setInverted(true);
 		rightSlave2.setInverted(true);
 		
+		//F gain = ([Percent Output] x 1023) / [Velocity]
+		
 		rightMaster.config_kF(0, 0.1097, 0);
 		rightMaster.config_kP(0, 0.8, 0);
+		rightMaster.config_kD(0, 800, 0);
 		
 		leftMaster.config_kF(0, 0.1097, 0);
 		leftMaster.config_kP(0, 0.8, 0);
+		leftMaster.config_kD(0, 80, 0);
 		
 		this.setBrake();
 		this.resetEncoder();
@@ -113,13 +116,9 @@ public class DriveTrain extends Subsystem {
 		leftSlave2.setNeutralMode(mode);
 	}
 	
-	public double getTicksPerInch() {
-		return (TPR / CIRCUMFERENCE) / 10.0;
-	}
-	
-	//returns total ticks required to travel to your target distance
-	public double targetTicks(double targetDistance){
-		return (targetDistance * getTicksPerInch() / 10.0); 
+	//returns total ticks required to travel to your target distance in meters
+	public static double getTargetTicks(double targetDistance){
+		return (targetDistance * 10 / kDistancePerPulse); 
 	}
 	
 	public double getLeftEncoderDistance(){
@@ -143,8 +142,13 @@ public class DriveTrain extends Subsystem {
 		rightMaster.setSelectedSensorPosition(0, 0, 0);
 	}
 	
+	//Returns the error in velocity from left and right (leftVelocity - rightVelocity)
+	public double getDriveError() {
+		return leftMaster.getSelectedSensorVelocity(0) - rightMaster.getSelectedSensorVelocity(0);
+	}
+	
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new UseArcadeDrive());
+		setDefaultCommand(new VelocityControl());
 	}
 }

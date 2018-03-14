@@ -47,7 +47,7 @@ public class LinearSlide extends Subsystem {
 	}
 	
 	public void move(double power) {
-		masterLine.set(ControlMode.PercentOutput, power);
+		masterLine.set(ControlMode.PercentOutput, -power);
 	}
 	
 	/*
