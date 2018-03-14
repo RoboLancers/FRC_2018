@@ -3,7 +3,6 @@ package org.usfirst.frc.team321.robot.subsystems;
 import org.usfirst.frc.team321.robot.Robot;
 import org.usfirst.frc.team321.robot.Constants;
 import org.usfirst.frc.team321.robot.commands.UseArcadeDrive;
-import org.usfirst.frc.team321.robot.commands.VelocityControl;
 import org.usfirst.frc.team321.robot.utilities.RobotUtil;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -68,6 +67,11 @@ public class DriveTrain extends Subsystem {
 		power = RobotUtil.range(power, -1, 1) * maxMotorPower;
 		
 		rightMaster.set(ControlMode.PercentOutput, power);
+	}
+	
+	public void setMotors(double leftPower, double rightPower) {
+		setLeft(leftPower);
+		setRight(rightPower);
 	}
 	
 	public void setAll(double power) {
@@ -143,8 +147,41 @@ public class DriveTrain extends Subsystem {
 		rightMaster.setSelectedSensorPosition(0, 0, 0);
 	}
 	
+	public void resetForPath() {
+        DrivetrainProfiling.isProfileFinished = false;
+        resetEncoder();
+        Robot.sensors.navX.reset();
+	}
+	
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new UseArcadeDrive());
+	}
+	
+	public static class DrivetrainProfiling {
+        //TODO: TUNE CONSTANTS
+        public static double kp = 0.8; //1.2;
+        public static double ki = 0.0;
+        public static double kd = 0.0;
+        
+        public static double gp = 0.0375;
+        public static double gd = 0.0;
+
+        //Gyro logging for motion profiling
+        public static double last_gyro_error = 0.0;
+        public static double path_angle_offset = 0.0;
+        
+        public static final double max_velocity = 5.0; //4 is real
+        public static final double kv = 1.0 / max_velocity;
+        public static final double max_acceleration = 3.8; // Estimated #
+        public static final double ka = 0.05; //0.015
+        public static final double max_jerk = 16.0;
+        public static final double wheel_diameter = 0.125;
+
+        public static final double wheel_base_width = 0.72;
+        public static final int ticks_per_rev = 4096;
+        public static final double dt = 0.02;
+        
+        public static boolean isProfileFinished = false;
 	}
 }
