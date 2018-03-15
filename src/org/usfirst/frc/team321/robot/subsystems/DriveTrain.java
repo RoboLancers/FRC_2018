@@ -6,6 +6,7 @@ import org.usfirst.frc.team321.robot.commands.UseArcadeDrive;
 import org.usfirst.frc.team321.robot.commands.VelocityControl;
 import org.usfirst.frc.team321.robot.utilities.RobotUtil;
 
+import com.ctre.phoenix.motorcontrol.ControlFrame;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -35,7 +36,7 @@ public class DriveTrain extends Subsystem {
 		
 		leftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 		rightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-		rightMaster.setSensorPhase(true);
+		rightMaster.setSensorPhase(false);
 		
 		leftSlave1.set(ControlMode.Follower, leftMaster.getDeviceID());
 		leftSlave2.set(ControlMode.Follower, leftMaster.getDeviceID());
@@ -49,20 +50,20 @@ public class DriveTrain extends Subsystem {
 		
 		//F gain = ([Percent Output] x 1023) / [Velocity]
 		
-		rightMaster.config_kF(0, 0.1097, 0);
-		rightMaster.config_kP(0, 0.8, 0);
-		rightMaster.config_kD(0, 800, 0);
+		rightMaster.config_kF(0, 0, 0);
+		rightMaster.config_kP(0, 0.1, 0);
+		rightMaster.config_kD(0, 0, 0);
 		
-		leftMaster.config_kF(0, 0.1097, 0);
-		leftMaster.config_kP(0, 0.8, 0);
-		leftMaster.config_kD(0, 80, 0);
+		leftMaster.config_kF(0, 0, 0);
+		leftMaster.config_kP(0, 0.1, 0);
+		leftMaster.config_kD(0, 0, 0);
 		
-		rightMaster.setSensorPhase(false);
 		this.setBrake();
 		this.resetEncoder();
 	}
 	
 	public void setLeft(double power) {
+		power *= 0.95;
 		power = RobotUtil.range(power, -1, 1) * maxMotorPower;
 		
 		leftMaster.set(ControlMode.PercentOutput, power);
@@ -124,8 +125,8 @@ public class DriveTrain extends Subsystem {
 	
 	public void enableRamping (boolean ramp) {
 		if (ramp) {
-			leftMaster.configOpenloopRamp(0.25, 0);
-			rightMaster.configOpenloopRamp(0.25, 0);
+			leftMaster.configOpenloopRamp(0.15, 0);
+			rightMaster.configOpenloopRamp(0.15, 0);
 		} else {
 			leftMaster.configOpenloopRamp(0, 0);
 			rightMaster.configOpenloopRamp(0, 0);
@@ -160,7 +161,7 @@ public class DriveTrain extends Subsystem {
 	
 	//Returns the error in velocity from left and right (leftVelocity - rightVelocity)
 	public double getDriveError() {
-		return leftMaster.getSelectedSensorVelocity(0) - rightMaster.getSelectedSensorVelocity(0);
+		return Math.abs(leftMaster.getSelectedSensorVelocity(0)) - Math.abs(rightMaster.getSelectedSensorVelocity(0));
 	}
 	
 	public void resetForPath() {
@@ -172,6 +173,7 @@ public class DriveTrain extends Subsystem {
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new UseArcadeDrive());
+		//setDefaultCommand(new VelocityControl());
 	}
 	
 	public static class DrivetrainProfiling {

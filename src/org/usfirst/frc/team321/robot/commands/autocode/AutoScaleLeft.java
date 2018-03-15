@@ -1,6 +1,5 @@
 package org.usfirst.frc.team321.robot.commands.autocode;
 
-import org.usfirst.frc.team321.robot.commands.UseArcadeDrive;
 import org.usfirst.frc.team321.robot.commands.UseIntake;
 import org.usfirst.frc.team321.robot.commands.UseLinearSlides;
 import org.usfirst.frc.team321.robot.commands.auto.MoveWithEncoder;

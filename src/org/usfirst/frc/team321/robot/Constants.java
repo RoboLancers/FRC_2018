@@ -4,14 +4,14 @@ public class Constants {
 	//TalonSRXs
 	public static final int LEFT_MASTER_MOTOR = 1;
 	public static final int LEFT_SLAVE_A = 5;
-	public static final int LEFT_SLAVE_B = 10;
+	public static final int LEFT_SLAVE_B = 12;
 	  
 	public static final int RIGHT_MASTER_MOTOR = 9;
 	public static final int RIGHT_SLAVE_A = 4;
 	public static final int RIGHT_SLAVE_B = 8;
 	
 	public static final int LINE_A = 6;
-	public static final int LINE_B = 12;
+	public static final int LINE_B = 10;
 	
 	public static final int INTAKE_LEFT = 2;
 	public static final int INTAKE_RIGHT = 11;

@@ -1,8 +1,7 @@
 package org.usfirst.frc.team321.robot;
 
-import java.nio.file.Paths;
-
 import org.usfirst.frc.team321.robot.commands.autocode.AutoMeters;
+import org.usfirst.frc.team321.robot.commands.autocode.AutoMiddle;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoScaleLeft;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoScaleRight;
 import org.usfirst.frc.team321.robot.commands.autocode.AutoStill;
@@ -63,16 +62,18 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("TestGyro", "TestGyro");
 		chooser.addObject("Cross Auto Line (Gyro)", "CrossAutoLineGyro");
 		chooser.addObject("Auto Switch", "AutoSwitch");
+		chooser.addObject("Auto Middle", "AutoMiddle");
 		chooser.addObject("Auto Scale Left", "AutoScaleLeft");
 		chooser.addObject("Auto Scale Right", "AutoScaleRight");
 		chooser.addObject("TestPathfinder", "TestPathfinder");
 
-		
 		SmartDashboard.putData("Auto mode", chooser);
 	}
 	
 	public void setDashboardValues() {
 		try {
+			SmartDashboard.putNumber("Robot pitch", Robot.sensors.navX.getPitch());
+			SmartDashboard.putNumber("Robot roll", Robot.sensors.navX.getRoll());
 			SmartDashboard.putNumber("Gyro", Robot.sensors.navX.getAngle());
 			SmartDashboard.putNumber("Left Encoder Distance", Robot.drivetrain.getLeftEncoderDistance());
 			SmartDashboard.putNumber("Right Encoder Distance", Robot.drivetrain.getRightEncoderDistance());
@@ -126,6 +127,9 @@ public class Robot extends IterativeRobot {
 				break;
 			case "AutoScaleRight" :
 				autonomousCommand = new AutoScaleRight();
+				break;
+			case "AutoMiddle":
+				autonomousCommand = new AutoMiddle();
 				break;
 			case "TestEncoder":
 				autonomousCommand = new AutoMeters();

@@ -6,6 +6,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutoTurn extends CommandGroup {
 	public AutoTurn() {
-		addSequential(new MoveInAngle(0.7, 90), 2);
+		addSequential(new MoveInAngle(0.7, 0), 2);
 	}
 }

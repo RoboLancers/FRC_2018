@@ -11,10 +11,17 @@ public class MoveInAngle extends Command {
 	private double degrees;
 	private double power;
 	private double currentAngle;
+	private double distance = 0;
 	
 	public MoveInAngle(double power, double degrees) {
 		this.degrees = degrees;
 		this.power = power;
+	}
+	
+	public MoveInAngle(double power, double degrees, double distance) {
+		this.degrees = degrees;
+		this.power = power;
+		this.distance = distance;
 	}
 
 	public void initialize() {
@@ -32,6 +39,8 @@ public class MoveInAngle extends Command {
 	
 	@Override
 	protected boolean isFinished() {
-		return false;
+		if (distance == 0) return false;
+		
+		return Math.abs(Robot.drivetrain.getLeftEncoderDistance()) >= distance || Math.abs(Robot.drivetrain.getRightEncoderDistance()) >= distance;
 	}
 }

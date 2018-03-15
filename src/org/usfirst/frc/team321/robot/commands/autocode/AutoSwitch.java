@@ -18,13 +18,13 @@ public class AutoSwitch extends CommandGroup {
 		if (gameData.charAt(0) == 'R') {
 			addSequential(new TurnUntilTargetDetected(1));
 			addParallel(new UseLinearSlides(1), 4);
-			addSequential(new MoveTowardTarget(1), 5);
+			addSequential(new MoveTowardTarget(0.75), 5);
 			addSequential(new UseIntake(1), 2);
 			
 		} else {
 			addSequential(new TurnUntilTargetDetected(-1));
 			addParallel(new UseLinearSlides(1), 4);
-			addSequential(new MoveTowardTarget(1), 5);
+			addSequential(new MoveTowardTarget(0.75), 5);
 			addSequential(new UseIntake(1), 2);
 		}
 	}
