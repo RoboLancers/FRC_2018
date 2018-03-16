@@ -1,5 +1,10 @@
 package org.usfirst.frc.team321.robot.subsystems;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.OptionalDouble;
+import java.util.stream.Stream;
+
 import org.usfirst.frc.team321.robot.Constants;
 import org.usfirst.frc.team321.robot.utilities.RobotUtil;
 
@@ -9,6 +14,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import jaci.pathfinder.followers.DistanceFollower;
 
 public class Sensors extends Subsystem {
 
@@ -16,6 +22,8 @@ public class Sensors extends Subsystem {
 	public Ultrasonic ultrasonic;
 	public DigitalInput topTouchSensor; 
 	public DigitalInput bottomTouchSensor; 
+	
+	private double[] ultrasonicBuffer = {0, 0, 0};
 	
 	public Sensors() {
 		navX = new AHRS(SerialPort.Port.kMXP);
@@ -42,6 +50,16 @@ public class Sensors extends Subsystem {
 	public double getDistanceInMeters() {
         return ultrasonic.getRangeMM() / 1000;
     }
+	
+	public double getAverageDistanceInMeters() {
+		for(int i = 0; i < ultrasonicBuffer.length; i++) {
+			ultrasonicBuffer[i] = getDistanceInMeters();
+		}
+		
+		return Arrays.stream(ultrasonicBuffer)
+				.average()
+				.getAsDouble();
+	}
 	
 	public double getRobotHeading() {
 		if (navX.getAngle() < 0) {
