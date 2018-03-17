@@ -33,6 +33,10 @@ public class UseArcadeDrive extends Command {
 	    
 	    Robot.drivetrain.setLeft(leftMotorSpeed);
 	    Robot.drivetrain.setRight(rightMotorSpeed);
+	    
+	    if (Math.abs(Robot.sensors.navX.getPitch()) >= 30) {
+	    	Robot.oi.xboxController.setRumble(Math.abs(Robot.sensors.navX.getPitch()) / 100);
+	    }
 	}
 
 	@Override

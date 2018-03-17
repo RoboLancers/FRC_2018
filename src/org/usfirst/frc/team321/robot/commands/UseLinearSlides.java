@@ -37,11 +37,11 @@ public class UseLinearSlides extends Command {
 					return;
 				}
 				
-				Robot.linear.move(-Robot.oi.flightController.getYAxisValue());
-			}else{
+				Robot.linear.move(Robot.oi.flightController.getYAxisValue());
+			} else {
 				Robot.linear.move(-0.75);
 			}
-		}else{
+		} else {
 			if ((power > 0 && Robot.sensors.isLinearSlideFullyExtended()) || 
 					(power < 0 && Robot.sensors.isLinearSlideAtGround())) {
 				Robot.linear.move(0);

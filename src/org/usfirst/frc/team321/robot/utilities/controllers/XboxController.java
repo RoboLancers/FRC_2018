@@ -126,6 +126,11 @@ public class XboxController extends Controller {
         	this.joystick.setRumble(RumbleType.kLeftRumble, 0);
     	}
     }
+    
+    public void setRumble(double rumblePower) {
+    	this.joystick.setRumble(RumbleType.kRightRumble, rumblePower);
+    	this.joystick.setRumble(RumbleType.kLeftRumble, rumblePower);
+    }
 }
 
 //no judge will ever read this, but maybe u

@@ -61,8 +61,8 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("TestEncoder", "TestEncoder");
 		chooser.addObject("TestGyro", "TestGyro");
 		chooser.addObject("Cross Auto Line (Gyro)", "CrossAutoLineGyro");
-		chooser.addObject("Auto Switch", "AutoSwitch");
-		chooser.addObject("Auto Middle", "AutoMiddle");
+		chooser.addObject("Auto Middle Switch", "AutoSwitch");
+		//chooser.addObject("Auto Middle", "AutoMiddle");
 		chooser.addObject("Auto Scale Left", "AutoScaleLeft");
 		chooser.addObject("Auto Scale Right", "AutoScaleRight");
 		chooser.addObject("TestPathfinder", "TestPathfinder");
@@ -113,6 +113,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		switch (chooser.getSelected()) {
+			//Competition Codes
 			case "CrossAutoLine":
 				autonomousCommand = new CrossAutoLine(false);
 				break;
@@ -128,6 +129,8 @@ public class Robot extends IterativeRobot {
 			case "AutoScaleRight" :
 				autonomousCommand = new AutoScaleRight();
 				break;
+				
+			//Test Codes
 			case "AutoMiddle":
 				autonomousCommand = new AutoMiddle();
 				break;
