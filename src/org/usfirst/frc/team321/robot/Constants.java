@@ -10,11 +10,11 @@ public class Constants {
 	public static final int RIGHT_SLAVE_A = 4;
 	public static final int RIGHT_SLAVE_B = 8;
 	
-	public static final int LINE_A = 6;
-	public static final int LINE_B = 10;
+	public static final int LINE_A = 11;
+	public static final int LINE_B = 2;
 	
-	public static final int INTAKE_LEFT = 2;
-	public static final int INTAKE_RIGHT = 11;
+	public static final int INTAKE_LEFT = 3;
+	public static final int INTAKE_RIGHT = 7;
 	
 	public static final int LEFT_RAMP = 21;
 	public static final int RIGHT_RAMP = 22;
