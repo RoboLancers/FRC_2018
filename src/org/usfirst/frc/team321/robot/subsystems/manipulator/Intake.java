@@ -1,4 +1,4 @@
-package org.usfirst.frc.team321.robot.subsystems;
+package org.usfirst.frc.team321.robot.subsystems.manipulator;
 
 import org.usfirst.frc.team321.robot.Constants;
 

@@ -1,4 +1,4 @@
-package org.usfirst.frc.team321.robot.commands.autocode;
+package org.usfirst.frc.team321.robot.commands.autonomous.modes;
 
 import org.usfirst.frc.team321.robot.Robot;
 

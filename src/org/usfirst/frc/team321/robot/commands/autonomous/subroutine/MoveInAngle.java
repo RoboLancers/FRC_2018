@@ -1,9 +1,8 @@
-package org.usfirst.frc.team321.robot.commands.auto;
+package org.usfirst.frc.team321.robot.commands.autonomous.subroutine;
 
 import org.usfirst.frc.team321.robot.Robot;
 import org.usfirst.frc.team321.robot.utilities.RobotUtil;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class MoveInAngle extends Command {
@@ -29,8 +28,8 @@ public class MoveInAngle extends Command {
 	}
 	
 	public void execute() {
-		Robot.drivetrain.setLeft(RobotUtil.moveToTarget(power, Robot.sensors.navX.getAngle(), degrees + currentAngle, 0.025)[1]);
-		Robot.drivetrain.setRight(RobotUtil.moveToTarget(power, Robot.sensors.navX.getAngle(), degrees + currentAngle, 0.025)[0]);
+		Robot.drivetrain.setLeft(RobotUtil.moveToTarget(power, Robot.sensors.navX.getAngle(), degrees + currentAngle, 0.025)[0]);
+		Robot.drivetrain.setRight(RobotUtil.moveToTarget(power, Robot.sensors.navX.getAngle(), degrees + currentAngle, 0.025)[1]);
 	}
 	
 	public void end() {

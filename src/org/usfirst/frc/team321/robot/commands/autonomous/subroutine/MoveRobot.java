@@ -1,4 +1,4 @@
-package org.usfirst.frc.team321.robot.commands.auto;
+package org.usfirst.frc.team321.robot.commands.autonomous.subroutine;
 
 import org.usfirst.frc.team321.robot.Robot;
 import org.usfirst.frc.team321.robot.utilities.LancerPID;
@@ -32,7 +32,7 @@ public class MoveRobot extends Command{
 		anglePower = power;
 		useAngle = true;
 		
-		lancerPID = new LancerPID(0.1, 0.0, 0.0);
+		lancerPID = new LancerPID(0.025, 0.0, 0.0);
 	}
 	
 	protected void initialize(){

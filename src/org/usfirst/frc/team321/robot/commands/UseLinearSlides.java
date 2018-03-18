@@ -2,8 +2,6 @@ package org.usfirst.frc.team321.robot.commands;
 
 import org.usfirst.frc.team321.robot.Robot;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.MatchGenerator;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class UseLinearSlides extends Command {
@@ -31,15 +29,17 @@ public class UseLinearSlides extends Command {
 	protected void execute() {
 		if(useJoystick){
 			if(Math.abs(Robot.sensors.navX.getRoll()) < 30 || Math.abs(Robot.sensors.navX.getPitch()) < 30){
+				/*
 				if ((-Robot.oi.flightController.getYAxisValue() > 0 && Robot.sensors.isLinearSlideFullyExtended()) ||
 						(-Robot.oi.flightController.getYAxisValue() < 0 && Robot.sensors.isLinearSlideAtGround())) {
-					Robot.linear.move(0);
+					Robot.linear.move(0.01);
 					return;
 				}
-				
+				*/
 				Robot.linear.move(Robot.oi.flightController.getYAxisValue());
 			} else {
-				Robot.linear.move(-0.75);
+				//Robot is too tipsy, readjusting
+				Robot.linear.move(-0.5);
 			}
 		} else {
 			if ((power > 0 && Robot.sensors.isLinearSlideFullyExtended()) || 

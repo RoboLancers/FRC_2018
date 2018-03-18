@@ -1,4 +1,4 @@
-package org.usfirst.frc.team321.robot.subsystems;
+package org.usfirst.frc.team321.robot.subsystems.misc;
 
 import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
@@ -208,7 +208,7 @@ public class Camera extends Subsystem {
     public void setCamVisionProcMode() {
         if (visionPort != null) {
             sendCmd("setcam autoexp 1"); //Disable auto exposure
-            sendCmd("setcam absexp 75"); //Force exposure to a low value for vision processing
+            sendCmd("setcam absexp 200"); //Force exposure to a low value for vision processing
         }
     }
 

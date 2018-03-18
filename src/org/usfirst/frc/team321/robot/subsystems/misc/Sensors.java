@@ -1,9 +1,6 @@
-package org.usfirst.frc.team321.robot.subsystems;
+package org.usfirst.frc.team321.robot.subsystems.misc;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.OptionalDouble;
-import java.util.stream.Stream;
 
 import org.usfirst.frc.team321.robot.Constants;
 import org.usfirst.frc.team321.robot.utilities.RobotUtil;
@@ -14,7 +11,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import jaci.pathfinder.followers.DistanceFollower;
 
 public class Sensors extends Subsystem {
 
@@ -27,7 +23,7 @@ public class Sensors extends Subsystem {
 	
 	public Sensors() {
 		navX = new AHRS(SerialPort.Port.kMXP);
-		ultrasonic = new Ultrasonic(Constants.UlTRASONIC_A, Constants.UlTRASONIC_B);
+		ultrasonic = new Ultrasonic(Constants.UlTRASONIC_TRIG, Constants.UlTRASONIC_ECHO);
 		topTouchSensor = new DigitalInput(Constants.TOP_TOUCH_SENSOR);
 		bottomTouchSensor = new DigitalInput(Constants.BOTTOM_TOUCH_SENSOR);
 		

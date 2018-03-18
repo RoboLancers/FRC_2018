@@ -1,7 +1,7 @@
-package org.usfirst.frc.team321.robot.commands.auto;
+package org.usfirst.frc.team321.robot.commands.autonomous.subroutine;
 
 import org.usfirst.frc.team321.robot.Robot;
-import org.usfirst.frc.team321.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team321.robot.subsystems.drivetrain.DriveTrain;
 import org.usfirst.frc.team321.robot.utilities.LancerPID;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;

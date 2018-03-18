@@ -10,8 +10,8 @@ public class Constants {
 	public static final int RIGHT_SLAVE_A = 4;
 	public static final int RIGHT_SLAVE_B = 8;
 	
-	public static final int LINE_A = 11;
-	public static final int LINE_B = 2;
+	public static final int LINEAR_MASTER = 11;
+	public static final int LINEAR_SLAVE = 2;
 	
 	public static final int INTAKE_LEFT = 3;
 	public static final int INTAKE_RIGHT = 7;
@@ -32,17 +32,12 @@ public class Constants {
 	public static final int PIVOT_FORWARD = 4;
 	public static final int PIVOT_REVERSE = 5;
 	
-	/*
-	public static final int INTAKE_FORWARD = 0;
-	public static final int INTAKE_REVERSE = 1; 
-	*/
-	
 	//Sensors
-	public static final int UlTRASONIC_A = 8;
-	public static final int UlTRASONIC_B = 9;
+	public static final int UlTRASONIC_TRIG = 0;
+	public static final int UlTRASONIC_ECHO = 1;
 	
-	public static final int TOP_TOUCH_SENSOR = 0;
-	public static final int BOTTOM_TOUCH_SENSOR = 7;
+	public static final int TOP_TOUCH_SENSOR = 9;
+	public static final int BOTTOM_TOUCH_SENSOR = 8;
 	
 	//Encoders
 	public static final int LEFT_ENCODER_A = 0;

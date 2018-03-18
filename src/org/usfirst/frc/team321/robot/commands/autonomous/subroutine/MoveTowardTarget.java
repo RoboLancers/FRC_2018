@@ -1,4 +1,4 @@
-package org.usfirst.frc.team321.robot.commands.auto;
+package org.usfirst.frc.team321.robot.commands.autonomous.subroutine;
 
 import org.usfirst.frc.team321.robot.Robot;
 import org.usfirst.frc.team321.robot.utilities.LancerPID;

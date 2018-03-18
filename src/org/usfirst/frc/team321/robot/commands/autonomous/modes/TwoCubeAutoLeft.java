@@ -1,9 +1,9 @@
-package org.usfirst.frc.team321.robot.commands.autocode;
+package org.usfirst.frc.team321.robot.commands.autonomous.modes;
 
 import org.usfirst.frc.team321.robot.commands.UseIntake;
 import org.usfirst.frc.team321.robot.commands.UseLinearSlides;
-import org.usfirst.frc.team321.robot.commands.auto.MoveInAngle;
-import org.usfirst.frc.team321.robot.commands.auto.MoveWithEncoder;
+import org.usfirst.frc.team321.robot.commands.autonomous.subroutine.MoveInAngle;
+import org.usfirst.frc.team321.robot.commands.autonomous.subroutine.MoveWithEncoder;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;

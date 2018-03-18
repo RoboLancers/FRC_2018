@@ -1,4 +1,4 @@
-package org.usfirst.frc.team321.robot.subsystems;
+package org.usfirst.frc.team321.robot.subsystems.manipulator;
 
 import org.usfirst.frc.team321.robot.Constants;
 
@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class IntakePivot extends Subsystem{
 
-	//allows for change of gears
 	public static DoubleSolenoid intakepivot;
 	
 	public IntakePivot(){
