@@ -25,7 +25,7 @@ public class FlightController extends Controller {
     	bottomLeft, bottomRight, topLeft, topRight, 
     	farTop, innerTop, farMiddle, innerMiddle, farBottom, innerBottom;
     
-    private double tolerance = 0.1;
+    private double tolerance = 0.25;
 
     public FlightController(int port) {
         super(port);

@@ -1,14 +1,9 @@
 package org.usfirst.frc.team321.robot.commands.autonomous.modes;
 
-import org.usfirst.frc.team321.robot.Robot;
-import org.usfirst.frc.team321.robot.commands.DSolenoidToggle;
 import org.usfirst.frc.team321.robot.commands.UseIntake;
-import org.usfirst.frc.team321.robot.commands.UseLinearSlides;
 import org.usfirst.frc.team321.robot.commands.autonomous.subroutine.MoveInAngle;
 import org.usfirst.frc.team321.robot.commands.autonomous.subroutine.MoveRobot;
-import org.usfirst.frc.team321.robot.subsystems.manipulator.IntakePivot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -18,11 +13,11 @@ public class AutoSwitchRight extends CommandGroup {
 		
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		
-		if (gameData.charAt(0) == 'R') {
-			addParallel(new UseLinearSlides(1), 2);
+		if (Character.toUpperCase(gameData.charAt(0)) == 'R') {
+			//addParallel(new UseLinearSlides(1), 2);
 			addSequential(new MoveRobot(0.8f, 0.0f), 2);
 			addSequential(new MoveInAngle(0.7, -90), 2);
-			addSequential(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakepivot, DoubleSolenoid.Value.kForward));
+			//addSequential(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakepivot, DoubleSolenoid.Value.kForward));
 			addSequential(new UseIntake(1), 2);
 		} else {
 			addSequential(new MoveRobot(0.8f, 0.0f), 2);

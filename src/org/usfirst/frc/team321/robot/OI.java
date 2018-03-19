@@ -1,7 +1,5 @@
 package org.usfirst.frc.team321.robot;
 
-import javax.swing.colorchooser.ColorChooserComponentFactory;
-
 import org.usfirst.frc.team321.robot.commands.DSolenoidHold;
 import org.usfirst.frc.team321.robot.commands.UseIntake;
 import org.usfirst.frc.team321.robot.commands.UseIntake.IntakePower;
@@ -11,6 +9,7 @@ import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoSwitch;
 import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoSwitchLeft;
 import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoSwitchRight;
 import org.usfirst.frc.team321.robot.commands.autonomous.modes.CrossAutoLine;
+import org.usfirst.frc.team321.robot.commands.autonomous.modes.TestGyro;
 import org.usfirst.frc.team321.robot.subsystems.drivetrain.GearShifter;
 import org.usfirst.frc.team321.robot.subsystems.manipulator.IntakePivot;
 import org.usfirst.frc.team321.robot.utilities.controllers.FlightController;
@@ -56,10 +55,9 @@ public class OI {
 			SmartDashboard.putNumber("Left Velocity", Robot.drivetrain.leftMaster.getSelectedSensorVelocity(0));
 			SmartDashboard.putNumber("Right Velocity", Robot.drivetrain.rightMaster.getSelectedSensorVelocity(0));
 			
-			//SmartDashboard.putNumber("Linear Encoder", linear.masterLine.getSelectedSensorPosition(0));
+			SmartDashboard.putNumber("Flight Stick Value", Robot.oi.flightController.getYAxisValue());
 			
-			//SmartDashboard.putNumber("Linear Slide Encoder value", Robot.linear.master.getSelectedSensorPosition(0));
-			//SmartDashboard.putNumber("LinearSlide Encoder distance", Robot.linear.getLineEncoderDistance());
+			SmartDashboard.putNumber("Linear Encoder", Robot.linear.master.getSelectedSensorPosition(0));
 			
 			SmartDashboard.putBoolean("isTargetDetected", Robot.camera.isTgtVisible());
 			SmartDashboard.putNumber("Vision Target Angle", Robot.camera.getTgtAngle_Deg());
@@ -83,6 +81,8 @@ public class OI {
 		
 		chooser.addObject("Auto Switch Left", "AutoSwitchLeft");
 		chooser.addObject("Auto Switch Right", "AutoSwitchRight");
+		
+		chooser.addObject("TestGyro", "TestGyro");
 
 		SmartDashboard.putData("Auto mode", chooser);
 	}
@@ -98,9 +98,9 @@ public class OI {
 			case "CrossAutoLineGyro":
 				return new CrossAutoLine(true);
 			case "CrossAutoLineLeft":
-				return new CrossAutoLine(false, true);
+				return new CrossAutoLine(true, true);
 			case "CrossAutoLineRight":
-				return new CrossAutoLine(false, false);
+				return new CrossAutoLine(true, false);
 			case "AutoSwitch":
 				return new AutoSwitch();
 			case "AutoSwitchLeft" :
@@ -109,6 +109,8 @@ public class OI {
 				return new AutoSwitchRight();
 			case "AutoMiddle":
 				return new AutoMiddle();
+			case "TestGyro":
+				return new TestGyro(0.1f, 90f);
 			default:
 				return new AutoStill();
 		}

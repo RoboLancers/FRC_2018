@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 								
 public class LinearSlide extends Subsystem {
 	
-	private TalonSRX master, slave;
+	public TalonSRX master;
+	private TalonSRX slave;
 
 	public LinearSlide() {
 		master = new TalonSRX(Constants.LINEAR_MASTER);
@@ -25,16 +26,21 @@ public class LinearSlide extends Subsystem {
 		
 		master.configOpenloopRamp(0.5, 0);
 		
+		master.configPeakOutputForward(0.8, 0);
+		
 		master.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
 		master.setSelectedSensorPosition(0, 0, 0);
+		
+		master.setInverted(true);
+		slave.setInverted(true);
 	}
 	
 	public void up() {
-		master.set(ControlMode.PercentOutput, 1);
+		move(1);
 	}
 	
 	public void down() {
-		master.set(ControlMode.PercentOutput, -1);
+		move(-1);
 	}
 	
 	public void stop() {

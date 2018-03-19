@@ -36,8 +36,8 @@ public class Constants {
 	public static final int UlTRASONIC_TRIG = 0;
 	public static final int UlTRASONIC_ECHO = 1;
 	
-	public static final int TOP_TOUCH_SENSOR = 9;
-	public static final int BOTTOM_TOUCH_SENSOR = 8;
+	public static final int TOP_TOUCH_SENSOR = 8;
+	public static final int BOTTOM_TOUCH_SENSOR = 9;
 	
 	//Encoders
 	public static final int LEFT_ENCODER_A = 0;

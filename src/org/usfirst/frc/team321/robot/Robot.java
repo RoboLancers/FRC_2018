@@ -1,12 +1,5 @@
 package org.usfirst.frc.team321.robot;
 
-import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoMiddle;
-import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoStill;
-import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoSwitch;
-import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoSwitchLeft;
-import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoSwitchRight;
-import org.usfirst.frc.team321.robot.commands.autonomous.modes.CrossAutoLine;
-import org.usfirst.frc.team321.robot.commands.pathfinder.FollowPath;
 import org.usfirst.frc.team321.robot.subsystems.drivetrain.DriveTrain;
 import org.usfirst.frc.team321.robot.subsystems.drivetrain.GearShifter;
 import org.usfirst.frc.team321.robot.subsystems.manipulator.Intake;
@@ -16,12 +9,9 @@ import org.usfirst.frc.team321.robot.subsystems.misc.Camera;
 import org.usfirst.frc.team321.robot.subsystems.misc.Pneumatics;
 import org.usfirst.frc.team321.robot.subsystems.misc.Sensors;
 
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 
