@@ -30,6 +30,6 @@ public class TurnUntilTargetDetected extends Command {
 	
 	@Override
 	protected void end(){
-		Robot.drivetrain.stopMotors();
+		Robot.drivetrain.stop();
 	}
 }

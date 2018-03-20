@@ -10,23 +10,23 @@ public class UseIntake extends Command {
 	boolean rumble = false;
 	
 	public UseIntake(double power) {
-		requires(Robot.intake);
+		requires(Robot.manipulator.getIntake());
 		this.power = power;
 	}
 	
 	public UseIntake(double power, boolean rumble) {
-		requires(Robot.intake);
+		requires(Robot.manipulator.getIntake());
 		this.power = power;
 		this.rumble = rumble;
 	}
 	
 	protected void initialize() {
-		Robot.intake.setAll(0);
+		Robot.manipulator.getIntake().stop();
 	}
 	
 	protected void execute() {
-		Robot.intake.setLeft(-power);
-		Robot.intake.setRight(power);
+		Robot.manipulator.getIntake().setLeft(-power);
+		Robot.manipulator.getIntake().setRight(power);
 		
 		if (rumble) {
 			Robot.oi.xboxController.setRumble(true);
@@ -38,22 +38,12 @@ public class UseIntake extends Command {
 	}
 	
 	protected void end() {
-		Robot.intake.stopIntake();
+		Robot.manipulator.getIntake().stop();
 		Robot.oi.xboxController.setRumble(false);
 	}
 	
 	@Override
 	protected boolean isFinished() {
 		return false;
-	}
-	
-	public enum IntakePower{
-		INTAKE(0.9), OUTTAKE(-0.7);
-		
-		public double power;
-		
-		IntakePower(double power){
-			this.power = power;
-		}
 	}
 }

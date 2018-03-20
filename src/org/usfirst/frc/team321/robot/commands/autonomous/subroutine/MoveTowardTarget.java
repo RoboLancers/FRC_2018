@@ -27,7 +27,7 @@ public class MoveTowardTarget extends Command{
 			Robot.drivetrain.setLeft(power - pid.calcPID(Robot.camera.getTgtAngle_Deg()));
 			Robot.drivetrain.setRight(power + pid.calcPID(Robot.camera.getTgtAngle_Deg()));
 		} else {
-			Robot.drivetrain.stopMotors();
+			Robot.drivetrain.stop();
 		}
 	}
 	
@@ -38,6 +38,6 @@ public class MoveTowardTarget extends Command{
 	
 	@Override
 	protected void end(){
-		Robot.drivetrain.stopMotors();
+		Robot.drivetrain.stop();
 	}
 }

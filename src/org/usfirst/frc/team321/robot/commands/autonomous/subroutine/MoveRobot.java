@@ -1,62 +1,45 @@
 package org.usfirst.frc.team321.robot.commands.autonomous.subroutine;
 
 import org.usfirst.frc.team321.robot.Robot;
-import org.usfirst.frc.team321.robot.utilities.LancerPID;
 import org.usfirst.frc.team321.robot.utilities.RobotUtil;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class MoveRobot extends Command{
-	
-	double leftPower, rightPower;
-	
-	boolean useAngle;
-	double angle, anglePower;
-	
-	LancerPID lancerPID;
-	
-	public MoveRobot(double power){
-		this(power, power);
+public class MoveRobot extends Command {
+
+	private double degrees, currentAngle;
+	private double power, distance = 0;
+
+	public MoveRobot(double power, double degrees) {
+		this.degrees = degrees;
+		this.power = power;
 	}
-	
-	public MoveRobot(double leftPower, double rightPower){
-		requires(Robot.drivetrain);
-		this.leftPower = leftPower;
-		this.rightPower = rightPower;
-		useAngle = false;
+
+	public MoveRobot(double power, double degrees, double distance) {
+		this.degrees = degrees;
+		this.power = power;
+		this.distance = distance;
 	}
-	
-	public MoveRobot(float power, float angle){
-		requires(Robot.drivetrain);
-		this.angle = angle;
-		anglePower = power;
-		useAngle = true;
-		
-		lancerPID = new LancerPID(0.025, 0.0, 0.0);
+
+	public void initialize() {
+		currentAngle = Robot.sensors.navX.getAngle();
 	}
-	
-	protected void initialize(){
-		Robot.drivetrain.setAll(0);
-		Robot.sensors.navX.reset();
+
+	public void execute() {
+		Robot.drivetrain.setLeft(RobotUtil.moveToTarget(power, Robot.sensors.navX.getAngle(), degrees + currentAngle, 0.01)[1]);
+		Robot.drivetrain.setRight(RobotUtil.moveToTarget(power, Robot.sensors.navX.getAngle(), degrees + currentAngle, 0.01)[0]);
 	}
-	
-	protected void execute(){
-		Robot.drivetrain.setLeft(useAngle ? RobotUtil.range(anglePower + lancerPID.calcPID(Robot.sensors.navX.getAngle()), 1) : leftPower);
-		Robot.drivetrain.setRight(useAngle ? RobotUtil.range(anglePower - lancerPID.calcPID(Robot.sensors.navX.getAngle()), 1) : rightPower);
+
+	public void end() {
+		Robot.drivetrain.stop();
 	}
-	
+
 	@Override
 	protected boolean isFinished() {
-		return false;
-	}
-	
-	protected void end(){
-		Robot.drivetrain.setAll(0);
-	}
-	
-	protected void interrupted(){
-		Robot.drivetrain.setAll(0);
+		if (distance == 0)
+			return false;
+
+		return Math.abs(Robot.drivetrain.getLeft().getEncoderDistance()) >= distance
+				|| Math.abs(Robot.drivetrain.getRight().getEncoderDistance()) >= distance;
 	}
 }
-
-

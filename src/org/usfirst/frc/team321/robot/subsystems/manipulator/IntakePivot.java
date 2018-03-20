@@ -7,23 +7,23 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class IntakePivot extends Subsystem{
 
-	public static DoubleSolenoid intakepivot;
+	public static DoubleSolenoid intakePivot;
 	
 	public IntakePivot(){
-		intakepivot = new DoubleSolenoid(Constants.PIVOT_FORWARD, Constants.PIVOT_REVERSE);
-		intakepivot.set(DoubleSolenoid.Value.kReverse);
+		intakePivot = new DoubleSolenoid(Constants.PIVOT_FORWARD, Constants.PIVOT_REVERSE);
+		intakePivot.set(DoubleSolenoid.Value.kReverse);
 	}
 	
 	public void setUp() {
-		intakepivot.set(DoubleSolenoid.Value.kReverse);
+		intakePivot.set(DoubleSolenoid.Value.kReverse);
 	}
 	
 	public void setDown() {
-		intakepivot.set(DoubleSolenoid.Value.kForward);
+		intakePivot.set(DoubleSolenoid.Value.kForward);
 	}
 	
 	public boolean isUp() {
-		return intakepivot.get() == DoubleSolenoid.Value.kReverse;
+		return intakePivot.get() == DoubleSolenoid.Value.kReverse;
 	}
 
 	@Override

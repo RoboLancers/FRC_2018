@@ -20,20 +20,19 @@ public class AutoScaleLeft extends CommandGroup{
 		if (gameData.charAt(1) == 'L') {
 			addParallel(new UseLinearSlides(1), 4);
 			addSequential(new MoveRobot(0.8f, 0.0f), 2);
-			addSequential(new MoveInAngle(0.7, 90), 2);
-			addSequential(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakepivot, DoubleSolenoid.Value.kForward));
+			addSequential(new MoveRobot(0.7, 90), 2);
+			addSequential(new DSolenoidToggle(Robot.manipulator.getIntakePivot(), IntakePivot.intakePivot, DoubleSolenoid.Value.kForward));
 			addSequential(new UseIntake(1), 2);
 		} else {
 			addSequential(new MoveRobot(0.8f, 0.0f), 2);
 			
 			addSequential(new MoveWithEncoder(3.44));
-			addSequential(new MoveInAngle(0, 90), 2);
+			addSequential(new MoveRobot(0, 90), 2);
 			addSequential(new MoveWithEncoder(5.9436));
 			addParallel(new UseLinearSlides(0.8));
-			addSequential(new MoveInAngle(0, -90), 2);
-			addSequential(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakepivot, DoubleSolenoid.Value.kForward));
+			addSequential(new MoveRobot(0, -90), 2);
+			addSequential(new DSolenoidToggle(Robot.manipulator.getIntakePivot(), IntakePivot.intakePivot, DoubleSolenoid.Value.kForward));
 			addSequential(new UseIntake(1), 2);
-			
 		}
 	}
 }

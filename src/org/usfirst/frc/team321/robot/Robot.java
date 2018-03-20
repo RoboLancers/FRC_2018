@@ -1,10 +1,7 @@
 package org.usfirst.frc.team321.robot;
 
-import org.usfirst.frc.team321.robot.subsystems.drivetrain.DriveTrain;
+import org.usfirst.frc.team321.robot.subsystems.drivetrain.Drivetrain;
 import org.usfirst.frc.team321.robot.subsystems.drivetrain.GearShifter;
-import org.usfirst.frc.team321.robot.subsystems.manipulator.Intake;
-import org.usfirst.frc.team321.robot.subsystems.manipulator.IntakePivot;
-import org.usfirst.frc.team321.robot.subsystems.manipulator.LinearSlide;
 import org.usfirst.frc.team321.robot.subsystems.manipulator.Manipulator;
 import org.usfirst.frc.team321.robot.subsystems.misc.Camera;
 import org.usfirst.frc.team321.robot.subsystems.misc.Pneumatics;
@@ -17,14 +14,13 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 public class Robot extends IterativeRobot {
 
 	public static Manipulator manipulator;
-	
-	public static DriveTrain drivetrain;
-	public static GearShifter gearshifter;
-	
-	public static Pneumatics pneumatics; 
+
+	public static Drivetrain drivetrain;
+
+	public static Pneumatics pneumatics;
 	public static Sensors sensors;
 	public static Camera camera;
-	
+
 	public static OI oi;
 	private Command autonomousCommand;
 
@@ -32,17 +28,16 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		sensors = new Sensors();
 		camera = new Camera(true);
-		
-		drivetrain = new DriveTrain();
+
+		drivetrain = new Drivetrain();
 		manipulator = new Manipulator();
-		
+
 		pneumatics = new Pneumatics();
-		gearshifter = new GearShifter();
-		
+
 		oi = new OI();
 		oi.putAutoModes();
 	}
-	
+
 	@Override
 	public void robotPeriodic() {
 		OI.setDashboardValues();
@@ -61,17 +56,17 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		drivetrain.enableRamping(false);
+		drivetrain.getGearShifter().setLowGear();
 		camera.setCamVisionProcMode();
-		
+
 		autonomousCommand = oi.getAutoCommand();
-		
+
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
 
 	@Override
 	public void autonomousPeriodic() {
-		gearshifter.setLowGear();
 		Scheduler.getInstance().run();
 	}
 
@@ -79,13 +74,13 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		
+
 		camera.setCamHumanDriverMode();
-		
-		drivetrain.resetEncoder();
+
+		drivetrain.resetEncoders();
 		drivetrain.enableRamping(true);
-		
-		gearshifter.setLowGear();
+		drivetrain.getGearShifter().setLowGear();
+
 		manipulator.getIntakePivot().setDown();
 	}
 
@@ -95,5 +90,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	@Override
-	public void testPeriodic() {}
+	public void testPeriodic() {
+	}
 }

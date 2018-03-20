@@ -4,7 +4,7 @@ import org.usfirst.frc.team321.robot.Robot;
 import org.usfirst.frc.team321.robot.commands.DSolenoidToggle;
 import org.usfirst.frc.team321.robot.commands.UseIntake;
 import org.usfirst.frc.team321.robot.commands.UseLinearSlides;
-import org.usfirst.frc.team321.robot.commands.autonomous.subroutine.MoveInAngle;
+import org.usfirst.frc.team321.robot.commands.autonomous.subroutine.MoveRobot;
 import org.usfirst.frc.team321.robot.commands.autonomous.subroutine.MoveTowardTarget;
 import org.usfirst.frc.team321.robot.commands.autonomous.subroutine.MoveWithEncoder;
 import org.usfirst.frc.team321.robot.commands.autonomous.subroutine.TurnUntilTargetDetected;
@@ -23,16 +23,16 @@ public class AutoSwitch extends CommandGroup {
 		addSequential(new MoveWithEncoder(1));
 		
 		if (gameData.charAt(0) == 'R') {
-			addSequential(new MoveInAngle(0.7, 18, 1.3));
+			addSequential(new MoveRobot(0.7, 18, 1.3));
 			addSequential(new TurnUntilTargetDetected(0.75));
 		} else {
-			addSequential(new MoveInAngle(0.7, -18, 1.3));
+			addSequential(new MoveRobot(0.7, -18, 1.3));
 			addSequential(new TurnUntilTargetDetected(-0.75));
 		}
 		
 		addParallel(new UseLinearSlides(1), 2);
 		addSequential(new MoveTowardTarget(0.75), 5);
-		addSequential(new DSolenoidToggle(Robot.intakepivot, IntakePivot.intakepivot, DoubleSolenoid.Value.kForward));
+		addSequential(new DSolenoidToggle(Robot.manipulator.getIntakePivot(), IntakePivot.intakePivot, DoubleSolenoid.Value.kForward));
 		addSequential(new UseIntake(1), 2);
 	}
 }

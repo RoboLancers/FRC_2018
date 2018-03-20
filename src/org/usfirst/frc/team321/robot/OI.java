@@ -2,7 +2,6 @@ package org.usfirst.frc.team321.robot;
 
 import org.usfirst.frc.team321.robot.commands.DSolenoidHold;
 import org.usfirst.frc.team321.robot.commands.UseIntake;
-import org.usfirst.frc.team321.robot.commands.UseIntake.IntakePower;
 import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoMiddle;
 import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoStill;
 import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoSwitch;
@@ -32,12 +31,12 @@ public class OI {
 		xboxController = new XboxController(0);
 		flightController = new FlightController(1);
 		
-		xboxController.rightTrigger.whileHeld(new DSolenoidHold(Robot.gearshifter, GearShifter.gearShifter, DoubleSolenoid.Value.kForward));
+		xboxController.rightTrigger.whileHeld(new DSolenoidHold(Robot.drivetrain.getGearShifter(), GearShifter.gearShifter, DoubleSolenoid.Value.kForward));
 		
-		xboxController.leftBumper.whileHeld(new UseIntake(IntakePower.INTAKE.power, true));
-		xboxController.rightBumper.whileHeld(new UseIntake(IntakePower.OUTTAKE.power, false));
+		xboxController.leftBumper.whileHeld(new UseIntake(0.9, true));
+		xboxController.rightBumper.whileHeld(new UseIntake(0.7));
 		
-		flightController.farBottom.whileHeld(new DSolenoidHold(Robot.intakepivot, IntakePivot.intakepivot, DoubleSolenoid.Value.kForward));
+		flightController.farBottom.whileHeld(new DSolenoidHold(Robot.manipulator.getIntakePivot(), IntakePivot.intakePivot, DoubleSolenoid.Value.kForward));
 	}
 	
 	public static void setDashboardValues() {
@@ -45,19 +44,16 @@ public class OI {
 			SmartDashboard.putNumber("Robot pitch", Robot.sensors.navX.getPitch());
 			SmartDashboard.putNumber("Robot roll", Robot.sensors.navX.getRoll());
 			SmartDashboard.putNumber("Gyro", Robot.sensors.navX.getAngle());
-			SmartDashboard.putNumber("Left Encoder Distance", Robot.drivetrain.getLeftEncoderDistance());
-			SmartDashboard.putNumber("Right Encoder Distance", Robot.drivetrain.getRightEncoderDistance());
+			SmartDashboard.putNumber("Left Encoder Distance", Robot.drivetrain.getLeft().getEncoderDistance());
+			SmartDashboard.putNumber("Right Encoder Distance", Robot.drivetrain.getRight().getEncoderDistance());
 			SmartDashboard.putNumber("Ultrasonic Sensor", Robot.sensors.getAverageDistanceInMeters());
 			
 			SmartDashboard.putBoolean("Slide Fully Extended", Robot.sensors.isLinearSlideFullyExtended());
 			SmartDashboard.putBoolean("Slide Grounded", Robot.sensors.isLinearSlideAtGround());
 			
-			SmartDashboard.putNumber("Left Velocity", Robot.drivetrain.leftMaster.getSelectedSensorVelocity(0));
-			SmartDashboard.putNumber("Right Velocity", Robot.drivetrain.rightMaster.getSelectedSensorVelocity(0));
-			
 			SmartDashboard.putNumber("Flight Stick Value", Robot.oi.flightController.getYAxisValue());
 			
-			SmartDashboard.putNumber("Linear Encoder", Robot.linear.master.getSelectedSensorPosition(0));
+			SmartDashboard.putNumber("Linear Encoder", Robot.manipulator.getLinearSlide().master.getSelectedSensorPosition(0));
 			
 			SmartDashboard.putBoolean("isTargetDetected", Robot.camera.isTgtVisible());
 			SmartDashboard.putNumber("Vision Target Angle", Robot.camera.getTgtAngle_Deg());

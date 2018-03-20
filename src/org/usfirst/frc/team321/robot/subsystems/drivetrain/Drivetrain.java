@@ -6,41 +6,56 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class DriveTrain extends Subsystem {
-	
-	Transmission leftTransmission, rightTransmission;
-	
-	public DriveTrain() {
+public class Drivetrain extends Subsystem {
+
+	private Transmission leftTransmission, rightTransmission;
+	private GearShifter gearShifter;
+
+	public Drivetrain() {
 		leftTransmission = new Transmission(false, LEFT_MASTER_MOTOR, LEFT_SLAVE_1, LEFT_SLAVE_2);
 		rightTransmission = new Transmission(false, RIGHT_MASTER_MOTOR, RIGHT_SLAVE_1, RIGHT_SLAVE_2);
+
+		gearShifter = new GearShifter();
 		
 		this.setMode(NeutralMode.Brake);
 		this.resetEncoders();
 	}
-	
+
+	public Transmission getLeft() {
+		return leftTransmission;
+	}
+
+	public Transmission getRight() {
+		return rightTransmission;
+	}
+
 	public void setLeft(double power) {
 		leftTransmission.setPower(power * 0.95);
 	}
-	
+
 	public void setRight(double power) {
-		rightTransmission.setPower(power * 0.95);
+		rightTransmission.setPower(power);
 	}
-	
+
 	public void setMotors(double leftPower, double rightPower) {
 		setLeft(leftPower);
 		setRight(rightPower);
 	}
-	
+
 	public void setAll(double power) {
 		setMotors(power, power);
 	}
 	
-	public void setMode(NeutralMode mode){
+	public void stop() {
+		setAll(0);
+	}
+
+	public void setMode(NeutralMode mode) {
 		leftTransmission.setMode(mode);
 		rightTransmission.setMode(mode);
 	}
-	
-	public void enableRamping (boolean ramp) {
+
+	public void enableRamping(boolean ramp) {
 		if (ramp) {
 			leftTransmission.setRampRate(0.15);
 			rightTransmission.setRampRate(0.15);
@@ -49,12 +64,16 @@ public class DriveTrain extends Subsystem {
 			rightTransmission.setRampRate(0);
 		}
 	}
-	
-	public void resetEncoders(){
+
+	public void resetEncoders() {
 		leftTransmission.resetEncoder();
 		rightTransmission.resetEncoder();
 	}
 	
+	public GearShifter getGearShifter() {
+		return gearShifter;
+	}
+
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new UseArcadeDrive());

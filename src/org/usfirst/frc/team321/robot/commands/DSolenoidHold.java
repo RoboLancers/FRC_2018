@@ -6,38 +6,30 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DSolenoidHold extends Command {
-	
-	private DoubleSolenoid ds;
+
+	private DoubleSolenoid doubleSolenoid;
 	private boolean hasFinished = false;
 	Value value = null;
 
-	public DSolenoidHold(Subsystem sub, DoubleSolenoid ds, Value defaultValue){
-		requires(sub);
-		this.ds = ds;
+	public DSolenoidHold(Subsystem subsystem, DoubleSolenoid doubleSolenoid, Value defaultValue) {
+		requires(subsystem);
+		this.doubleSolenoid = doubleSolenoid;
 		this.value = defaultValue;
 	}
 
 	protected void initialize() {
-		ds.set(value == DoubleSolenoid.Value.kForward ? DoubleSolenoid.Value.kReverse : DoubleSolenoid.Value.kForward);
-		
-		hasFinished = false;
-	}
+		doubleSolenoid.set(
+				value == DoubleSolenoid.Value.kForward ? DoubleSolenoid.Value.kReverse : DoubleSolenoid.Value.kForward);
 
-	protected void execute() {
-		
+		hasFinished = false;
 	}
 
 	protected boolean isFinished() {
 		return hasFinished;
 	}
 
-	protected void end() {
-
-	}
-
 	protected void interrupted() {
-		ds.set(value);
-		
+		doubleSolenoid.set(value);
 		hasFinished = true;
 	}
 }
