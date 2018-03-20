@@ -5,6 +5,7 @@ import org.usfirst.frc.team321.robot.subsystems.drivetrain.GearShifter;
 import org.usfirst.frc.team321.robot.subsystems.manipulator.Intake;
 import org.usfirst.frc.team321.robot.subsystems.manipulator.IntakePivot;
 import org.usfirst.frc.team321.robot.subsystems.manipulator.LinearSlide;
+import org.usfirst.frc.team321.robot.subsystems.manipulator.Manipulator;
 import org.usfirst.frc.team321.robot.subsystems.misc.Camera;
 import org.usfirst.frc.team321.robot.subsystems.misc.Pneumatics;
 import org.usfirst.frc.team321.robot.subsystems.misc.Sensors;
@@ -15,19 +16,17 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 
 public class Robot extends IterativeRobot {
 
-	public static DriveTrain drivetrain;
-	public static LinearSlide linear;
-	public static Intake intake;
-	public static IntakePivot intakepivot;
-	public static GearShifter gearshifter;
-	public static Pneumatics pneumatics; 
+	public static Manipulator manipulator;
 	
+	public static DriveTrain drivetrain;
+	public static GearShifter gearshifter;
+	
+	public static Pneumatics pneumatics; 
 	public static Sensors sensors;
 	public static Camera camera;
 	
 	public static OI oi;
-	
-	Command autonomousCommand;
+	private Command autonomousCommand;
 
 	@Override
 	public void robotInit() {
@@ -35,9 +34,7 @@ public class Robot extends IterativeRobot {
 		camera = new Camera(true);
 		
 		drivetrain = new DriveTrain();
-		linear = new LinearSlide();
-		intake = new Intake(); 
-		intakepivot = new IntakePivot();
+		manipulator = new Manipulator();
 		
 		pneumatics = new Pneumatics();
 		gearshifter = new GearShifter();
@@ -63,7 +60,6 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-		
 		drivetrain.enableRamping(false);
 		camera.setCamVisionProcMode();
 		
@@ -90,7 +86,7 @@ public class Robot extends IterativeRobot {
 		drivetrain.enableRamping(true);
 		
 		gearshifter.setLowGear();
-		intakepivot.setDown();
+		manipulator.getIntakePivot().setDown();
 	}
 
 	@Override

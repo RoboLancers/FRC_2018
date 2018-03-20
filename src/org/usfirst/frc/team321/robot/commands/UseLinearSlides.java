@@ -11,19 +11,19 @@ public class UseLinearSlides extends Command {
 	boolean useJoystick;
 	
 	public UseLinearSlides() {
-		requires(Robot.linear);
+		requires(Robot.linearSlide);
 		useJoystick = true;
 	}
 	
 	public UseLinearSlides(double power) {
-		requires(Robot.linear);
+		requires(Robot.linearSlide);
 		this.power = power;
 		
 		useJoystick = false;
 	}
 	
 	protected void initialize() {
-		Robot.linear.stop();
+		Robot.linearSlide.stop();
 	}
 	
 	protected void execute() {
@@ -32,31 +32,31 @@ public class UseLinearSlides extends Command {
 				
 				if ((-Robot.oi.flightController.getYAxisValue() > 0 && Robot.sensors.isLinearSlideFullyExtended()) ||
 						(-Robot.oi.flightController.getYAxisValue() < 0 && Robot.sensors.isLinearSlideAtGround())) {
-					Robot.linear.move(0);
+					Robot.linearSlide.move(0);
 				} else {
-					Robot.linear.move(Robot.oi.flightController.getYAxisValue());
+					Robot.linearSlide.move(Robot.oi.flightController.getYAxisValue());
 				}
 			} else {
 				//Robot is too tipsy, readjusting
-				Robot.linear.move(-0.5);
+				Robot.linearSlide.move(-0.5);
 			}
 		} else {
 			if ((power > 0 && Robot.sensors.isLinearSlideFullyExtended()) || 
 					(power < 0 && Robot.sensors.isLinearSlideAtGround())) {
-				Robot.linear.move(0);
+				Robot.linearSlide.move(0);
 				return;
 			}
 			
-			Robot.linear.move(power);
+			Robot.linearSlide.move(power);
 		}
 	}
 
 	protected void interrupted() {
-		Robot.linear.stop();
+		Robot.linearSlide.stop();
 	}
 	
 	protected void end() {
-		Robot.linear.stop();
+		Robot.linearSlide.stop();
 	}
 	
 	@Override
