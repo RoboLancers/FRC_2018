@@ -57,6 +57,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		drivetrain.enableRamping(false);
 		drivetrain.getGearShifter().setLowGear();
+		
 		camera.setCamVisionProcMode();
 
 		autonomousCommand = oi.getAutoCommand();
