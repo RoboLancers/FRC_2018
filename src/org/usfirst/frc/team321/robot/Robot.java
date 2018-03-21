@@ -1,7 +1,6 @@
 package org.usfirst.frc.team321.robot;
 
 import org.usfirst.frc.team321.robot.subsystems.drivetrain.Drivetrain;
-import org.usfirst.frc.team321.robot.subsystems.drivetrain.GearShifter;
 import org.usfirst.frc.team321.robot.subsystems.manipulator.Manipulator;
 import org.usfirst.frc.team321.robot.subsystems.misc.Camera;
 import org.usfirst.frc.team321.robot.subsystems.misc.Pneumatics;
@@ -60,7 +59,7 @@ public class Robot extends IterativeRobot {
 		
 		camera.setCamVisionProcMode();
 
-		autonomousCommand = oi.getAutoCommand();
+		autonomousCommand = oi.getAutoCommand(oi.getAutoMode());
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();

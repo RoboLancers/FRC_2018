@@ -1,7 +1,7 @@
 package org.usfirst.frc.team321.robot.commands.autonomous.modes;
 
-import org.usfirst.frc.team321.robot.commands.UseIntake;
 import org.usfirst.frc.team321.robot.commands.autonomous.subroutine.MoveRobot;
+import org.usfirst.frc.team321.robot.commands.subsystems.manipulator.UseIntake;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;

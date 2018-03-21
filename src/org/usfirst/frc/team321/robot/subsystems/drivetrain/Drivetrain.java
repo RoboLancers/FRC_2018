@@ -1,7 +1,9 @@
 package org.usfirst.frc.team321.robot.subsystems.drivetrain;
 
 import static org.usfirst.frc.team321.robot.Constants.*;
-import org.usfirst.frc.team321.robot.commands.UseArcadeDrive;
+
+import org.usfirst.frc.team321.robot.commands.subsystems.drivetrain.UseArcadeDrive;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;

@@ -1,7 +1,7 @@
 package org.usfirst.frc.team321.robot.subsystems.misc;
 
 import org.usfirst.frc.team321.robot.Constants;
-import org.usfirst.frc.team321.robot.commands.RegulateCompressor;
+import org.usfirst.frc.team321.robot.commands.subsystems.misc.RegulateCompressor;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.command.Subsystem;

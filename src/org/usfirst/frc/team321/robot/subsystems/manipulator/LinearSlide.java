@@ -1,7 +1,7 @@
 package org.usfirst.frc.team321.robot.subsystems.manipulator;
 
 import org.usfirst.frc.team321.robot.Constants;
-import org.usfirst.frc.team321.robot.commands.UseLinearSlides;
+import org.usfirst.frc.team321.robot.commands.subsystems.manipulator.UseLinearSlides;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;

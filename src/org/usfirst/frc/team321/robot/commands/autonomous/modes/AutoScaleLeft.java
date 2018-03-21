@@ -1,12 +1,12 @@
 package org.usfirst.frc.team321.robot.commands.autonomous.modes;
 
 import org.usfirst.frc.team321.robot.Robot;
-import org.usfirst.frc.team321.robot.commands.DSolenoidToggle;
-import org.usfirst.frc.team321.robot.commands.UseIntake;
-import org.usfirst.frc.team321.robot.commands.UseLinearSlides;
 import org.usfirst.frc.team321.robot.commands.autonomous.subroutine.MoveInAngle;
 import org.usfirst.frc.team321.robot.commands.autonomous.subroutine.MoveRobot;
 import org.usfirst.frc.team321.robot.commands.autonomous.subroutine.MoveWithEncoder;
+import org.usfirst.frc.team321.robot.commands.subsystems.manipulator.UseIntake;
+import org.usfirst.frc.team321.robot.commands.subsystems.manipulator.UseLinearSlides;
+import org.usfirst.frc.team321.robot.commands.subsystems.misc.DSolenoidToggle;
 import org.usfirst.frc.team321.robot.subsystems.manipulator.IntakePivot;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;

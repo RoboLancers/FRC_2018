@@ -1,14 +1,12 @@
 package org.usfirst.frc.team321.robot;
 
-import org.usfirst.frc.team321.robot.commands.DSolenoidHold;
-import org.usfirst.frc.team321.robot.commands.UseIntake;
-import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoMiddle;
 import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoStill;
 import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoSwitch;
-import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoSwitchLeft;
-import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoSwitchRight;
 import org.usfirst.frc.team321.robot.commands.autonomous.modes.CrossAutoLine;
 import org.usfirst.frc.team321.robot.commands.autonomous.modes.TestGyro;
+import org.usfirst.frc.team321.robot.commands.subsystems.drivetrain.UseSlowArcadeDrive;
+import org.usfirst.frc.team321.robot.commands.subsystems.manipulator.UseIntake;
+import org.usfirst.frc.team321.robot.commands.subsystems.misc.DSolenoidHold;
 import org.usfirst.frc.team321.robot.subsystems.drivetrain.GearShifter;
 import org.usfirst.frc.team321.robot.subsystems.manipulator.IntakePivot;
 import org.usfirst.frc.team321.robot.utilities.controllers.FlightController;
@@ -16,6 +14,7 @@ import org.usfirst.frc.team321.robot.utilities.controllers.XboxController;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,12 +25,14 @@ public class OI {
 	public FlightController flightController;
 	
 	SendableChooser<String> chooser = new SendableChooser<>();
+	static final String[] autoModes = {"Cross Auto Line Left", "Cross Auto Line Right", "Auto Switch Camera", "Auto Switch No Camera", "Test Gyro"};
 	
 	public OI() {
 		xboxController = new XboxController(0);
 		flightController = new FlightController(1);
 		
 		xboxController.rightTrigger.whileHeld(new DSolenoidHold(Robot.drivetrain.getGearShifter(), GearShifter.gearShifter, DoubleSolenoid.Value.kForward));
+		xboxController.leftTrigger.whileHeld(new UseSlowArcadeDrive());
 		
 		xboxController.leftBumper.whileHeld(new UseIntake(0.9, true));
 		xboxController.rightBumper.whileHeld(new UseIntake(0.7));
@@ -55,56 +56,48 @@ public class OI {
 			
 			SmartDashboard.putNumber("Linear Encoder", Robot.manipulator.getLinearSlide().master.getSelectedSensorPosition(0));
 			
-			SmartDashboard.putBoolean("isTargetDetected", Robot.camera.isTgtVisible());
+			SmartDashboard.putBoolean("IsTargetDetected", Robot.camera.isTgtVisible());
 			SmartDashboard.putNumber("Vision Target Angle", Robot.camera.getTgtAngle_Deg());
 			
 			NetworkTableInstance.getDefault()
 		        .getEntry("/CameraPublisher/JeVois/streams")
 		        .setStringArray(new String[]{"mjpeg:http://roborio-321-frc.local:1180/?action=stream"});
 	        
+			//Custom Dashboard information
+			NetworkTableInstance.getDefault().getEntry("/SmartDashboard/drive/navx/yaw").setNumber(Robot.sensors.navX.getAngle());
+			NetworkTableInstance.getDefault().getEntry("/robot/time").setNumber(DriverStation.getInstance().getMatchTime());
+			NetworkTableInstance.getDefault().getEntry("/SmartDashboard/autonomous/modes").setStringArray(autoModes);
+			
 		} catch (Exception e) {}
 	}
 	
 	public void putAutoModes(){
-		chooser.addDefault("Cross Auto Line (Time)", "CrossAutoLine");
-		chooser.addObject("Cross Auto Line (Gyro)", "CrossAutoLineGyro");
-		
-		chooser.addObject("Cross Auto Line with Switch Left", "CrossAutoLineLeft");
-		chooser.addObject("Cross Auto Line with Switch Right", "CrossAutoLineRight");
-		
-		chooser.addObject("Auto Switch (Camera)", "AutoSwitch");
-		chooser.addObject("Auto Switch (No Camera)", "AutoMiddle");
-		
-		chooser.addObject("Auto Switch Left", "AutoSwitchLeft");
-		chooser.addObject("Auto Switch Right", "AutoSwitchRight");
-		
-		chooser.addObject("TestGyro", "TestGyro");
+		for(String mode : autoModes) {
+			String noSpace = mode.replaceAll("\\s", "");
+			chooser.addObject(mode, noSpace);
+		}
 
 		SmartDashboard.putData("Auto mode", chooser);
 	}
 	
-	private String getAutoMode(){
+	public String getDashboardMode() {
+		return NetworkTableInstance.getDefault().getEntry("/SmartDashboard/currentlySelectedMode").getString("DoNothing");
+	}
+	
+	public String getAutoMode(){
 		return chooser.getSelected();
 	}
 	
-	public Command getAutoCommand(){
-		switch (getAutoMode()) {
-			case "CrossAutoLine":
-				return new CrossAutoLine(false);
-			case "CrossAutoLineGyro":
-				return new CrossAutoLine(true);
+	public Command getAutoCommand(String mode){
+		switch (mode) {
 			case "CrossAutoLineLeft":
-				return new CrossAutoLine(true, true);
+				return new CrossAutoLine(true);
 			case "CrossAutoLineRight":
-				return new CrossAutoLine(true, false);
-			case "AutoSwitch":
-				return new AutoSwitch();
-			case "AutoSwitchLeft" :
-				return new AutoSwitchLeft();
-			case "AutoSwitchRight" :
-				return new AutoSwitchRight();
-			case "AutoMiddle":
-				return new AutoMiddle();
+				return new CrossAutoLine(false);
+			case "AutoSwitchCamera":
+				return new AutoSwitch(true);
+			case "AutoSwitchNoCamera":
+				return new AutoSwitch(false);
 			case "TestGyro":
 				return new TestGyro(0.1f, 90f);
 			default:
