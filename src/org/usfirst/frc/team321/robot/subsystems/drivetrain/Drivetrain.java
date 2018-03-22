@@ -22,7 +22,7 @@ public class Drivetrain extends Subsystem {
 		this.setMode(NeutralMode.Brake);
 		this.resetEncoders();
 	}
-
+	
 	public Transmission getLeft() {
 		return leftTransmission;
 	}

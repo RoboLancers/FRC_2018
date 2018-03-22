@@ -52,8 +52,6 @@ public class OI {
 			SmartDashboard.putBoolean("Slide Fully Extended", Robot.sensors.isLinearSlideFullyExtended());
 			SmartDashboard.putBoolean("Slide Grounded", Robot.sensors.isLinearSlideAtGround());
 			
-			SmartDashboard.putNumber("Flight Stick Value", Robot.oi.flightController.getYAxisValue());
-			
 			SmartDashboard.putNumber("Linear Encoder", Robot.manipulator.getLinearSlide().master.getSelectedSensorPosition(0));
 			
 			SmartDashboard.putBoolean("IsTargetDetected", Robot.camera.isTgtVisible());
@@ -71,6 +69,9 @@ public class OI {
 		} catch (Exception e) {}
 	}
 	
+	/**
+	 * Puts auto mode on SmartDashboard
+	 */
 	public void putAutoModes(){
 		for(String mode : autoModes) {
 			String noSpace = mode.replaceAll("\\s", "");
@@ -80,14 +81,27 @@ public class OI {
 		SmartDashboard.putData("Auto mode", chooser);
 	}
 	
+	/**
+	 * Gets the mode from Dashboard
+	 * @return The mode as a string
+	 */
 	public String getDashboardMode() {
 		return NetworkTableInstance.getDefault().getEntry("/SmartDashboard/currentlySelectedMode").getString("DoNothing");
 	}
 	
+	/**
+	 * Gets the mode from SmartDashboard
+	 * @return The mode as a string
+	 */
 	public String getAutoMode(){
 		return chooser.getSelected();
 	}
 	
+	/**
+	 * Uses a string and finds the corresponding autonomous mode
+	 * @param mode The mode as a string that we are looking for
+	 * @return The autonomous command
+	 */
 	public Command getAutoCommand(String mode){
 		switch (mode) {
 			case "CrossAutoLineLeft":
