@@ -15,7 +15,7 @@ public class Drivetrain extends Subsystem {
 
 	public Drivetrain() {
 		leftTransmission = new Transmission(false, LEFT_MASTER_MOTOR, LEFT_SLAVE_1, LEFT_SLAVE_2);
-		rightTransmission = new Transmission(false, RIGHT_MASTER_MOTOR, RIGHT_SLAVE_1, RIGHT_SLAVE_2);
+		rightTransmission = new Transmission(true, RIGHT_MASTER_MOTOR, RIGHT_SLAVE_1, RIGHT_SLAVE_2);
 
 		gearShifter = new GearShifter();
 		

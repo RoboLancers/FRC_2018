@@ -108,6 +108,7 @@ public class OI {
 				return new CrossAutoLine(true);
 			case "CrossAutoLineRight":
 				return new CrossAutoLine(false);
+			//Unused
 			case "AutoSwitchCamera":
 				return new AutoSwitch(true);
 			case "AutoSwitchNoCamera":

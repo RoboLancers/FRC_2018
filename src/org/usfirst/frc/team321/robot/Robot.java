@@ -3,8 +3,10 @@ package org.usfirst.frc.team321.robot;
 import org.usfirst.frc.team321.robot.subsystems.drivetrain.Drivetrain;
 import org.usfirst.frc.team321.robot.subsystems.manipulator.Manipulator;
 import org.usfirst.frc.team321.robot.subsystems.misc.Camera;
+import org.usfirst.frc.team321.robot.subsystems.misc.Leds;
 import org.usfirst.frc.team321.robot.subsystems.misc.Pneumatics;
 import org.usfirst.frc.team321.robot.subsystems.misc.Sensors;
+import org.usfirst.frc.team321.robot.subsystems.misc.Leds.LedColors;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -13,9 +15,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 public class Robot extends IterativeRobot {
 
 	public static Manipulator manipulator;
-
 	public static Drivetrain drivetrain;
-
+	public static Leds leds;
 	public static Pneumatics pneumatics;
 	public static Sensors sensors;
 	public static Camera camera;
@@ -29,6 +30,7 @@ public class Robot extends IterativeRobot {
 		camera = new Camera(true);
 
 		drivetrain = new Drivetrain();
+		leds = new Leds();
 		manipulator = new Manipulator();
 
 		pneumatics = new Pneumatics();

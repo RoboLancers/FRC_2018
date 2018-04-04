@@ -43,6 +43,14 @@ public class LinearSlide extends Subsystem {
 		master.set(ControlMode.PercentOutput, power);
 	}
 	
+	public double getEncoder() {
+		return master.getSelectedSensorPosition(0);
+	}
+	
+	public void resetEncoder() {
+		master.setSelectedSensorPosition(0, 0, 0);
+	}
+	
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new UseLinearSlides());
