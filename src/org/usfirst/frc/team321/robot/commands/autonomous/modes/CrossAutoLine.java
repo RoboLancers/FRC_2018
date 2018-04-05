@@ -10,7 +10,7 @@ public class CrossAutoLine extends CommandGroup {
 
 	public CrossAutoLine() {
 		addSequential(new AutoStill());
-		addSequential(new MoveRobot(0.8f, 0.0f), 2.1);
+		addSequential(new MoveRobot(0.8, 0.0), 2.1);
 	}
 
 	public CrossAutoLine(boolean isLeft) {

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team321.robot;
 
+import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoScale;
 import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoStill;
 import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoSwitch;
 import org.usfirst.frc.team321.robot.commands.autonomous.modes.CrossAutoLine;
@@ -25,7 +26,9 @@ public class OI {
 	public FlightController flightController;
 	
 	SendableChooser<String> chooser = new SendableChooser<>();
-	static final String[] autoModes = {"Cross Auto Line Left", "Cross Auto Line Right", "Auto Switch Camera", "Auto Switch No Camera", "Test Gyro"};
+	static final String[] autoModes = {"Cross Auto Line Left", "Cross Auto Line Right", 
+			"Auto Switch Camera", "Auto Switch No Camera", "Test Gyro",
+			"Auto Scale Left", "Auto Scale Right"};
 	
 	public OI() {
 		xboxController = new XboxController(0);
@@ -108,6 +111,10 @@ public class OI {
 				return new CrossAutoLine(true);
 			case "CrossAutoLineRight":
 				return new CrossAutoLine(false);
+			case "AutoScaleLeft":
+				return new AutoScale(true);
+			case "AutoScaleRight":
+				return new AutoScale(false);
 			//Unused
 			case "AutoSwitchCamera":
 				return new AutoSwitch(true);
