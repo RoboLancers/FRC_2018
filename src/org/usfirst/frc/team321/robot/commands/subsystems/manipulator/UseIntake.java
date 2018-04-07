@@ -15,9 +15,12 @@ public class UseIntake extends Command {
 	}
 	
 	public UseIntake(double power, boolean rumble) {
-		requires(Robot.manipulator.getIntake());
-		this.power = power;
+		this(power);
 		this.rumble = rumble;
+	}
+	
+	public UseIntake(IntakePower intakePower){
+		this(intakePower.power);
 	}
 	
 	protected void initialize() {
@@ -45,5 +48,15 @@ public class UseIntake extends Command {
 	@Override
 	protected boolean isFinished() {
 		return false;
+	}
+	
+	public enum IntakePower {
+		INTAKE(0.87), OUTAKE(-0.7), STOP(0);
+		
+		public double power;
+		
+		IntakePower(double power){
+			this.power = power;
+		}
 	}
 }

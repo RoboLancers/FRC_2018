@@ -1,6 +1,7 @@
 package org.usfirst.frc.team321.robot.subsystems.manipulator;
 
 import org.usfirst.frc.team321.robot.Constants;
+import org.usfirst.frc.team321.robot.Robot;
 import org.usfirst.frc.team321.robot.commands.subsystems.manipulator.UseLinearSlides;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -30,6 +31,7 @@ public class LinearSlide extends Subsystem {
 		
 		master.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
 		master.setSelectedSensorPosition(0, 0, 0);
+		master.setSensorPhase(true);
 		
 		master.setInverted(true);
 		slave.setInverted(true);
@@ -44,11 +46,19 @@ public class LinearSlide extends Subsystem {
 	}
 	
 	public double getEncoder() {
+		if (Robot.sensors.isLinearSlideAtGround()) {
+			this.resetEncoder();
+		}
 		return master.getSelectedSensorPosition(0);
 	}
 	
 	public void resetEncoder() {
 		master.setSelectedSensorPosition(0, 0, 0);
+	}
+	
+	public boolean isSafeToMove(double power) {
+		return (Robot.sensors.isLinearSlideFullyExtended() && power > 0) 
+				|| (Robot.sensors.isLinearSlideAtGround() && power < 0);
 	}
 	
 	@Override

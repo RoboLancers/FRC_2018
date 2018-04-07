@@ -14,7 +14,7 @@ public class ChangeLeds extends Command{
 	@Override
 	protected void execute() {
 		if(Robot.manipulator.getIntakePivot().isUp()) {
-			Robot.leds.setColor(LedColors.DARK_BLUE);
+			Robot.leds.setColor(LedColors.RED);
 		}else {
 			double distance = Robot.sensors.getAverageDistanceInMeters();
 			
@@ -23,9 +23,9 @@ public class ChangeLeds extends Command{
 			}else if(distance > 0.1 && distance <= 0.2) {
 				Robot.leds.setColor(LedColors.LIME);
 			}else if(distance > 0.2 && distance <= 0.3) {
-				Robot.leds.setColor(LedColors.SKY_BLUE);
+				Robot.leds.setColor(LedColors.RED_ORANGE);
 			}else {
-				Robot.leds.setColor(LedColors.DARK_BLUE);
+				Robot.leds.setColor(LedColors.RED);
 			}
 		}
 	}

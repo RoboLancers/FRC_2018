@@ -2,7 +2,7 @@ package org.usfirst.frc.team321.robot;
 
 public class Constants {
 	// TalonSRXs
-	public static final int LEFT_MASTER_MOTOR = 1;
+	public static final int LEFT_MASTER_MOTOR = 10;
 	public static final int LEFT_SLAVE_1 = 5;
 	public static final int LEFT_SLAVE_2 = 12;
 

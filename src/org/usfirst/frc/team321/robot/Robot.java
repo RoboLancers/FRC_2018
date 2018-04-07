@@ -61,6 +61,7 @@ public class Robot extends IterativeRobot {
 		camera.setCamVisionProcMode();
 
 		autonomousCommand = oi.getAutoCommand(oi.getAutoMode());
+		manipulator.getIntakePivot().setUp();
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();

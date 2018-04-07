@@ -4,44 +4,49 @@ import org.usfirst.frc.team321.robot.Robot;
 import org.usfirst.frc.team321.robot.utilities.LancerPID;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MoveLinearSlide extends Command {
 	
 	LancerPID pid = new LancerPID();
 	boolean useEncoders;
 	
-	double distance;
+	int encoderTick;
 	double power;
 	
-	//USE ENCODER TICKS AS DISTANCE
-	public MoveLinearSlide(double distance) {
-		this.distance = distance;
-		pid = new LancerPID(0.800, 0, 0);
-		pid.setReference(distance);
+	public MoveLinearSlide(int encoderTicks) {
+		this.encoderTick = encoderTicks;
+		pid = new LancerPID(0.00002, 0, 0.0001);
+		pid.setReference(encoderTicks);
 		useEncoders = true;
 	}
 	
-	public MoveLinearSlide(float power) {
-		this.power = power;
-		useEncoders = false;
-	}
-	
 	protected void initialize() {
-		//Robot.drivetrain.setCoast();
-		Robot.drivetrain.setAll(0); 
-		Robot.drivetrain.resetEncoders();
+		if (useEncoders) {
+			Robot.manipulator.getLinearSlide().resetEncoder();
+		}
+		
+		Robot.manipulator.getLinearSlide().move(0);
 	}
 	
 	protected void execute() {
-		Robot.manipulator.getLinearSlide().move((pid.calcPID(Robot.manipulator.getLinearSlide().getEncoder())));
+		if (useEncoders) {
+			power = pid.calcPID(Robot.manipulator.getLinearSlide().getEncoder());
+			Robot.manipulator.getLinearSlide().move(-power * 0.8);
+			SmartDashboard.putNumber("Power Linear Slide lol i can type", -power);
+		} else {
+			Robot.manipulator.getLinearSlide().move(-power * 0.8);
+		}
 	}
 	
 	@Override
 	protected boolean isFinished() {
-		if (!useEncoders) return Robot.sensors.isLinearSlideFullyExtended() || Robot.sensors.isLinearSlideFullyExtended();
+		if (useEncoders) {
+			return Math.abs(Robot.manipulator.getLinearSlide().getEncoder()) >= Math.abs(encoderTick) ||
+			Robot.manipulator.getLinearSlide().isSafeToMove(power);
+		}
 		
-		return Math.abs(Robot.manipulator.getLinearSlide().getEncoder()) >= Math.abs(distance)
-				|| Robot.sensors.isLinearSlideFullyExtended() || Robot.sensors.isLinearSlideFullyExtended(); 
+		return Robot.manipulator.getLinearSlide().isSafeToMove(power); 
 	}
 	
 	@Override

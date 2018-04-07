@@ -1,10 +1,9 @@
 package org.usfirst.frc.team321.robot;
 
-import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoScale;
-import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoStill;
-import org.usfirst.frc.team321.robot.commands.autonomous.modes.AutoSwitch;
+import org.usfirst.frc.team321.robot.commands.autonomous.modes.MiddleSwitch;
+import org.usfirst.frc.team321.robot.commands.autonomous.modes.SameSideScale;
+import org.usfirst.frc.team321.robot.commands.autonomous.modes.DoNothingAndReset;
 import org.usfirst.frc.team321.robot.commands.autonomous.modes.CrossAutoLine;
-import org.usfirst.frc.team321.robot.commands.autonomous.modes.TestGyro;
 import org.usfirst.frc.team321.robot.commands.subsystems.drivetrain.UseSlowArcadeDrive;
 import org.usfirst.frc.team321.robot.commands.subsystems.manipulator.UseIntake;
 import org.usfirst.frc.team321.robot.commands.subsystems.misc.DSolenoidHold;
@@ -26,9 +25,9 @@ public class OI {
 	public FlightController flightController;
 	
 	SendableChooser<String> chooser = new SendableChooser<>();
-	static final String[] autoModes = {"Cross Auto Line Left", "Cross Auto Line Right", 
-			"Auto Switch Camera", "Auto Switch No Camera", "Test Gyro",
-			"Auto Scale Left", "Auto Scale Right"};
+	static final String[] autoModesDisplay = {"Cross Auto Line With Left Switch", "Cross Auto Line With Right Switch", 
+			"1 Cube Same Side Scale Left", "1 Cube Same Side Scale Right",
+			"1 Cube Middle Switch"};
 	
 	public OI() {
 		xboxController = new XboxController(0);
@@ -37,8 +36,8 @@ public class OI {
 		xboxController.rightTrigger.whileHeld(new DSolenoidHold(Robot.drivetrain.getGearShifter(), GearShifter.gearShifter, DoubleSolenoid.Value.kForward));
 		xboxController.leftTrigger.whileHeld(new UseSlowArcadeDrive());
 		
-		xboxController.leftBumper.whileHeld(new UseIntake(0.9, true));
-		xboxController.rightBumper.whileHeld(new UseIntake(0.7));
+		xboxController.leftBumper.whileHeld(new UseIntake(0.87, true));
+		xboxController.rightBumper.whileHeld(new UseIntake(-0.7));
 		
 		flightController.farBottom.whileHeld(new DSolenoidHold(Robot.manipulator.getIntakePivot(), IntakePivot.intakePivot, DoubleSolenoid.Value.kForward));
 	}
@@ -55,7 +54,7 @@ public class OI {
 			SmartDashboard.putBoolean("Slide Fully Extended", Robot.sensors.isLinearSlideFullyExtended());
 			SmartDashboard.putBoolean("Slide Grounded", Robot.sensors.isLinearSlideAtGround());
 			
-			SmartDashboard.putNumber("Linear Encoder", Robot.manipulator.getLinearSlide().master.getSelectedSensorPosition(0));
+			SmartDashboard.putNumber("Linear Encoder", Robot.manipulator.getLinearSlide().getEncoder());
 			
 			SmartDashboard.putBoolean("IsTargetDetected", Robot.camera.isTgtVisible());
 			SmartDashboard.putNumber("Vision Target Angle", Robot.camera.getTgtAngle_Deg());
@@ -67,7 +66,7 @@ public class OI {
 			//Custom Dashboard information
 			NetworkTableInstance.getDefault().getEntry("/SmartDashboard/drive/navx/yaw").setNumber(Robot.sensors.navX.getAngle());
 			NetworkTableInstance.getDefault().getEntry("/robot/time").setNumber(DriverStation.getInstance().getMatchTime());
-			NetworkTableInstance.getDefault().getEntry("/SmartDashboard/autonomous/modes").setStringArray(autoModes);
+			NetworkTableInstance.getDefault().getEntry("/SmartDashboard/autonomous/modes").setStringArray(autoModesDisplay);
 			
 		} catch (Exception e) {}
 	}
@@ -76,7 +75,7 @@ public class OI {
 	 * Puts auto mode on SmartDashboard
 	 */
 	public void putAutoModes(){
-		for(String mode : autoModes) {
+		for(String mode : autoModesDisplay) {
 			String noSpace = mode.replaceAll("\\s", "");
 			chooser.addObject(mode, noSpace);
 		}
@@ -101,29 +100,31 @@ public class OI {
 	}
 	
 	/**
+	 * {"Cross Auto Line With Left Switch", "Cross Auto Line With Right Switch", 
+			"1 Cube Same Side Scale Left", "1 Cube Same Side Scale Right",
+			"1 Cube Middle Switch"}
+	 */
+	
+	/**
 	 * Uses a string and finds the corresponding autonomous mode
 	 * @param mode The mode as a string that we are looking for
 	 * @return The autonomous command
 	 */
 	public Command getAutoCommand(String mode){
 		switch (mode) {
-			case "CrossAutoLineLeft":
+			case "CrossAutoLineWithLeftSwitch":
 				return new CrossAutoLine(true);
-			case "CrossAutoLineRight":
+			case "CrossAutoLineWithRightSwitch":
 				return new CrossAutoLine(false);
-			case "AutoScaleLeft":
-				return new AutoScale(true);
-			case "AutoScaleRight":
-				return new AutoScale(false);
-			//Unused
-			case "AutoSwitchCamera":
-				return new AutoSwitch(true);
-			case "AutoSwitchNoCamera":
-				return new AutoSwitch(false);
-			case "TestGyro":
-				return new TestGyro(0.1f, 90f);
+			case "1CubeSameSideScaleLeft":
+				return new SameSideScale(true);
+			case "1CubeSameSideScaleRight":
+				return new SameSideScale(false);
+			case "1CubeMiddleSwitch":
+				return new MiddleSwitch();
+			// Unused/Untested
 			default:
-				return new AutoStill();
+				return new DoNothingAndReset();
 		}
 	}
 }
