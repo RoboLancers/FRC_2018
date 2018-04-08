@@ -33,6 +33,9 @@ public class LinearSlide extends Subsystem {
 		master.setSelectedSensorPosition(0, 0, 0);
 		master.setSensorPhase(true);
 		
+		master.configNominalOutputForward(0.05, 0);
+		slave.configNominalOutputForward(0.05, 0);
+		
 		master.setInverted(true);
 		slave.setInverted(true);
 	}
@@ -42,7 +45,11 @@ public class LinearSlide extends Subsystem {
 	}
 	
 	public void move(double power) {
-		master.set(ControlMode.PercentOutput, power);
+		if(power == 0) {
+			master.set(ControlMode.PercentOutput, -0.05);
+		}else {
+			master.set(ControlMode.PercentOutput, power);
+		}
 	}
 	
 	public double getEncoder() {

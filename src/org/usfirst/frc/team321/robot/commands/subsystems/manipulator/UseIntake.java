@@ -24,7 +24,7 @@ public class UseIntake extends Command {
 	}
 	
 	protected void initialize() {
-		Robot.manipulator.getIntake().stop();
+		Robot.manipulator.getIntake().stop(false);
 	}
 	
 	protected void execute() {
@@ -41,7 +41,7 @@ public class UseIntake extends Command {
 	}
 	
 	protected void end() {
-		Robot.manipulator.getIntake().stop();
+		Robot.manipulator.getIntake().stop(power < 0 ? false : true);
 		Robot.oi.xboxController.setRumble(false);
 	}
 	

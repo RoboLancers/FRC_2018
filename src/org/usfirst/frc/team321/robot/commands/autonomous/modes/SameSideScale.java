@@ -13,14 +13,14 @@ public class SameSideScale extends CommandGroup{
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		
 		if(gameData.charAt(1) == 'L' && isLeft) {
-			addSequential(new MoveRobot(0.8f, 0.0f), 3.5);
+			addSequential(new MoveRobot(0.8f, 0.0f), 3.6);
 			addSequential(new DoNothingAndReset(), 1);
 			addParallel(new MoveLinearSlide(82000), 2.5);
 			addSequential(new MoveInAngle(0, 35), 2.5);
 			addSequential(new UseIntake(-1), 2);
 			addSequential(new MoveLinearSlide(-86000), 2.5);
 		}else if(gameData.charAt(1) == 'R' && !isLeft) {
-			addSequential(new MoveRobot(0.8f, 0.0f), 3.5);
+			addSequential(new MoveRobot(0.8f, 0.0f), 3.6);
 			addSequential(new DoNothingAndReset(), 1);
 			addParallel(new MoveLinearSlide(82000), 2.5);
 			addSequential(new MoveInAngle(0, -35), 2.5);

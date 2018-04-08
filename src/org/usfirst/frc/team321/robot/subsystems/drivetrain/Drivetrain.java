@@ -59,8 +59,8 @@ public class Drivetrain extends Subsystem {
 
 	public void enableRamping(boolean ramp) {
 		if (ramp) {
-			leftTransmission.setRampRate(0.15);
-			rightTransmission.setRampRate(0.15);
+			leftTransmission.setRampRate(0.20);
+			rightTransmission.setRampRate(0.20);
 		} else {
 			leftTransmission.setRampRate(0);
 			rightTransmission.setRampRate(0);

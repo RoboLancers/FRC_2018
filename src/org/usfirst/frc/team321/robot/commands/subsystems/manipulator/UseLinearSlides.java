@@ -33,10 +33,40 @@ public class UseLinearSlides extends Command {
 						|| (-Robot.oi.flightController.getYAxisValue() < 0 && Robot.sensors.isLinearSlideAtGround())) {
 					Robot.manipulator.getLinearSlide().stop();
 				} else {
-					Robot.manipulator.getLinearSlide().move(Robot.oi.flightController.getYAxisValue());
+					//Negative is up
+					//Positive is down
+					double joyVal = Robot.oi.flightController.getYAxisValue();
+					double encoderVal = Robot.manipulator.getLinearSlide().getEncoder();
+					double ratio;
+					
+					if (joyVal < 0) {
+						if (Robot.manipulator.getLinearSlide().getEncoder() < 80000) {
+							ratio = 1;
+						} else if (Robot.manipulator.getLinearSlide().getEncoder() >= 80000 &&
+								Robot.manipulator.getLinearSlide().getEncoder() <= 90000) {
+							ratio = 0.375 * Math.cos(Math.PI * (encoderVal - 70000.0 / 20000.0)) + 0.625;
+						} else {
+							ratio = 0.25;
+						}
+					} else if (joyVal > 0) {
+						if (Robot.manipulator.getLinearSlide().getEncoder() > 20000) {
+							ratio = 1;
+						} else if (Robot.manipulator.getLinearSlide().getEncoder() >= 10000 &&
+								Robot.manipulator.getLinearSlide().getEncoder() <= 30000) {
+							ratio = -0.375 * Math.sin(Math.PI * (encoderVal / 20000.0)) + 0.625;
+						} else {
+							ratio = 0.25;
+						}
+					} else {
+						ratio = 0;
+					}
+					
+					Robot.manipulator.getLinearSlide().move(ratio * joyVal);
+					
+					//Robot.manipulator.getLinearSlide().move(joyVal);
 				}
 			} else {
-				Robot.manipulator.getLinearSlide().move(-0.5);
+				Robot.manipulator.getLinearSlide().move(0.5);
 				Robot.oi.xboxController.setRumble(Math.abs(Robot.sensors.navX.getPitch()) / 100);
 			}
 		} else {

@@ -2,6 +2,7 @@ package org.usfirst.frc.team321.robot;
 
 import org.usfirst.frc.team321.robot.commands.autonomous.modes.MiddleSwitch;
 import org.usfirst.frc.team321.robot.commands.autonomous.modes.SameSideScale;
+import org.usfirst.frc.team321.robot.commands.autonomous.modes.SwitchThenScale;
 import org.usfirst.frc.team321.robot.commands.autonomous.modes.DoNothingAndReset;
 import org.usfirst.frc.team321.robot.commands.autonomous.modes.CrossAutoLine;
 import org.usfirst.frc.team321.robot.commands.subsystems.drivetrain.UseSlowArcadeDrive;
@@ -25,9 +26,10 @@ public class OI {
 	public FlightController flightController;
 	
 	SendableChooser<String> chooser = new SendableChooser<>();
+	
 	static final String[] autoModesDisplay = {"Cross Auto Line With Left Switch", "Cross Auto Line With Right Switch", 
 			"1 Cube Same Side Scale Left", "1 Cube Same Side Scale Right",
-			"1 Cube Middle Switch"};
+			"1 Cube Middle Switch", "1 Cube Switch Then Scale Left", "1 Cube Switch Then Scale Right"};
 	
 	public OI() {
 		xboxController = new XboxController(0);
@@ -122,6 +124,10 @@ public class OI {
 				return new SameSideScale(false);
 			case "1CubeMiddleSwitch":
 				return new MiddleSwitch();
+			case "1CubeSwitchThenScaleLeft":
+				return new SwitchThenScale(true);
+			case "1CubeSwitchThenScaleRight":
+				return new SwitchThenScale(false);
 			// Unused/Untested
 			default:
 				return new DoNothingAndReset();

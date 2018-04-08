@@ -30,12 +30,16 @@ public class Intake extends Subsystem {
 	}
 	
 	public void setAll(double power) {
-		setLeft(power);
+		setLeft(-power);
 		setRight(power);
 	}
 	
-	public void stop() {
-		setAll(0);
+	public void stop(boolean isIntaking) {
+		if (isIntaking) {
+			setAll(0.2);
+		} else {
+			setAll(0);
+		}
 	}
 	
 	@Override
