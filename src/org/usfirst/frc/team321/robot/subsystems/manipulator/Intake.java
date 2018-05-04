@@ -1,6 +1,7 @@
 package org.usfirst.frc.team321.robot.subsystems.manipulator;
 
 import org.usfirst.frc.team321.robot.Constants;
+import org.usfirst.frc.team321.robot.commands.subsystems.manipulator.UseIntakeJoystick;
 import org.usfirst.frc.team321.robot.utilities.RobotUtil;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -44,5 +45,6 @@ public class Intake extends Subsystem {
 	
 	@Override
 	protected void initDefaultCommand() {
+		setDefaultCommand(new UseIntakeJoystick());
 	}
 }

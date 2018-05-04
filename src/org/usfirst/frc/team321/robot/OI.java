@@ -39,7 +39,7 @@ public class OI {
 		xboxController.leftTrigger.whileHeld(new UseSlowArcadeDrive());
 		
 		xboxController.leftBumper.whileHeld(new UseIntake(0.87, true));
-		xboxController.rightBumper.whileHeld(new UseIntake(-0.7));
+		//xboxController.rightBumper.whileHeld(new UseIntake(-0.5));
 		
 		flightController.farBottom.whileHeld(new DSolenoidHold(Robot.manipulator.getIntakePivot(), IntakePivot.intakePivot, DoubleSolenoid.Value.kForward));
 	}
@@ -49,8 +49,8 @@ public class OI {
 			SmartDashboard.putNumber("Robot pitch", Robot.sensors.navX.getPitch());
 			SmartDashboard.putNumber("Robot roll", Robot.sensors.navX.getRoll());
 			SmartDashboard.putNumber("Gyro", Robot.sensors.navX.getAngle());
-			SmartDashboard.putNumber("Left Encoder Distance", Robot.drivetrain.getLeft().getEncoderDistance());
-			SmartDashboard.putNumber("Right Encoder Distance", Robot.drivetrain.getRight().getEncoderDistance());
+			//SmartDashboard.putNumber("Left Encoder Distance", Robot.drivetrain.getLeft().getEncoderDistance());
+			//SmartDashboard.putNumber("Right Encoder Distance", Robot.drivetrain.getRight().getEncoderDistance());
 			SmartDashboard.putNumber("Ultrasonic Sensor", Robot.sensors.getAverageDistanceInMeters());
 			
 			SmartDashboard.putBoolean("Slide Fully Extended", Robot.sensors.isLinearSlideFullyExtended());

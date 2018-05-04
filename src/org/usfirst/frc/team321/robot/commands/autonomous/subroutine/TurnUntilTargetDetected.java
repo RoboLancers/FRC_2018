@@ -10,7 +10,7 @@ public class TurnUntilTargetDetected extends Command {
 	
 	public TurnUntilTargetDetected(double power) {
 		this.power = power;
-		requires(Robot.camera);
+		//requires(Robot.camera);
 		requires(Robot.drivetrain);
 	}
 	

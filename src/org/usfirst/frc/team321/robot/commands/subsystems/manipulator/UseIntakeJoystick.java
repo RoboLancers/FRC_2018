@@ -4,32 +4,14 @@ import org.usfirst.frc.team321.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class UseIntake extends Command {
+public class UseIntakeJoystick extends Command {
 
 	double power;
 	boolean rumble = false;
-	boolean useJoystick;
 	boolean wasIntaking = false;
 	
-	public UseIntake(){
+	public UseIntakeJoystick() {
 		requires(Robot.manipulator.getIntake());
-		useJoystick = true;
-	}
-	
-	public UseIntake(double power) {
-		requires(Robot.manipulator.getIntake());
-		this.power = power;
-		
-		useJoystick = false;
-	}
-	
-	public UseIntake(double power, boolean rumble) {
-		this(power);
-		this.rumble = rumble;
-	}
-	
-	public UseIntake(IntakePower intakePower){
-		this(intakePower.power);
 	}
 	
 	protected void initialize() {
@@ -37,17 +19,27 @@ public class UseIntake extends Command {
 	}
 	
 	protected void execute() {
-		if(useJoystick && Robot.oi.xboxController.rightBumper.get()){
+		if (Robot.oi.xboxController.leftBumper.get()) {
+			power = 0.87;
+		} else if (Robot.oi.xboxController.rightBumper.get()){
 			power = -0.7;
-		}else if(useJoystick){
+		} else {
 			power = -Math.abs(Math.abs(Robot.oi.flightController.getRotateAxisValue()) > 0.5 ? Robot.oi.flightController.getRotateAxisValue() : 0) * 0.25;
+		}
+		
+		if (power > 0) {
+			wasIntaking = true;
+		} else if (power < 0) {
+			wasIntaking = false;
+		}
+		
+		if (wasIntaking && power == 0) {
+			power = 0.2;
 		}
 		
 		Robot.manipulator.getIntake().setAll(power);
 		
-		if (rumble) {
-			Robot.oi.xboxController.setRumble(true);
-		}
+		Robot.oi.xboxController.setRumble(power > 0 && !wasIntaking);
 	}
 	
 	protected void interrupted() {
@@ -61,15 +53,5 @@ public class UseIntake extends Command {
 	@Override
 	protected boolean isFinished() {
 		return false;
-	}
-	
-	public enum IntakePower {
-		INTAKE(0.87), OUTAKE(-0.7), STOP(0);
-		
-		public double power;
-		
-		IntakePower(double power){
-			this.power = power;
-		}
 	}
 }
